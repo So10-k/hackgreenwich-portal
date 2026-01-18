@@ -1,44 +1,42 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { getLoginUrl } from "@/const";
-import { ArrowRight, Users, Trophy, BookOpen, MessageSquare, Sparkles } from "lucide-react";
+import { ArrowRight, Users, Trophy, BookOpen, MessageSquare, Sparkles, Loader2 } from "lucide-react";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
+import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
 
 export default function Home() {
-  const { user, loading, isAuthenticated } = useAuth();
+  const { user, loading } = useSupabaseAuth();
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    if (!loading && isAuthenticated) {
-      if (user?.portalAccessGranted) {
-        setLocation("/dashboard");
-      } else {
-        setLocation("/register");
-      }
+    if (!loading && user) {
+      setLocation("/dashboard");
     }
-  }, [loading, isAuthenticated, user, setLocation]);
+  }, [loading, user, setLocation]);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <Loader2 className="animate-spin h-12 w-12 text-purple-600" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
       {/* Navigation */}
-      <nav className="border-b bg-background/80 backdrop-blur-lg sticky top-0 z-50">
+      <nav className="border-b bg-white/80 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">HackGreenwich</span>
+            <Sparkles className="h-6 w-6 text-purple-600" />
+            <span className="text-xl font-bold text-gray-900">HackGreenwich</span>
           </div>
-          <Button asChild>
-            <a href={getLoginUrl()}>Sign In</a>
+          <Button
+            onClick={() => setLocation("/signin")}
+            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+          >
+            Sign In
           </Button>
         </div>
       </nav>
@@ -46,30 +44,33 @@ export default function Home() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 lg:py-32">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700 text-sm font-medium">
             <Trophy className="h-4 w-4" />
-            <span>HackGreenwich 2026 - Registration Open</span>
+            HackGreenwich 2026 - Registration Open
           </div>
-          
-          <h1 className="text-5xl lg:text-7xl font-bold tracking-tight">
-            Build the Future at{" "}
-            <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              HackGreenwich
-            </span>
-          </h1>
-          
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Join hundreds of innovators, creators, and problem-solvers for 48 hours of coding, 
-            collaboration, and creativity. Find your team, access resources, and bring your ideas to life.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg h-12 px-8" asChild>
-              <a href={getLoginUrl()}>
-                Get Started <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+
+          <div className="space-y-4">
+            <h1 className="text-5xl lg:text-6xl font-bold text-gray-900">
+              Build the Future at{" "}
+              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                HackGreenwich
+              </span>
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Join hundreds of innovators, creators, and problem-solvers for 48 hours of coding, collaboration, and
+              creativity. Find your team, access resources, and bring your ideas to life.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+            <Button
+              onClick={() => setLocation("/signup")}
+              size="lg"
+              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+            >
+              Get Started <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <Button size="lg" variant="outline" className="text-lg h-12 px-8">
+            <Button size="lg" variant="outline" className="border-gray-300">
               Learn More
             </Button>
           </div>
@@ -78,93 +79,92 @@ export default function Home() {
 
       {/* Features Section */}
       <section className="container mx-auto px-4 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">Everything You Need to Succeed</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Our portal provides all the tools and resources to make your hackathon experience seamless
-          </p>
-        </div>
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Portal Features</h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="border-2 hover:border-primary/50 transition-colors">
-            <CardContent className="pt-6">
-              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <Users className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Find Teammates</h3>
-              <p className="text-muted-foreground">
-                Connect with other participants, browse profiles by skills and interests, and form the perfect team
-              </p>
-            </CardContent>
-          </Card>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="border-gray-200 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <Users className="h-8 w-8 text-purple-600 mb-4" />
+                <h3 className="font-semibold text-gray-900 mb-2">Find Teammates</h3>
+                <p className="text-gray-600 text-sm">
+                  Browse participants, filter by skills and interests, and connect with potential team members.
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card className="border-2 hover:border-primary/50 transition-colors">
-            <CardContent className="pt-6">
-              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <Trophy className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Team Management</h3>
-              <p className="text-muted-foreground">
-                Create teams, invite members, and collaborate seamlessly throughout the hackathon
-              </p>
-            </CardContent>
-          </Card>
+            <Card className="border-gray-200 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <Trophy className="h-8 w-8 text-purple-600 mb-4" />
+                <h3 className="font-semibold text-gray-900 mb-2">Team Management</h3>
+                <p className="text-gray-600 text-sm">
+                  Create teams, invite members, and manage your team's projects and submissions.
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card className="border-2 hover:border-primary/50 transition-colors">
-            <CardContent className="pt-6">
-              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <BookOpen className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Resource Library</h3>
-              <p className="text-muted-foreground">
-                Access curated APIs, tutorials, tools, and datasets to accelerate your development
-              </p>
-            </CardContent>
-          </Card>
+            <Card className="border-gray-200 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <BookOpen className="h-8 w-8 text-purple-600 mb-4" />
+                <h3 className="font-semibold text-gray-900 mb-2">Resources</h3>
+                <p className="text-gray-600 text-sm">
+                  Access APIs, tutorials, tools, and datasets to help you build your project.
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card className="border-2 hover:border-primary/50 transition-colors">
-            <CardContent className="pt-6">
-              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <MessageSquare className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Live Updates</h3>
-              <p className="text-muted-foreground">
-                Stay informed with real-time announcements, schedule updates, and important information
-              </p>
-            </CardContent>
-          </Card>
+            <Card className="border-gray-200 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <MessageSquare className="h-8 w-8 text-purple-600 mb-4" />
+                <h3 className="font-semibold text-gray-900 mb-2">Announcements</h3>
+                <p className="text-gray-600 text-sm">
+                  Stay updated with important announcements and schedule updates from organizers.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-gray-200 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <Sparkles className="h-8 w-8 text-purple-600 mb-4" />
+                <h3 className="font-semibold text-gray-900 mb-2">Project Submission</h3>
+                <p className="text-gray-600 text-sm">
+                  Submit your team's project for admin review and showcase your work.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-gray-200 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <Users className="h-8 w-8 text-purple-600 mb-4" />
+                <h3 className="font-semibold text-gray-900 mb-2">Networking</h3>
+                <p className="text-gray-600 text-sm">
+                  Connect with fellow hackers, mentors, and sponsors throughout the event.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 py-20">
-        <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-purple-500/5">
-          <CardContent className="p-12 text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Register now to secure your spot, complete your profile, and get access to the full portal
-            </p>
-            <Button size="lg" className="text-lg h-12 px-8" asChild>
-              <a href={getLoginUrl()}>
-                Register for HackGreenwich <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
-            </Button>
-          </CardContent>
-        </Card>
+      <section className="container mx-auto px-4 py-20 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg my-12">
+        <div className="max-w-2xl mx-auto text-center text-white space-y-6">
+          <h2 className="text-3xl font-bold">Ready to Build Something Amazing?</h2>
+          <p className="text-lg opacity-90">Join the HackGreenwich community and start your hackathon journey today.</p>
+          <Button
+            onClick={() => setLocation("/signup")}
+            size="lg"
+            className="bg-white text-purple-600 hover:bg-gray-100"
+          >
+            Sign Up Now <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t mt-20">
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" />
-              <span className="font-semibold">HackGreenwich 2026</span>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              © 2026 HackGreenwich. All rights reserved.
-            </p>
-          </div>
+      <footer className="border-t bg-gray-50 py-8">
+        <div className="container mx-auto px-4 text-center text-gray-600">
+          <p>&copy; 2026 HackGreenwich. All rights reserved.</p>
         </div>
       </footer>
     </div>

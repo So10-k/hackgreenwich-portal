@@ -91,3 +91,13 @@
 - [ ] Add announcement management interface for admins
 - [ ] Add team management interface for admins
 - [ ] Create submission review interface for admins
+
+## Supabase Migration
+- [x] Migrate database schema to Supabase PostgreSQL
+- [x] Set up Supabase authentication (email/password, social login)
+- [x] Update backend to use Supabase client
+- [x] Update frontend auth flow to use Supabase
+- [x] Migrate all data from MySQL to Supabase
+- [x] Remove all Manus OAuth dependencies
+- [x] Test full authentication flow
+- [x] Verify database operations with Supabase
