@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import PortalLayout from "@/components/PortalLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { Loader2, Pin } from "lucide-react";
@@ -18,7 +19,8 @@ export default function Announcements() {
   if (loading || isLoading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background py-12">
+    <PortalLayout>
+      <div className="p-8 space-y-6 bg-gradient-to-br from-background via-primary/5 to-background py-12">
       <div className="container max-w-4xl mx-auto px-4">
         <h1 className="text-4xl font-bold mb-8">Announcements</h1>
         <div className="space-y-4">
@@ -46,5 +48,6 @@ export default function Announcements() {
         </div>
       </div>
     </div>
+    </PortalLayout>
   );
 }

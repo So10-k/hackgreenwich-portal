@@ -1,12 +1,10 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import PortalLayout from "@/components/PortalLayout";
 import { trpc } from "@/lib/trpc";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
@@ -14,97 +12,213 @@ import { toast } from "sonner";
 export default function Teams() {
   const { user, loading, isAuthenticated } = useAuth();
   const [, setLocation] = useLocation();
-  const [open, setOpen] = useState(false);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [teamName, setTeamName] = useState("");
+  const [teamDescription, setTeamDescription] = useState("");
+  const [projectIdea, setProjectIdea] = useState("");
+  const [maxMembers, setMaxMembers] = useState("4");
 
   const { data: myTeam } = trpc.teams.getMyTeam.useQuery();
+  const { data: allTeams, isLoading } = trpc.teams.list.useQuery();
+  const { data: invitations } = trpc.teams.getInvitations.useQuery();
+
   const createTeam = trpc.teams.create.useMutation({
     onSuccess: () => {
       toast.success("Team created!");
-      setOpen(false);
+      setTeamName("");
+      setTeamDescription("");
+      setProjectIdea("");
+      setMaxMembers("4");
+      setShowCreateForm(false);
     },
-    onError: (error) => toast.error(error.message),
+    onError: (error: any) => toast.error(error.message),
   });
 
   useEffect(() => {
     if (!loading && !isAuthenticated) setLocation("/");
   }, [loading, isAuthenticated, setLocation]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    await createTeam.mutateAsync({
-      name: formData.get("name") as string,
-      description: formData.get("description") as string,
-      projectIdea: formData.get("projectIdea") as string,
-      maxMembers: 4,
-    });
-  };
-
-  if (loading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
+  if (loading || isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background py-12">
-      <div className="container max-w-4xl mx-auto px-4">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold">Your Team</h1>
+    <PortalLayout>
+      <div className="p-8 space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">Teams</h1>
+            <p className="text-muted-foreground">Create or join a team for the hackathon</p>
+          </div>
           {!myTeam && (
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild>
-                <Button><Plus className="mr-2 h-4 w-4" /> Create Team</Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Create a Team</DialogTitle>
-                </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div><Label htmlFor="name">Team Name *</Label><Input id="name" name="name" required /></div>
-                  <div><Label htmlFor="description">Description</Label><Textarea id="description" name="description" rows={3} /></div>
-                  <div><Label htmlFor="projectIdea">Project Idea</Label><Textarea id="projectIdea" name="projectIdea" rows={3} /></div>
-                  <Button type="submit" className="w-full" disabled={createTeam.isPending}>
-                    {createTeam.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Create Team
-                  </Button>
-                </form>
-              </DialogContent>
-            </Dialog>
+            <Button onClick={() => setShowCreateForm(!showCreateForm)} size="lg">
+              <Plus className="h-5 w-5 mr-2" />
+              Create Team
+            </Button>
           )}
         </div>
 
-        {myTeam ? (
+        {showCreateForm && !myTeam && (
           <Card>
             <CardHeader>
-              <CardTitle>{myTeam.team.name}</CardTitle>
+              <CardTitle>Create New Team</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              {myTeam.team.description && <p className="text-muted-foreground">{myTeam.team.description}</p>}
+            <CardContent className="space-y-4">
               <div>
-                <h3 className="font-semibold mb-4">Team Members ({myTeam.members.length}/{myTeam.team.maxMembers})</h3>
-                <div className="space-y-3">
-                  {myTeam.members.map((member) => (
-                    <div key={member.userId} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                      <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="font-semibold text-primary">{member.user.name?.charAt(0).toUpperCase()}</span>
+                <label className="text-sm font-medium">Team Name</label>
+                <Input
+                  value={teamName}
+                  onChange={(e) => setTeamName(e.target.value)}
+                  placeholder="Enter team name"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium">Description</label>
+                <textarea
+                  value={teamDescription}
+                  onChange={(e) => setTeamDescription(e.target.value)}
+                  placeholder="Describe your team"
+                  rows={3}
+                  className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium">Project Idea</label>
+                <textarea
+                  value={projectIdea}
+                  onChange={(e) => setProjectIdea(e.target.value)}
+                  placeholder="What will you build?"
+                  rows={3}
+                  className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium">Max Members</label>
+                <select
+                  value={maxMembers}
+                  onChange={(e) => setMaxMembers(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                >
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  className="flex-1"
+                  onClick={() =>
+                    createTeam.mutate({
+                      name: teamName,
+                      description: teamDescription || undefined,
+                      projectIdea: projectIdea || undefined,
+                      maxMembers: parseInt(maxMembers),
+                    })
+                  }
+                  disabled={!teamName}
+                >
+                  Create Team
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setShowCreateForm(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {myTeam && (
+          <Card className="border-primary/50 bg-primary/5">
+            <CardHeader>
+              <CardTitle>Your Team</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-2xl font-bold">{myTeam.team.name}</h3>
+                  {myTeam.team.description && <p className="text-muted-foreground">{myTeam.team.description}</p>}
+                </div>
+                {myTeam.team.projectIdea && (
+                  <div className="p-3 rounded-lg bg-background border">
+                    <p className="text-sm font-medium mb-1">Project Idea</p>
+                    <p className="text-sm text-muted-foreground">{myTeam.team.projectIdea}</p>
+                  </div>
+                )}
+                <div>
+                  <p className="text-sm font-medium mb-3">Members ({myTeam.members.length}/{myTeam.team.maxMembers})</p>
+                  <div className="space-y-2">
+                    {myTeam.members.map((member) => (
+                      <div key={member.userId} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                        <Users className="h-5 w-5 text-muted-foreground" />
+                        <div className="flex-1">
+                          <p className="font-medium text-sm">{member.user.name}</p>
+                          <p className="text-xs text-muted-foreground capitalize">{member.role}</p>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <p className="font-medium">{member.user.name}</p>
-                        <p className="text-sm text-muted-foreground capitalize">{member.role}</p>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
-        ) : (
+        )}
+
+        {invitations && invitations.length > 0 && (
           <Card>
-            <CardContent className="pt-6 text-center py-12">
-              <h3 className="text-xl font-semibold mb-2">No Team Yet</h3>
-              <p className="text-muted-foreground mb-6">Create a team to start collaborating</p>
-              <Button onClick={() => setOpen(true)}>Create Your Team</Button>
+            <CardHeader>
+              <CardTitle>Team Invitations</CardTitle>
+              <CardDescription>You have {invitations.length} pending invitation(s)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {invitations.map((inv) => (
+                  <div key={inv.invitation.id} className="flex items-center justify-between p-4 rounded-lg border">
+                    <div>
+                      <p className="font-semibold">{inv.team.name}</p>
+                      {inv.team.description && <p className="text-sm text-muted-foreground">{inv.team.description}</p>}
+                    </div>
+                    <div className="flex gap-2">
+                      <Button size="sm">Accept</Button>
+                      <Button size="sm" variant="outline">Decline</Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         )}
+
+        {!myTeam && (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Available Teams</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {allTeams?.map((team) => (
+                <Card key={team.id}>
+                  <CardContent className="pt-6">
+                    <h3 className="text-lg font-semibold mb-2">{team.name}</h3>
+                    {team.description && <p className="text-sm text-muted-foreground mb-3">{team.description}</p>}
+                    {team.projectIdea && (
+                      <p className="text-sm text-muted-foreground italic mb-3">Project: {team.projectIdea}</p>
+                    )}
+                    <p className="text-xs text-muted-foreground mb-4">{team.maxMembers} members max</p>
+                    <Button className="w-full">Request to Join</Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </PortalLayout>
   );
 }

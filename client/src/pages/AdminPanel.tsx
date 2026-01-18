@@ -1,67 +1,341 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import PortalLayout from "@/components/PortalLayout";
 import { trpc } from "@/lib/trpc";
-import { CheckCircle, Loader2 } from "lucide-react";
-import { useEffect } from "react";
+import { Loader2, Check, X, Users, MessageSquare, Trophy, Settings } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
+
+type TabType = "users" | "announcements" | "teams" | "submissions";
 
 export default function AdminPanel() {
   const { user, loading, isAuthenticated } = useAuth();
   const [, setLocation] = useLocation();
+  const [activeTab, setActiveTab] = useState<TabType>("users");
+  const [announcementTitle, setAnnouncementTitle] = useState("");
+  const [announcementContent, setAnnouncementContent] = useState("");
+  const [announcementCategory, setAnnouncementCategory] = useState("general");
+  const [isPinned, setIsPinned] = useState(false);
 
-  const { data: users, refetch } = trpc.admin.getAllUsers.useQuery(undefined, {
-    enabled: isAuthenticated && user?.role === "admin",
-  });
+  const { data: allUsers, isLoading: usersLoading, refetch: refetchUsers } = trpc.admin.getAllUsers.useQuery();
+  const { data: announcements, isLoading: announcementsLoading, refetch: refetchAnnouncements } = trpc.announcements.list.useQuery();
+  const { data: allTeams, isLoading: teamsLoading } = trpc.teams.list.useQuery();
 
   const approveAccess = trpc.admin.approvePortalAccess.useMutation({
     onSuccess: () => {
-      toast.success("User approved!");
-      refetch();
+      toast.success("Portal access approved!");
+      refetchUsers();
     },
     onError: (error) => toast.error(error.message),
   });
 
+
+
+  const createAnnouncement = trpc.announcements.create.useMutation({
+    onSuccess: () => {
+      toast.success("Announcement created!");
+      setAnnouncementTitle("");
+      setAnnouncementContent("");
+      setAnnouncementCategory("general");
+      setIsPinned(false);
+      refetchAnnouncements();
+    },
+    onError: (error: any) => toast.error(error.message),
+  });
+
   useEffect(() => {
-    if (!loading && !isAuthenticated) setLocation("/");
-    if (!loading && user && user.role !== "admin") setLocation("/dashboard");
+    if (!loading && (!isAuthenticated || user?.role !== "admin")) {
+      setLocation("/");
+    }
   }, [loading, isAuthenticated, user, setLocation]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
+  if (loading || usersLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
-  const pendingUsers = users?.filter(u => !u.portalAccessGranted && u.registrationStep >= 2);
+  const pendingUsers = allUsers?.filter(u => !u.portalAccessGranted && u.devpostVerified) || [];
+  const approvedUsers = allUsers?.filter(u => u.portalAccessGranted) || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background py-12">
-      <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold mb-8">Admin Panel</h1>
-        <Card>
-          <CardHeader>
-            <CardTitle>Pending Approvals ({pendingUsers?.length || 0})</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {pendingUsers?.map((u) => (
-                <div key={u.id} className="flex items-center justify-between p-4 rounded-lg bg-muted/50">
-                  <div>
-                    <p className="font-semibold">{u.name}</p>
-                    <p className="text-sm text-muted-foreground">{u.email}</p>
-                    <p className="text-sm text-muted-foreground">Devpost: {u.devpostUsername}</p>
+    <PortalLayout>
+      <div className="p-8 space-y-8">
+        <div>
+          <h1 className="text-4xl font-bold mb-2">Admin Panel</h1>
+          <p className="text-muted-foreground">Manage participants, announcements, teams, and submissions</p>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex gap-2 border-b">
+          {[
+            { id: "users" as TabType, label: "Users", icon: Users },
+            { id: "announcements" as TabType, label: "Announcements", icon: MessageSquare },
+            { id: "teams" as TabType, label: "Teams", icon: Trophy },
+            { id: "submissions" as TabType, label: "Submissions", icon: Settings },
+          ].map((tab) => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors ${
+                  activeTab === tab.id
+                    ? "border-primary text-primary"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Users Tab */}
+        {activeTab === "users" && (
+          <div className="space-y-6">
+            {/* Pending Approvals */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Pending Portal Access</CardTitle>
+                <CardDescription>Users waiting for admin approval after Devpost verification</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {pendingUsers.length > 0 ? (
+                  <div className="space-y-4">
+                    {pendingUsers.map((u) => (
+                      <div key={u.id} className="flex items-center justify-between p-4 rounded-lg border">
+                        <div className="flex-1">
+                          <h4 className="font-semibold">{u.name}</h4>
+                          <p className="text-sm text-muted-foreground">{u.email}</p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Devpost: {u.devpostUsername}
+                          </p>
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            variant="default"
+                            onClick={() => approveAccess.mutate({ userId: u.id })}
+                          >
+                            <Check className="h-4 w-4 mr-1" />
+                            Approve
+                          </Button>
+
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <Button onClick={() => approveAccess.mutate({ userId: u.id })} disabled={approveAccess.isPending}>
-                    {approveAccess.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CheckCircle className="mr-2 h-4 w-4" />}
-                    Approve
-                  </Button>
+                ) : (
+                  <p className="text-muted-foreground text-center py-8">No pending approvals</p>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* All Users */}
+            <Card>
+              <CardHeader>
+                <CardTitle>All Participants</CardTitle>
+                <CardDescription>Total: {allUsers?.length || 0} users</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 max-h-96 overflow-y-auto">
+                  {allUsers?.map((u) => (
+                    <div key={u.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                      <div className="flex-1">
+                        <p className="font-medium">{u.name}</p>
+                        <p className="text-xs text-muted-foreground">{u.email}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                          u.portalAccessGranted
+                            ? "bg-green-500/10 text-green-700"
+                            : "bg-yellow-500/10 text-yellow-700"
+                        }`}>
+                          {u.portalAccessGranted ? "Approved" : "Pending"}
+                        </span>
+                        {u.devpostVerified && (
+                          <span className="px-2 py-1 rounded text-xs font-semibold bg-blue-500/10 text-blue-700">
+                            Devpost ✓
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-              {(!pendingUsers || pendingUsers.length === 0) && (
-                <p className="text-center text-muted-foreground py-8">No pending approvals</p>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Announcements Tab */}
+        {activeTab === "announcements" && (
+          <div className="space-y-6">
+            {/* Create Announcement */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Create Announcement</CardTitle>
+                <CardDescription>Post important updates for all participants</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">Title</label>
+                  <Input
+                    value={announcementTitle}
+                    onChange={(e) => setAnnouncementTitle(e.target.value)}
+                    placeholder="Announcement title"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Content</label>
+                  <textarea
+                    value={announcementContent}
+                    onChange={(e) => setAnnouncementContent(e.target.value)}
+                    placeholder="Announcement content"
+                    rows={5}
+                    className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium">Category</label>
+                    <select
+                      value={announcementCategory}
+                      onChange={(e) => setAnnouncementCategory(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                    >
+                      <option value="general">General</option>
+                      <option value="urgent">Urgent</option>
+                      <option value="schedule">Schedule</option>
+                      <option value="rules">Rules</option>
+                    </select>
+                  </div>
+                  <div className="flex items-end">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={isPinned}
+                        onChange={(e) => setIsPinned(e.target.checked)}
+                        className="rounded"
+                      />
+                      <span className="text-sm font-medium">Pin this announcement</span>
+                    </label>
+                  </div>
+                </div>
+                <Button
+                  className="w-full"
+                  onClick={() =>
+                    createAnnouncement.mutate({
+                      title: announcementTitle,
+                      content: announcementContent,
+                      category: announcementCategory,
+                      isPinned,
+                    })
+                  }
+                  disabled={!announcementTitle || !announcementContent}
+                >
+                  Post Announcement
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Recent Announcements */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Announcements</CardTitle>
+                <CardDescription>Total: {announcements?.length || 0}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 max-h-96 overflow-y-auto">
+                  {announcements?.slice(0, 10).map((a) => (
+                    <div key={a.id} className="p-4 rounded-lg border">
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="font-semibold">{a.title}</h4>
+                        {a.isPinned && (
+                          <span className="px-2 py-1 bg-primary/10 text-primary text-xs rounded font-semibold">
+                            Pinned
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{a.content}</p>
+                      <div className="flex gap-2">
+                        <span className="text-xs bg-muted px-2 py-1 rounded capitalize">{a.category}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(a.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Teams Tab */}
+        {activeTab === "teams" && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Team Management</CardTitle>
+              <CardDescription>Overview of all teams in the hackathon</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {teamsLoading ? (
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              ) : allTeams && allTeams.length > 0 ? (
+                <div className="space-y-4 max-h-96 overflow-y-auto">
+                  {allTeams.map((team) => (
+                    <div key={team.id} className="p-4 rounded-lg border">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h4 className="font-semibold">{team.name}</h4>
+                          {team.description && (
+                            <p className="text-sm text-muted-foreground">{team.description}</p>
+                          )}
+                        </div>
+                        <span className="text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded">
+                          {team.maxMembers} members max
+                        </span>
+                      </div>
+                      {team.projectIdea && (
+                        <p className="text-sm text-muted-foreground italic">
+                          Project: {team.projectIdea}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground text-center py-8">No teams yet</p>
               )}
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Submissions Tab */}
+        {activeTab === "submissions" && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Project Submissions</CardTitle>
+              <CardDescription>Review and manage submitted projects</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center py-12">
+                <Settings className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground">
+                  Project submission management coming soon
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
-    </div>
+    </PortalLayout>
   );
 }

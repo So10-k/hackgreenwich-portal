@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import PortalLayout from "@/components/PortalLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -44,7 +45,8 @@ export default function Profile() {
   if (loading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background py-12">
+    <PortalLayout>
+      <div className="p-8 space-y-6 bg-gradient-to-br from-background via-primary/5 to-background py-12">
       <div className="container max-w-2xl mx-auto px-4">
         <Card>
           <CardHeader>
@@ -64,5 +66,6 @@ export default function Profile() {
         </Card>
       </div>
     </div>
+    </PortalLayout>
   );
 }

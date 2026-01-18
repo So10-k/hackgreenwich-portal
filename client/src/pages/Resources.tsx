@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import PortalLayout from "@/components/PortalLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -22,7 +23,8 @@ export default function Resources() {
   const categories = ["api", "tutorial", "tool", "dataset", "other"];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background py-12">
+    <PortalLayout>
+      <div className="p-8 space-y-6 bg-gradient-to-br from-background via-primary/5 to-background py-12">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold mb-8">Resource Library</h1>
         <Tabs defaultValue="all">
@@ -78,5 +80,6 @@ export default function Resources() {
         </Tabs>
       </div>
     </div>
+    </PortalLayout>
   );
 }

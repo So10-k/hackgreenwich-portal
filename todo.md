@@ -80,4 +80,14 @@
 - [x] Test team creation and invitations
 - [x] Test connection requests
 - [x] Test admin functionalities
-- [ ] Create final checkpoint
+- [x] Create final checkpoint
+
+## UI/UX Enhancements
+- [ ] Create proper dashboard layout with sidebar navigation
+- [ ] Add persistent navbar with logo, links, and logout button
+- [ ] Redesign dashboard to look more like a professional dashboard
+- [ ] Add project submission card with admin approval workflow
+- [ ] Expand admin dashboard with participant management
+- [ ] Add announcement management interface for admins
+- [ ] Add team management interface for admins
+- [ ] Create submission review interface for admins
