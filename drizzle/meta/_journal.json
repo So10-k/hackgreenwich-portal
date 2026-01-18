@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "mysql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1768768298808,
+      "tag": "0000_omniscient_silvermane",
+      "breakpoints": true
+    }
+  ]
 }
