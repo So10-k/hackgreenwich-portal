@@ -242,3 +242,7 @@
 - [x] Create /sponsors page with tier-based sponsor showcase
 - [x] Add navigation links to both pages (Home nav bar)
 - [x] Style pages with responsive design (gradient backgrounds, cards)
+
+## Update Homepage for Logged-In Users
+- [x] Show "Dashboard" button instead of "Sign In" and "Get Started" for authenticated users
+- [x] Keep existing buttons for non-authenticated visitors

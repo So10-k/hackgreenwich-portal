@@ -21,11 +21,7 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
 
-  useEffect(() => {
-    if (user) {
-      setLocation("/dashboard");
-    }
-  }, [user, setLocation]);
+  // Allow logged-in users to view homepage - they'll see Dashboard button instead
 
   return (
     <div ref={containerRef} className="relative overflow-hidden">
@@ -70,19 +66,30 @@ export default function Home() {
             >
               Sponsors
             </Button>
-            <Button
-              variant="ghost"
-              className="text-white hover:bg-white/10"
-              onClick={() => setLocation("/signin")}
-            >
-              Sign In
-            </Button>
-            <Button
-              className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white"
-              onClick={() => setLocation("/signup")}
-            >
-              Get Started
-            </Button>
+            {user ? (
+              <Button
+                className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white"
+                onClick={() => setLocation("/dashboard")}
+              >
+                Dashboard
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="ghost"
+                  className="text-white hover:bg-white/10"
+                  onClick={() => setLocation("/signin")}
+                >
+                  Sign In
+                </Button>
+                <Button
+                  className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white"
+                  onClick={() => setLocation("/signup")}
+                >
+                  Get Started
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </nav>
