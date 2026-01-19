@@ -191,3 +191,7 @@
 - [x] Add CSV export button to Admin Panel Teams tab
 - [x] Generate CSV with team roster including member details
 - [x] Implement download functionality
+
+## Fix React Key Warning
+- [x] Find missing key props in Dashboard component
+- [x] Add unique keys to all list items

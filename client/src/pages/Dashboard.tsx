@@ -64,7 +64,7 @@ export default function Dashboard() {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card>
+          <Card key="stat-team">
             <CardContent className="pt-6">
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground">Your Team</p>
@@ -74,7 +74,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card key="stat-requests">
             <CardContent className="pt-6">
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground">Pending Requests</p>
@@ -84,7 +84,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card key="stat-announcements">
             <CardContent className="pt-6">
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground">Announcements</p>
@@ -94,7 +94,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card key="stat-status">
             <CardContent className="pt-6">
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground">Status</p>
@@ -256,7 +256,7 @@ export default function Dashboard() {
 
         {/* Quick Actions */}
         <div className="grid md:grid-cols-4 gap-4">
-          <Card className="cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setLocation("/teammates")}>
+          <Card key="action-teammates" className="cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setLocation("/teammates")}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -268,7 +268,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setLocation("/resources")}>
+          <Card key="action-resources" className="cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setLocation("/resources")}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -280,7 +280,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setLocation("/announcements")}>
+          <Card key="action-announcements" className="cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setLocation("/announcements")}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -292,7 +292,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setLocation("/profile")}>
+          <Card key="action-profile" className="cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setLocation("/profile")}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
