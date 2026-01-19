@@ -106,9 +106,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl md:text-2xl text-purple-100 max-w-3xl mx-auto mb-12 leading-relaxed"
           >
-            Join hundreds of innovators, creators, and problem-solvers for 48 hours of
-            coding, collaboration, and creativity. Find your team, access resources,
-            and bring your ideas to life.
+            Sponsored by RoleColorOne.
           </motion.p>
 
           <motion.div
@@ -238,9 +236,9 @@ export default function Home() {
             <div className="grid md:grid-cols-4 gap-8 text-center">
               {[
                 { number: "500+", label: "Participants" },
-                { number: "48", label: "Hours" },
-                { number: "$50K", label: "In Prizes" },
-                { number: "100+", label: "Projects" },
+                { number: "3", label: "Hours" },
+                { number: "Super Cool", label: "Prizes" },
+                { number: "A lot of", label: "Projects" },
               ].map((stat, index) => (
                 <motion.div
                   key={index}
