@@ -48,7 +48,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-14" />
+            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-16" />
           </div>
           <div className="flex items-center gap-3">
             <Button
@@ -120,16 +120,15 @@ export default function Home() {
             <span className="bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 bg-clip-text text-transparent">HackGreenwich</span>
           </motion.h1>
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-white max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="text-xl md:text-2xl text-white max-w-3xl mx-auto mb-12 leading-relaxed text-center"
           >
-            <span className="inline-flex items-center gap-2">
-              Sponsored by <img src="/onercf-logo.png" alt="OneRCF" className="h-8 inline-block" />
-            </span>
-          </motion.p>
+            <p className="mb-2">Sponsored by</p>
+            <img src="/onercf-logo.png" alt="OneRCF" className="h-12 mx-auto" />
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 50 }}

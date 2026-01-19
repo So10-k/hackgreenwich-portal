@@ -274,3 +274,16 @@
 - [x] Soften background gradients to be less intense
 - [x] Reduce color saturation for a more professional look
 - [x] Update text colors to be more subtle and readable
+
+## Sponsors and Schedule Page Updates
+- [x] Add navigation header to Sponsors page matching homepage theme
+- [x] Add navigation header to Schedule page matching homepage theme
+- [x] Update Sponsors page styling to match dark theme
+- [x] Update Schedule page styling to match dark theme
+- [x] Create email template for "Become a Sponsor" button
+- [x] Set up mailto link to hackgreenwich@rolecolorfinder.com
+
+## Logo Size Adjustments
+- [x] Increase HackGreenwich logo size in navigation (h-16)
+- [x] Increase OneRCF logo size (h-12)
+- [x] Move OneRCF logo to separate line under "Sponsored by"

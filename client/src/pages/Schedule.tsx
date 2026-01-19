@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { trpc } from "@/lib/trpc-supabase";
-
+import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, AlertCircle } from "lucide-react";
+import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
 import { format, parseISO, isSameDay } from "date-fns";
 
 export default function Schedule() {
   const { data: events, isLoading } = trpc.schedule.list.useQuery();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [, setLocation] = useLocation();
+  const { user } = useSupabaseAuth();
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
         <div className="container py-12">
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-              <p className="text-muted-foreground">Loading schedule...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-400 mx-auto mb-4"></div>
+              <p className="text-white/70">Loading schedule...</p>
             </div>
           </div>
         </div>
@@ -62,15 +66,65 @@ export default function Schedule() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
-      <div className="container py-12 space-y-6">
-        {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold">Event Schedule</h1>
-          <p className="text-muted-foreground mt-2">
-            Stay on track with all hackathon events, workshops, and deadlines
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-14 cursor-pointer" onClick={() => setLocation("/")} />
+          </div>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              className="text-white hover:bg-white/10"
+              onClick={() => setLocation("/schedule")}
+            >
+              Schedule
+            </Button>
+            <Button
+              variant="ghost"
+              className="text-white hover:bg-white/10"
+              onClick={() => setLocation("/sponsors")}
+            >
+              Sponsors
+            </Button>
+            {user ? (
+              <Button
+                className="bg-red-600 hover:bg-red-700 text-white"
+                onClick={() => setLocation("/dashboard")}
+              >
+                Dashboard
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="ghost"
+                  className="text-white hover:bg-white/10"
+                  onClick={() => setLocation("/signin")}
+                >
+                  Sign In
+                </Button>
+                <Button
+                  className="bg-red-600 hover:bg-red-700 text-white"
+                  onClick={() => setLocation("/signup")}
+                >
+                  Get Started
+                </Button>
+              </>
+            )}
+          </div>
         </div>
+      </nav>
+
+      <div className="pt-20">
+        <div className="container py-12 space-y-6">
+          {/* Header */}
+          <div>
+            <h1 className="text-3xl font-bold text-white">Event Schedule</h1>
+            <p className="text-white/80 mt-2">
+              Stay on track with all hackathon events, workshops, and deadlines
+            </p>
+          </div>
 
         {/* Date Filter */}
         {dates.length > 0 && (
@@ -79,8 +133,8 @@ export default function Schedule() {
               onClick={() => setSelectedDate(null)}
               className={`px-4 py-2 rounded-lg border transition-colors ${
                 selectedDate === null
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-card border-border hover:bg-accent"
+                  ? "bg-red-600 text-white border-red-600"
+                  : "bg-white/10 border-white/20 text-white hover:bg-white/20"
               }`}
             >
               All Days
@@ -91,8 +145,8 @@ export default function Schedule() {
                 onClick={() => setSelectedDate(parseISO(dateStr))}
                 className={`px-4 py-2 rounded-lg border transition-colors ${
                   selectedDate && format(selectedDate, "yyyy-MM-dd") === dateStr
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-card border-border hover:bg-accent"
+                    ? "bg-red-600 text-white border-red-600"
+                    : "bg-white/10 border-white/20 text-white hover:bg-white/20"
                 }`}
               >
                 {format(parseISO(dateStr), "MMM d")}
@@ -198,6 +252,7 @@ export default function Schedule() {
             </CardContent>
           </Card>
         )}
+        </div>
       </div>
     </div>
   );

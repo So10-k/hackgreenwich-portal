@@ -1,21 +1,43 @@
 import { trpc } from "@/lib/trpc-supabase";
-
+import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Award } from "lucide-react";
+import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
 
 export default function Sponsors() {
   const { data: sponsors, isLoading } = trpc.sponsors.list.useQuery();
+  const [, setLocation] = useLocation();
+  const { user } = useSupabaseAuth();
+
+  const handleBecomeASponsor = () => {
+    const subject = encodeURIComponent("HackGreenwich 2026 - Sponsorship Inquiry");
+    const body = encodeURIComponent(
+      `Hello HackGreenwich Team,\n\n` +
+      `I am interested in becoming a sponsor for HackGreenwich 2026.\n\n` +
+      `Company/Organization Name: [Your Company Name]\n` +
+      `Contact Person: [Your Name]\n` +
+      `Email: [Your Email]\n` +
+      `Phone: [Your Phone Number]\n` +
+      `Website: [Your Website]\n\n` +
+      `Sponsorship Tier Interest: [Gold/Silver/Bronze/Partner]\n\n` +
+      `Additional Information:\n` +
+      `[Please share any specific interests, goals, or questions about sponsorship]\n\n` +
+      `Thank you for considering our sponsorship inquiry.\n\n` +
+      `Best regards`
+    );
+    window.location.href = `mailto:hackgreenwich@rolecolorfinder.com?subject=${subject}&body=${body}`;
+  };
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
         <div className="container py-12">
-          <div className="flex items-center justify-center min-h-[60vh]">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-              <p className="text-muted-foreground">Loading sponsors...</p>
+            <div className="flex items-center justify-center min-h-[60vh]">
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-400 mx-auto mb-4"></div>
+                <p className="text-white/70">Loading sponsors...</p>
             </div>
           </div>
         </div>
@@ -60,19 +82,69 @@ export default function Sponsors() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
-      <div className="container py-12 space-y-8">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Award className="h-10 w-10 text-primary" />
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-14 cursor-pointer" onClick={() => setLocation("/")} />
           </div>
-          <h1 className="text-4xl font-bold">Our Sponsors</h1>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            HackGreenwich is made possible by the generous support of our sponsors. Thank you for
-            believing in innovation and the next generation of developers!
-          </p>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              className="text-white hover:bg-white/10"
+              onClick={() => setLocation("/schedule")}
+            >
+              Schedule
+            </Button>
+            <Button
+              variant="ghost"
+              className="text-white hover:bg-white/10"
+              onClick={() => setLocation("/sponsors")}
+            >
+              Sponsors
+            </Button>
+            {user ? (
+              <Button
+                className="bg-red-600 hover:bg-red-700 text-white"
+                onClick={() => setLocation("/dashboard")}
+              >
+                Dashboard
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="ghost"
+                  className="text-white hover:bg-white/10"
+                  onClick={() => setLocation("/signin")}
+                >
+                  Sign In
+                </Button>
+                <Button
+                  className="bg-red-600 hover:bg-red-700 text-white"
+                  onClick={() => setLocation("/signup")}
+                >
+                  Get Started
+                </Button>
+              </>
+            )}
+          </div>
         </div>
+      </nav>
+
+      <div className="pt-20">
+        <div className="container py-12 space-y-8">
+          {/* Header */}
+          <div className="text-center space-y-4">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Award className="h-10 w-10 text-red-400" />
+            </div>
+            <h1 className="text-4xl font-bold text-white">Our Sponsors</h1>
+            <p className="text-white/80 text-lg max-w-2xl mx-auto">
+              HackGreenwich is made possible by the generous support of our sponsors. Thank you for
+              believing in innovation and the next generation of developers!
+            </p>
+          </div>
 
         {/* Sponsors by Tier */}
         {sponsors && sponsors.length > 0 ? (
@@ -180,21 +252,22 @@ export default function Sponsors() {
           </Card>
         )}
 
-        {/* Call to Action */}
-        <Card className="bg-primary/5 border-primary/20">
-          <CardContent className="py-8">
-            <div className="text-center space-y-4">
-              <h3 className="text-2xl font-bold">Interested in Sponsoring?</h3>
-              <p className="text-muted-foreground max-w-xl mx-auto">
-                Join us in supporting the next generation of innovators. Contact us to learn about
-                sponsorship opportunities.
-              </p>
-              <Button size="lg" variant="default">
+          {/* Call to Action */}
+          <Card className="bg-white/5 border-white/10">
+            <CardContent className="py-8">
+              <div className="text-center space-y-4">
+                <h3 className="text-2xl font-bold text-white">Interested in Sponsoring?</h3>
+                <p className="text-white/80 max-w-xl mx-auto">
+                  Join us in supporting the next generation of innovators. Contact us to learn about
+                  sponsorship opportunities.
+                </p>
+              <Button size="lg" className="bg-red-600 hover:bg-red-700 text-white" onClick={handleBecomeASponsor}>
                 Become a Sponsor
               </Button>
-            </div>
-          </CardContent>
-        </Card>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
