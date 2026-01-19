@@ -366,7 +366,7 @@ export async function inviteToTeam(teamId: number, invitedUserId: number, invite
 export async function getTeamInvitations(userId: number) {
   const { data, error } = await supabaseAdmin
     .from("team_invitations")
-    .select("*, team(*), invited_by:invited_by_id(name, email)")
+    .select("*, teams(*), invited_by:invited_by_id(name, email)")
     .eq("invited_user_id", userId)
     .eq("status", "pending");
 

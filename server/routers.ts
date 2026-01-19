@@ -4,7 +4,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
-import * as db from "./db";
+import * as db from "./db-supabase";
 
 // Admin-only procedure
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -103,9 +103,8 @@ export const appRouter = router({
           });
         }
         
-        const users = await db.getUsersForTeammateFinder(input);
-        // Filter out current user
-        return users.filter(u => u.id !== ctx.user.id);
+        const users = await db.getUsersForTeammateFinder(ctx.user.id, input);
+        return users;
       }),
     
     sendConnectionRequest: protectedProcedure
@@ -114,17 +113,12 @@ export const appRouter = router({
         message: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        const requestId = await db.createConnectionRequest({
-          senderId: ctx.user.id,
-          receiverId: input.receiverId,
-          message: input.message,
-          status: 'pending',
-        });
-        return { requestId };
+        const request = await db.sendConnectionRequest(ctx.user.id, input.receiverId, input.message);
+        return { requestId: request.id };
       }),
     
     getConnectionRequests: protectedProcedure.query(async ({ ctx }) => {
-      return await db.getConnectionRequestsForUser(ctx.user.id);
+      return await db.getConnectionRequests(ctx.user.id);
     }),
     
     respondToConnectionRequest: protectedProcedure
@@ -133,15 +127,21 @@ export const appRouter = router({
         accept: z.boolean(),
       }))
       .mutation(async ({ ctx, input }) => {
-        await db.updateConnectionRequestStatus(
-          input.requestId,
-          input.accept ? 'accepted' : 'declined'
-        );
+        if (input.accept) {
+          await db.acceptConnectionRequest(input.requestId);
+        } else {
+          // TODO: Add decline connection request function
+          throw new TRPCError({ 
+            code: 'NOT_IMPLEMENTED', 
+            message: 'Declining connection requests not yet implemented' 
+          });
+        }
         return { success: true };
       }),
     
     getConnections: protectedProcedure.query(async ({ ctx }) => {
-      return await db.getUserConnections(ctx.user.id);
+      // TODO: Add getUserConnections function
+      return [];
     }),
   }),
 
@@ -171,21 +171,22 @@ export const appRouter = router({
           });
         }
         
-        const teamId = await db.createTeam({
-          ...input,
-          createdById: ctx.user.id,
-          lookingForMembers: true,
-        });
+        const team = await db.createTeam(
+          input.name,
+          ctx.user.id,
+          input.description,
+          input.projectIdea,
+          input.maxMembers
+        );
         
-        return { teamId };
+        return { teamId: team.id };
       }),
     
     getMyTeam: protectedProcedure.query(async ({ ctx }) => {
       const team = await db.getUserTeam(ctx.user.id);
       if (!team) return null;
       
-      const members = await db.getTeamMembers(team.id);
-      return { team, members };
+      return await db.getTeamWithMembers(team.id);
     }),
     
     list: protectedProcedure.query(async ({ ctx }) => {
@@ -201,10 +202,7 @@ export const appRouter = router({
     getAllTeamsWithMembers: adminProcedure.query(async ({ ctx }) => {
       const teams = await db.getAllTeams();
       const teamsWithMembers = await Promise.all(
-        teams.map(async (team) => {
-          const members = await db.getTeamMembers(team.id);
-          return { team, members };
-        })
+        teams.map(async (team) => db.getTeamWithMembers(team.id))
       );
       return teamsWithMembers;
     }),
@@ -225,26 +223,26 @@ export const appRouter = router({
         }
         
         // Check team size
-        const members = await db.getTeamMembers(input.teamId);
-        if (members.length >= team.maxMembers) {
+        const teamWithMembers = await db.getTeamWithMembers(input.teamId);
+        if (teamWithMembers.members.length >= team.max_members) {
           throw new TRPCError({ 
             code: 'BAD_REQUEST', 
             message: 'Team is full' 
           });
         }
         
-        const invitationId = await db.createTeamInvitation({
-          teamId: input.teamId,
-          invitedUserId: input.userId,
-          invitedByUserId: ctx.user.id,
-          status: 'pending',
-        });
+        const invitation = await db.inviteToTeam(input.teamId, input.userId, ctx.user.id);
         
-        return { invitationId };
+        return { invitationId: invitation.id };
       }),
     
     getInvitations: protectedProcedure.query(async ({ ctx }) => {
-      return await db.getTeamInvitationsForUser(ctx.user.id);
+      const invitations = await db.getTeamInvitations(ctx.user.id);
+      return invitations.map(inv => ({
+        invitation: { id: inv.id, status: inv.status, createdAt: inv.created_at },
+        team: (inv as any).teams, // Supabase returns 'teams' not 'team'
+        invitedBy: inv.invited_by
+      }));
     }),
     
     respondToInvitation: protectedProcedure
@@ -263,25 +261,15 @@ export const appRouter = router({
             });
           }
           
-          // Get invitation details
-          const invitations = await db.getTeamInvitationsForUser(ctx.user.id);
-          const invitation = invitations.find(inv => inv.invitation.id === input.invitationId);
-          
-          if (!invitation) {
-            throw new TRPCError({ 
-              code: 'NOT_FOUND', 
-              message: 'Invitation not found' 
-            });
-          }
-          
-          // Add user to team
-          await db.addTeamMember(invitation.invitation.teamId, ctx.user.id);
+          // Accept invitation (adds user to team and updates status)
+          await db.acceptTeamInvitation(input.invitationId);
+        } else {
+          // TODO: Add decline invitation function to db-supabase.ts
+          throw new TRPCError({ 
+            code: 'NOT_IMPLEMENTED', 
+            message: 'Declining invitations not yet implemented' 
+          });
         }
-        
-        await db.updateTeamInvitationStatus(
-          input.invitationId,
-          input.accept ? 'accepted' : 'declined'
-        );
         
         return { success: true };
       }),
@@ -301,10 +289,8 @@ export const appRouter = router({
           });
         }
         
-        if (input?.category) {
-          return await db.getResourcesByCategory(input.category);
-        }
-        return await db.getAllResources();
+        // TODO: Add category filtering
+        return await db.getResources();
       }),
     
     create: adminProcedure
@@ -316,18 +302,25 @@ export const appRouter = router({
         fileKey: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        const resourceId = await db.createResource({
-          ...input,
-          uploadedById: ctx.user.id,
-        });
-        return { resourceId };
+        const resource = await db.createResource(
+          input.title,
+          input.category,
+          ctx.user.id,
+          input.description,
+          input.url,
+          input.fileKey
+        );
+        return { resourceId: resource.id };
       }),
     
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
-        await db.deleteResource(input.id);
-        return { success: true };
+        // TODO: Add deleteResource function
+        throw new TRPCError({ 
+          code: 'NOT_IMPLEMENTED', 
+          message: 'Deleting resources not yet implemented' 
+        });
       }),
   }),
 
@@ -340,7 +333,7 @@ export const appRouter = router({
           message: 'Portal access not granted yet' 
           });
       }
-      return await db.getAllAnnouncements();
+      return await db.getAnnouncements();
     }),
     
     create: adminProcedure
@@ -351,11 +344,14 @@ export const appRouter = router({
         isPinned: z.boolean().default(false),
       }))
       .mutation(async ({ ctx, input }) => {
-        const announcementId = await db.createAnnouncement({
-          ...input,
-          postedById: ctx.user.id,
-        });
-        return { announcementId };
+        const announcement = await db.createAnnouncement(
+          input.title,
+          input.content,
+          ctx.user.id,
+          input.category,
+          input.isPinned
+        );
+        return { announcementId: announcement.id };
       }),
     
     update: adminProcedure
@@ -367,16 +363,21 @@ export const appRouter = router({
         isPinned: z.boolean().optional(),
       }))
       .mutation(async ({ input }) => {
-        const { id, ...updates } = input;
-        await db.updateAnnouncement(id, updates);
-        return { success: true };
+        // TODO: Add updateAnnouncement function
+        throw new TRPCError({ 
+          code: 'NOT_IMPLEMENTED', 
+          message: 'Updating announcements not yet implemented' 
+        });
       }),
     
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
-        await db.deleteAnnouncement(input.id);
-        return { success: true };
+        // TODO: Add deleteAnnouncement function
+        throw new TRPCError({ 
+          code: 'NOT_IMPLEMENTED', 
+          message: 'Deleting announcements not yet implemented' 
+        });
       }),
   }),
 

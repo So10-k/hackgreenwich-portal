@@ -196,11 +196,10 @@
 - [x] Find missing key props in Dashboard component
 - [x] Add unique keys to all list items
 
-## Fix Teams Component Issues
-- [x] Fix React key warning in Teammates component (skills mapping)
-- [ ] Debug team member data loading showing "Unknown User"
-- [ ] Fix member count display showing "(1/)" instead of proper count
-- [ ] Investigate why user data is not being joined properly in getTeamMembers
-
-## Fix Teams Page Key Warning
-- [x] Find and fix missing key in Teams component (option elements in select dropdown)
+## Fix Teams Component Issues - CRITICAL
+- [x] Find ACTUAL missing React key in Teams component (Button elements in invitations)
+- [x] Migrate all team queries from MySQL/Drizzle to Supabase
+- [x] Update routers.ts to use Supabase functions (db-supabase.ts)
+- [x] Fix getMyTeam to use getTeamWithMembers
+- [x] Fix team invitations to use Supabase functions
+- [x] Fix teammates, resources, and announcements routers

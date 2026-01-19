@@ -252,6 +252,7 @@ export async function getUserTeam(userId: number) {
     .where(eq(teamMembers.userId, userId))
     .limit(1);
 
+  console.log('[getUserTeam] Result for userId', userId, ':', JSON.stringify(result, null, 2));
   return result.length > 0 ? result[0].team : undefined;
 }
 

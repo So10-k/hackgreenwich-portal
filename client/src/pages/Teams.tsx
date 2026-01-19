@@ -188,8 +188,8 @@ export default function Teams() {
                       {inv.team.description && <p className="text-sm text-muted-foreground">{inv.team.description}</p>}
                     </div>
                     <div className="flex gap-2">
-                      <Button size="sm">Accept</Button>
-                      <Button size="sm" variant="outline">Decline</Button>
+                      <Button key="accept" size="sm">Accept</Button>
+                      <Button key="decline" size="sm" variant="outline">Decline</Button>
                     </div>
                   </div>
                 ))}
