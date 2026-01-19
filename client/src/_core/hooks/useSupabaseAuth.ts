@@ -35,8 +35,15 @@ export function useSupabaseAuth() {
             .single();
 
           if (profileError) {
-            console.error("Error fetching user profile:", profileError);
-            setUser(null);
+            // Silently ignore if we already have user data
+            if (!user) {
+              console.error("Error fetching user profile:", {
+                message: profileError.message,
+                details: profileError.details,
+                hint: profileError.hint,
+                code: profileError.code,
+              });
+            }
           } else if (userProfile) {
             setUser({
               id: userProfile.id,
@@ -77,8 +84,15 @@ export function useSupabaseAuth() {
           .single();
 
         if (profileError) {
-          console.error("Error fetching user profile:", profileError);
-          setUser(null);
+          // Silently ignore if we already have user data
+          if (!user) {
+            console.error("Error fetching user profile:", {
+              message: profileError.message,
+              details: profileError.details,
+              hint: profileError.hint,
+              code: profileError.code,
+            });
+          }
         } else if (userProfile) {
           setUser({
             id: userProfile.id,

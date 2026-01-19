@@ -253,3 +253,8 @@
 - [x] Fix ProtectedRoute setState during render error (wrapped in useEffect)
 - [x] Fix Supabase "signal is aborted without reason" error
 - [x] Prevent useEffect cleanup from aborting Supabase queries (ignore AbortError)
+
+## Fix User Profile Fetching Error
+- [x] Improve error logging in useSupabaseAuth
+- [x] Silently ignore profile fetch errors when user is already authenticated
+- [x] Prevent duplicate error logs during auth state changes
