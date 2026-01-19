@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Award } from "lucide-react";
 import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
+import { SafeExternalLink } from "@/components/ExternalLinkDialog";
 
 export default function Sponsors() {
   const { data: sponsors, isLoading } = trpc.sponsors.list.useQuery();
@@ -85,28 +86,28 @@ export default function Sponsors() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-20 cursor-pointer" onClick={() => setLocation("/")} />
+            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-12 md:h-16 lg:h-20 cursor-pointer" onClick={() => setLocation("/")} />
           </div>
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
-              className="text-white hover:bg-white/10"
+              className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
               onClick={() => setLocation("/schedule")}
             >
               Schedule
             </Button>
             <Button
               variant="ghost"
-              className="text-white hover:bg-white/10"
+              className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
               onClick={() => setLocation("/sponsors")}
             >
               Sponsors
             </Button>
             {user ? (
               <Button
-                className="bg-red-600 hover:bg-red-700 text-white"
+                className="bg-red-600 hover:bg-red-700 text-white text-sm md:text-base px-3 md:px-4"
                 onClick={() => setLocation("/dashboard")}
               >
                 Dashboard
@@ -115,13 +116,13 @@ export default function Sponsors() {
               <>
                 <Button
                   variant="ghost"
-                  className="text-white hover:bg-white/10"
+                  className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4 hidden sm:inline-flex"
                   onClick={() => setLocation("/signin")}
                 >
                   Sign In
                 </Button>
                 <Button
-                  className="bg-red-600 hover:bg-red-700 text-white"
+                  className="bg-red-600 hover:bg-red-700 text-white text-sm md:text-base px-3 md:px-4"
                   onClick={() => setLocation("/signup")}
                 >
                   Get Started
@@ -139,8 +140,8 @@ export default function Sponsors() {
             <div className="flex items-center justify-center gap-3 mb-4">
               <Award className="h-10 w-10 text-red-400" />
             </div>
-            <h1 className="text-4xl font-bold text-white">Our Sponsors</h1>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto">
+            <h1 className="text-3xl md:text-4xl font-bold text-white px-4">Our Sponsors</h1>
+            <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto px-4">
               HackGreenwich is made possible by the generous support of our sponsors. Thank you for
               believing in innovation and the next generation of developers!
             </p>
@@ -217,15 +218,13 @@ export default function Sponsors() {
                               {sponsor.website_url && (
                                 <div className="flex justify-center">
                                   <Button variant="outline" asChild>
-                                    <a
+                                    <SafeExternalLink
                                       href={sponsor.website_url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
                                       className="flex items-center gap-2"
                                     >
                                       Visit Website
                                       <ExternalLink className="h-4 w-4" />
-                                    </a>
+                                    </SafeExternalLink>
                                   </Button>
                                 </div>
                               )}

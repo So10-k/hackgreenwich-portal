@@ -46,28 +46,28 @@ export default function Home() {
 
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-20" />
+            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-12 md:h-16 lg:h-20" />
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <Button
               variant="ghost"
-              className="text-white hover:bg-white/10"
+              className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
               onClick={() => setLocation("/schedule")}
             >
               Schedule
             </Button>
             <Button
               variant="ghost"
-              className="text-white hover:bg-white/10"
+              className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
               onClick={() => setLocation("/sponsors")}
             >
               Sponsors
             </Button>
             {user ? (
               <Button
-                className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white"
+                className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white text-sm md:text-base px-3 md:px-4"
                 onClick={() => setLocation("/dashboard")}
               >
                 Dashboard
@@ -76,13 +76,13 @@ export default function Home() {
               <>
                 <Button
                   variant="ghost"
-                  className="text-white hover:bg-white/10"
+                  className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4 hidden sm:inline-flex"
                   onClick={() => setLocation("/signin")}
                 >
                   Sign In
                 </Button>
                 <Button
-                  className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white"
+                  className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white text-sm md:text-base px-3 md:px-4"
                   onClick={() => setLocation("/signup")}
                 >
                   Get Started
@@ -113,7 +113,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-6xl md:text-8xl font-bold mb-6 text-white"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 text-white px-4"
           >
             Build the Future at
             <br />
@@ -124,10 +124,10 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-white max-w-3xl mx-auto mb-12 leading-relaxed text-center"
+            className="text-lg md:text-xl lg:text-2xl text-white max-w-3xl mx-auto mb-8 md:mb-12 leading-relaxed text-center px-4"
           >
-            <p className="mb-2">Sponsored by</p>
-            <img src="/onercf-logo.png" alt="OneRCF" className="h-16 mx-auto" />
+            <p className="mb-2 text-base md:text-lg">Sponsored by</p>
+            <img src="/onercf-logo.png" alt="OneRCF" className="h-12 md:h-16 mx-auto" />
           </motion.div>
 
           <motion.div
@@ -196,15 +196,15 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 px-4">
               Everything You Need
             </h2>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg lg:text-xl text-white/90 max-w-2xl mx-auto px-4">
               Our portal provides all the tools and resources to make your hackathon experience seamless
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 icon: Users,
@@ -288,10 +288,10 @@ export default function Home() {
           viewport={{ once: true }}
           className="container mx-auto px-4 text-center"
         >
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 md:mb-8 px-4">
             Ready to Build?
           </h2>
-          <p className="text-2xl text-white/90 mb-12 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl lg:text-2xl text-white/90 mb-8 md:mb-12 max-w-2xl mx-auto px-4">
             Join the next generation of innovators at HackGreenwich 2026
           </p>
           <Button

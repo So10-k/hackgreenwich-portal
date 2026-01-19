@@ -322,3 +322,11 @@
 - [x] Validate GitHub URLs are properly formatted with regex extraction
 - [x] Add LinkedIn and portfolio URL display if available
 - [x] Ensure all social media links have proper protocols and open to correct sites
+
+## Mobile Responsiveness & URL Security
+- [x] Create URL confirmation dialog component
+- [x] Add confirmation dialog to all external links (GitHub, LinkedIn, Portfolio, Sponsor links)
+- [x] Improve homepage mobile layout (hero, features, stats sections)
+- [x] Improve Schedule and Sponsors page mobile layout
+- [x] Improve participant cards mobile layout (stack buttons vertically on mobile)
+- [x] Test navigation and interactions on mobile viewport

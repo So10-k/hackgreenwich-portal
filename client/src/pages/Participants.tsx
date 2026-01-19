@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Users, Search, Github, Shield, User, Linkedin, Globe } from "lucide-react";
+import { SafeExternalLink } from "@/components/ExternalLinkDialog";
 
 export default function Participants() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -68,8 +69,7 @@ export default function Participants() {
 
         {/* Participants Grid */}
         {filteredParticipants && filteredParticipants.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filteredParticipants.map((participant: any) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"> {filteredParticipants.map((participant: any) => (
               <Card key={participant.id} className="hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-start justify-between">
@@ -107,7 +107,7 @@ export default function Participants() {
                   )}
 
                   {/* Social Links */}
-                  <div className="flex gap-2">
+                  <div className="flex flex-col sm:flex-row gap-2">
                     {participant.github_url && (
                       <Button
                         variant="outline"
@@ -115,15 +115,13 @@ export default function Participants() {
                         className="flex-1"
                         asChild
                       >
-                        <a
+                        <SafeExternalLink
                           href={participant.github_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           className="flex items-center justify-center gap-2"
                         >
                           <Github className="h-4 w-4" />
                           GitHub
-                        </a>
+                        </SafeExternalLink>
                       </Button>
                     )}
                     {participant.linkedin_url && (
@@ -133,15 +131,13 @@ export default function Participants() {
                         className="flex-1"
                         asChild
                       >
-                        <a
+                        <SafeExternalLink
                           href={participant.linkedin_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           className="flex items-center justify-center gap-2"
                         >
                           <Linkedin className="h-4 w-4" />
                           LinkedIn
-                        </a>
+                        </SafeExternalLink>
                       </Button>
                     )}
                     {participant.portfolio_url && (
@@ -151,15 +147,13 @@ export default function Participants() {
                         className="flex-1"
                         asChild
                       >
-                        <a
+                        <SafeExternalLink
                           href={participant.portfolio_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           className="flex items-center justify-center gap-2"
                         >
                           <Globe className="h-4 w-4" />
                           Portfolio
-                        </a>
+                        </SafeExternalLink>
                       </Button>
                     )}
                   </div>
