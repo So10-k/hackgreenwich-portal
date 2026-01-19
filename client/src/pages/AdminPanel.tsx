@@ -23,6 +23,9 @@ export default function AdminPanel() {
   const { data: allUsers, isLoading: usersLoading, refetch: refetchUsers } = trpc.admin.getAllUsers.useQuery();
   const { data: announcements, isLoading: announcementsLoading, refetch: refetchAnnouncements } = trpc.announcements.list.useQuery();
   const { data: allTeams, isLoading: teamsLoading } = trpc.teams.list.useQuery();
+  const { data: teamsWithMembers, isLoading: teamsWithMembersLoading } = trpc.teams.getAllTeamsWithMembers.useQuery(undefined, {
+    enabled: activeTab === 'teams' && user?.role === 'admin',
+  });
 
   const approveAccess = trpc.admin.approvePortalAccess.useMutation({
     onSuccess: () => {
@@ -284,8 +287,75 @@ export default function AdminPanel() {
         {activeTab === "teams" && (
           <Card>
             <CardHeader>
-              <CardTitle>Team Management</CardTitle>
-              <CardDescription>Overview of all teams in the hackathon</CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Team Management</CardTitle>
+                  <CardDescription>Overview of all teams in the hackathon</CardDescription>
+                </div>
+                <Button
+                  onClick={() => {
+                    if (!teamsWithMembers || teamsWithMembers.length === 0) {
+                      toast.error('No teams to export');
+                      return;
+                    }
+                    
+                    // Generate CSV content
+                    const csvRows = [];
+                    csvRows.push(['Team Name', 'Team Description', 'Project Idea', 'Max Members', 'Member Name', 'Member Email', 'Member Role', 'Joined At']);
+                    
+                    teamsWithMembers.forEach((teamData) => {
+                      const { team, members } = teamData;
+                      if (members.length === 0) {
+                        csvRows.push([
+                          team.name,
+                          team.description || '',
+                          team.projectIdea || '',
+                          team.maxMembers.toString(),
+                          '',
+                          '',
+                          '',
+                          ''
+                        ]);
+                      } else {
+                        members.forEach((member) => {
+                          csvRows.push([
+                            team.name,
+                            team.description || '',
+                            team.projectIdea || '',
+                            team.maxMembers.toString(),
+                            member.user?.name || 'Unknown',
+                            member.user?.email || '',
+                            member.role,
+                            member.joinedAt ? new Date(member.joinedAt).toLocaleDateString() : ''
+                          ]);
+                        });
+                      }
+                    });
+                    
+                    // Convert to CSV string
+                    const csvContent = csvRows.map(row => 
+                      row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')
+                    ).join('\n');
+                    
+                    // Create download link
+                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `hackgreenwich-teams-${new Date().toISOString().split('T')[0]}.csv`;
+                    link.click();
+                    URL.revokeObjectURL(url);
+                    
+                    toast.success('Team roster exported successfully!');
+                  }}
+                  disabled={teamsWithMembersLoading || !teamsWithMembers || teamsWithMembers.length === 0}
+                >
+                  {teamsWithMembersLoading ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : null}
+                  Export to CSV
+                </Button>
+              </div>
             </CardHeader>
             <CardContent>
               {teamsLoading ? (

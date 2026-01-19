@@ -182,3 +182,12 @@
 - [x] Fix Teams page to handle undefined member data
 - [x] Add null checks for team member properties
 - [x] Test Teams page with empty and populated data
+
+## Fix Dashboard Error
+- [x] Find and fix Dashboard error reading 'name' property
+- [x] Add null checks for all user/team data on Dashboard
+
+## CSV Export Feature
+- [x] Add CSV export button to Admin Panel Teams tab
+- [x] Generate CSV with team roster including member details
+- [x] Implement download functionality

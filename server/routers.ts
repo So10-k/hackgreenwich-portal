@@ -198,6 +198,17 @@ export const appRouter = router({
       return await db.getAllTeams();
     }),
     
+    getAllTeamsWithMembers: adminProcedure.query(async ({ ctx }) => {
+      const teams = await db.getAllTeams();
+      const teamsWithMembers = await Promise.all(
+        teams.map(async (team) => {
+          const members = await db.getTeamMembers(team.id);
+          return { team, members };
+        })
+      );
+      return teamsWithMembers;
+    }),
+    
     inviteMember: protectedProcedure
       .input(z.object({
         teamId: z.number(),
