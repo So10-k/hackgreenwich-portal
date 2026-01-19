@@ -266,3 +266,8 @@
 ## Fix Sign-In Redirect Issue - CRITICAL
 - [x] Fix SignIn component to redirect to dashboard after successful login
 - [x] Add 100ms delay to ensure auth state updates before redirect
+
+## Fix ProtectedRoute Auth Loop - CRITICAL
+- [x] Fix ProtectedRoute redirecting authenticated users back to sign-in
+- [x] Increased sign-in delay to 500ms for auth state to fully propagate
+- [x] ProtectedRoute already shows loading spinner and waits for auth
