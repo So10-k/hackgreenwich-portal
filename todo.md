@@ -201,3 +201,6 @@
 - [ ] Debug team member data loading showing "Unknown User"
 - [ ] Fix member count display showing "(1/)" instead of proper count
 - [ ] Investigate why user data is not being joined properly in getTeamMembers
+
+## Fix Teams Page Key Warning
+- [x] Find and fix missing key in Teams component (option elements in select dropdown)

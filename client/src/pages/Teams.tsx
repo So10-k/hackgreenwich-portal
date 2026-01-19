@@ -103,11 +103,11 @@ export default function Teams() {
                   onChange={(e) => setMaxMembers(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg border border-input bg-background"
                 >
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
+                  <option key="2" value="2">2</option>
+                  <option key="3" value="3">3</option>
+                  <option key="4" value="4">4</option>
+                  <option key="5" value="5">5</option>
+                  <option key="6" value="6">6</option>
                 </select>
               </div>
               <div className="flex gap-2">
