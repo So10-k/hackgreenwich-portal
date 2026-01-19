@@ -267,3 +267,10 @@
 - [x] Update homepage gradient backgrounds to match new color scheme
 - [x] Update button colors and UI components
 - [x] Update navigation and footer styling
+
+## Homepage Design Refinement
+- [x] Upload OneRCF logo and replace text with logo image
+- [x] Increase HackGreenwich logo size in navigation
+- [x] Soften background gradients to be less intense
+- [x] Reduce color saturation for a more professional look
+- [x] Update text colors to be more subtle and readable
