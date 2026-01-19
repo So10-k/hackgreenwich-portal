@@ -51,6 +51,10 @@ export function useSupabaseAuth() {
           }
         }
       } catch (err) {
+        // Ignore AbortError from component unmounting
+        if (err instanceof Error && err.name === 'AbortError') {
+          return;
+        }
         console.error("Error checking session:", err);
         setError(err instanceof Error ? err.message : "Unknown error");
       } finally {

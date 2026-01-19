@@ -248,3 +248,8 @@
 - [x] Fix logout implementation to use useSupabaseAuth
 - [x] Update AuthUser type to include all user fields
 - [x] Fetch full user profile from database on auth state change
+
+## Fix React and Supabase Errors
+- [x] Fix ProtectedRoute setState during render error (wrapped in useEffect)
+- [x] Fix Supabase "signal is aborted without reason" error
+- [x] Prevent useEffect cleanup from aborting Supabase queries (ignore AbortError)

@@ -21,14 +21,21 @@ import Sponsors from "./pages/Sponsors";
 import { useSupabaseAuth } from "./_core/hooks/useSupabaseAuth";
 import { Loader2 } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { trpc, getTrpcClient } from "./lib/trpc-supabase";
 
 const queryClient = new QueryClient();
 const trpcClient = getTrpcClient();
 
 function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
-  const { user, loading } = useSupabaseAuth();
+  const { loading, user } = useSupabaseAuth();
   const [, setLocation] = useLocation();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      setLocation("/signin");
+    }
+  }, [loading, user, setLocation]);
 
   if (loading) {
     return (
@@ -39,7 +46,6 @@ function ProtectedRoute({ component: Component }: { component: React.ComponentTy
   }
 
   if (!user) {
-    setLocation("/signin");
     return null;
   }
 
