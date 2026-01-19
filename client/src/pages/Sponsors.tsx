@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, Award } from "lucide-react";
 import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
 import { SafeExternalLink } from "@/components/ExternalLinkDialog";
+import { MobileMenu } from "@/components/MobileMenu";
 
 export default function Sponsors() {
   const { data: sponsors, isLoading } = trpc.sponsors.list.useQuery();
@@ -90,7 +91,8 @@ export default function Sponsors() {
           <div className="flex items-center gap-2">
             <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-12 md:h-16 lg:h-20 cursor-pointer" onClick={() => setLocation("/")} />
           </div>
-          <div className="flex items-center gap-3">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-3">
             <Button
               variant="ghost"
               className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
@@ -116,7 +118,7 @@ export default function Sponsors() {
               <>
                 <Button
                   variant="ghost"
-                  className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4 hidden sm:inline-flex"
+                  className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
                   onClick={() => setLocation("/signin")}
                 >
                   Sign In
@@ -130,6 +132,9 @@ export default function Sponsors() {
               </>
             )}
           </div>
+          
+          {/* Mobile Menu */}
+          <MobileMenu user={user} onNavigate={setLocation} />
         </div>
       </nav>
 

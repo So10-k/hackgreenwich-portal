@@ -330,3 +330,10 @@
 - [x] Improve Schedule and Sponsors page mobile layout
 - [x] Improve participant cards mobile layout (stack buttons vertically on mobile)
 - [x] Test navigation and interactions on mobile viewport
+
+## Mobile Hamburger Menu
+- [x] Create MobileMenu component with hamburger icon
+- [x] Add slide-out drawer with navigation links
+- [x] Integrate into Homepage navigation
+- [x] Integrate into Sponsors and Schedule pages
+- [x] Hide desktop navigation on mobile, show hamburger instead

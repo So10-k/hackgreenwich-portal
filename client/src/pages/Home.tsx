@@ -2,6 +2,7 @@ import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Code, Users, Trophy, Sparkles, ArrowRight, Calendar, MapPin } from "lucide-react";
+import { MobileMenu } from "@/components/MobileMenu";
 import { useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 
@@ -50,7 +51,8 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-12 md:h-16 lg:h-20" />
           </div>
-          <div className="flex items-center gap-2 md:gap-3">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-2 md:gap-3">
             <Button
               variant="ghost"
               className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
@@ -76,7 +78,7 @@ export default function Home() {
               <>
                 <Button
                   variant="ghost"
-                  className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4 hidden sm:inline-flex"
+                  className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
                   onClick={() => setLocation("/signin")}
                 >
                   Sign In
@@ -90,6 +92,9 @@ export default function Home() {
               </>
             )}
           </div>
+          
+          {/* Mobile Menu */}
+          <MobileMenu user={user} onNavigate={setLocation} />
         </div>
       </nav>
 
