@@ -21,10 +21,7 @@ export default function SignIn() {
     try {
       await signIn(email, password);
       toast.success("Signed in successfully!");
-      // Delay to ensure auth state updates before redirect
-      setTimeout(() => {
-        setLocation("/dashboard");
-      }, 500);
+      setLocation("/dashboard");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to sign in");
     } finally {
