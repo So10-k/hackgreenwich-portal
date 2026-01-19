@@ -218,18 +218,27 @@ export async function getTeamMembers(teamId: number) {
   const db = await getDb();
   if (!db) return [];
 
-  return await db
+  const results = await db
     .select({
       id: teamMembers.id,
       teamId: teamMembers.teamId,
       userId: teamMembers.userId,
       role: teamMembers.role,
       joinedAt: teamMembers.joinedAt,
-      user: users
+      user: {
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        avatarUrl: users.avatarUrl,
+        role: users.role,
+      }
     })
     .from(teamMembers)
     .innerJoin(users, eq(teamMembers.userId, users.id))
     .where(eq(teamMembers.teamId, teamId));
+  
+  console.log('[getTeamMembers] Results:', JSON.stringify(results, null, 2));
+  return results;
 }
 
 export async function getUserTeam(userId: number) {

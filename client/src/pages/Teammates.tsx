@@ -65,8 +65,8 @@ export default function Teammates() {
                 {teammate.bio && <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{teammate.bio}</p>}
                 {teammate.skills && teammate.skills.length > 0 && (
                   <div className="flex flex-wrap gap-2">
-                    {teammate.skills.slice(0, 3).map((skill) => (
-                      <span key={skill} className="px-2 py-1 bg-primary/10 text-primary rounded text-xs">{skill}</span>
+                    {teammate.skills.slice(0, 3).map((skill, index) => (
+                      <span key={`${teammate.id}-skill-${index}`} className="px-2 py-1 bg-primary/10 text-primary rounded text-xs">{skill}</span>
                     ))}
                   </div>
                 )}

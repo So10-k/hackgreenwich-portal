@@ -195,3 +195,9 @@
 ## Fix React Key Warning
 - [x] Find missing key props in Dashboard component
 - [x] Add unique keys to all list items
+
+## Fix Teams Component Issues
+- [x] Fix React key warning in Teammates component (skills mapping)
+- [ ] Debug team member data loading showing "Unknown User"
+- [ ] Fix member count display showing "(1/)" instead of proper count
+- [ ] Investigate why user data is not being joined properly in getTeamMembers
