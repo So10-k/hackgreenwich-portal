@@ -1,6 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import PortalLayout from "@/components/PortalLayout";
 import { trpc } from "@/lib/trpc";
@@ -24,12 +25,45 @@ export default function Teammates() {
     if (!loading && !isAuthenticated) setLocation("/");
   }, [loading, isAuthenticated, setLocation]);
 
-  const filteredTeammates = teammates?.filter(t => 
+  const filteredTeammates = teammates?.filter((t: any) => 
     t.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    t.skills?.some(s => s.toLowerCase().includes(searchTerm.toLowerCase()))
+    t.skills?.some((s: string) => s.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  if (loading || isLoading) return <div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
+  if (loading || isLoading) {
+    return (
+      <PortalLayout>
+        <div className="p-8 space-y-6">
+          <div>
+            <Skeleton className="h-10 w-48 mb-2" />
+            <Skeleton className="h-5 w-96" />
+          </div>
+          <Skeleton className="h-10 w-full max-w-md" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <Card key={i}>
+                <CardContent className="pt-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <Skeleton className="h-6 w-32 mb-1" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
+                    <Skeleton className="h-8 w-8 rounded" />
+                  </div>
+                  <Skeleton className="h-12 w-full mb-4" />
+                  <div className="flex gap-2">
+                    <Skeleton className="h-6 w-16" />
+                    <Skeleton className="h-6 w-20" />
+                    <Skeleton className="h-6 w-16" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </PortalLayout>
+    );
+  }
 
   return (
     <PortalLayout>
@@ -65,7 +99,7 @@ export default function Teammates() {
                 {teammate.bio && <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{teammate.bio}</p>}
                 {teammate.skills && teammate.skills.length > 0 && (
                   <div className="flex flex-wrap gap-2">
-                    {teammate.skills.slice(0, 3).map((skill, index) => (
+                    {teammate.skills.slice(0, 3).map((skill: string, index: number) => (
                       <span key={`${teammate.id}-skill-${index}`} className="px-2 py-1 bg-primary/10 text-primary rounded text-xs">{skill}</span>
                     ))}
                   </div>

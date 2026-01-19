@@ -683,3 +683,82 @@ export async function deleteSponsor(id: number) {
 
   return { success: true };
 }
+
+// ===== Additional CRUD Operations =====
+
+export async function declineTeamInvitation(invitationId: number) {
+  const { error } = await supabaseAdmin
+    .from("team_invitations")
+    .update({ status: "declined" })
+    .eq("id", invitationId);
+
+  if (error) {
+    console.error("Error declining team invitation:", error);
+    throw error;
+  }
+
+  return { success: true };
+}
+
+export async function declineConnectionRequest(requestId: number) {
+  const { error } = await supabaseAdmin
+    .from("connection_requests")
+    .update({ status: "declined" })
+    .eq("id", requestId);
+
+  if (error) {
+    console.error("Error declining connection request:", error);
+    throw error;
+  }
+
+  return { success: true };
+}
+
+export async function deleteResource(id: number) {
+  const { error } = await supabaseAdmin
+    .from("resources")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error deleting resource:", error);
+    throw error;
+  }
+
+  return { success: true };
+}
+
+export async function updateAnnouncement(id: number, updates: {
+  title?: string;
+  content?: string;
+  category?: string;
+  is_pinned?: boolean;
+}) {
+  const { data, error } = await supabaseAdmin
+    .from("announcements")
+    .update(updates)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error updating announcement:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function deleteAnnouncement(id: number) {
+  const { error } = await supabaseAdmin
+    .from("announcements")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error deleting announcement:", error);
+    throw error;
+  }
+
+  return { success: true };
+}

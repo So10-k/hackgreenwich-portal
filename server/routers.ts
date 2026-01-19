@@ -130,11 +130,7 @@ export const appRouter = router({
         if (input.accept) {
           await db.acceptConnectionRequest(input.requestId);
         } else {
-          // TODO: Add decline connection request function
-          throw new TRPCError({ 
-            code: 'NOT_IMPLEMENTED', 
-            message: 'Declining connection requests not yet implemented' 
-          });
+          await db.declineConnectionRequest(input.requestId);
         }
         return { success: true };
       }),
@@ -264,11 +260,7 @@ export const appRouter = router({
           // Accept invitation (adds user to team and updates status)
           await db.acceptTeamInvitation(input.invitationId);
         } else {
-          // TODO: Add decline invitation function to db-supabase.ts
-          throw new TRPCError({ 
-            code: 'NOT_IMPLEMENTED', 
-            message: 'Declining invitations not yet implemented' 
-          });
+          await db.declineTeamInvitation(input.invitationId);
         }
         
         return { success: true };
@@ -316,11 +308,8 @@ export const appRouter = router({
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
-        // TODO: Add deleteResource function
-        throw new TRPCError({ 
-          code: 'NOT_IMPLEMENTED', 
-          message: 'Deleting resources not yet implemented' 
-        });
+        await db.deleteResource(input.id);
+        return { success: true };
       }),
   }),
 
@@ -363,21 +352,22 @@ export const appRouter = router({
         isPinned: z.boolean().optional(),
       }))
       .mutation(async ({ input }) => {
-        // TODO: Add updateAnnouncement function
-        throw new TRPCError({ 
-          code: 'NOT_IMPLEMENTED', 
-          message: 'Updating announcements not yet implemented' 
-        });
+        const { id, ...updates } = input;
+        const updatedFields: any = {};
+        if (updates.title) updatedFields.title = updates.title;
+        if (updates.content) updatedFields.content = updates.content;
+        if (updates.category) updatedFields.category = updates.category;
+        if (updates.isPinned !== undefined) updatedFields.is_pinned = updates.isPinned;
+        
+        await db.updateAnnouncement(id, updatedFields);
+        return { success: true };
       }),
     
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
-        // TODO: Add deleteAnnouncement function
-        throw new TRPCError({ 
-          code: 'NOT_IMPLEMENTED', 
-          message: 'Deleting announcements not yet implemented' 
-        });
+        await db.deleteAnnouncement(input.id);
+        return { success: true };
       }),
   }),
 

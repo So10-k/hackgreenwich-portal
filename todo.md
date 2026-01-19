@@ -203,3 +203,16 @@
 - [x] Fix getMyTeam to use getTeamWithMembers
 - [x] Fix team invitations to use Supabase functions
 - [x] Fix teammates, resources, and announcements routers
+
+## Complete Supabase Migration Tasks
+- [x] Add Teams page maintenance message
+- [x] Implement declineTeamInvitation in db-supabase.ts
+- [x] Implement declineConnectionRequest in db-supabase.ts
+- [x] Implement deleteResource in db-supabase.ts
+- [x] Implement updateAnnouncement in db-supabase.ts
+- [x] Implement deleteAnnouncement in db-supabase.ts
+- [x] Add loading skeletons to Dashboard page
+- [x] Add loading skeletons to Teams page
+- [x] Add loading skeletons to Teammates page
+- [x] Migrate test suite to use Supabase instead of MySQL
+- [x] Create comprehensive Supabase database tests
