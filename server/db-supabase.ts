@@ -86,7 +86,7 @@ export async function getAllUsers() {
 export async function getAllParticipants() {
   const { data, error } = await supabaseAdmin
     .from("users")
-    .select("id, name, email, role, skills, github_url")
+    .select("id, name, email, role, skills, github_url, linkedin_url, portfolio_url")
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -94,11 +94,24 @@ export async function getAllParticipants() {
     throw error;
   }
 
-  // Transform github_url to github_username for frontend compatibility
-  const participants = data?.map(user => ({
-    ...user,
-    github_username: user.github_url ? user.github_url.replace('https://github.com/', '').replace('/', '') : null
-  })) || [];
+  // Extract username/handle from social URLs
+  const participants = data?.map(user => {
+    let github_username = null;
+    if (user.github_url) {
+      // Extract username from various GitHub URL formats
+      const githubMatch = user.github_url.match(/github\.com\/([^\/\?#]+)/);
+      github_username = githubMatch ? githubMatch[1] : null;
+    }
+
+    return {
+      ...user,
+      github_username,
+      // Ensure URLs have proper protocol
+      github_url: user.github_url && user.github_url.startsWith('http') ? user.github_url : user.github_url ? `https://${user.github_url}` : null,
+      linkedin_url: user.linkedin_url && user.linkedin_url.startsWith('http') ? user.linkedin_url : user.linkedin_url ? `https://${user.linkedin_url}` : null,
+      portfolio_url: user.portfolio_url && user.portfolio_url.startsWith('http') ? user.portfolio_url : user.portfolio_url ? `https://${user.portfolio_url}` : null,
+    };
+  }) || [];
 
   return participants;
 }

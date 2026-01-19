@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Users, Search, Github, Shield, User } from "lucide-react";
+import { Users, Search, Github, Shield, User, Linkedin, Globe } from "lucide-react";
 
 export default function Participants() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,7 +15,6 @@ export default function Participants() {
     const query = searchQuery.toLowerCase();
     return (
       p.name?.toLowerCase().includes(query) ||
-      p.email?.toLowerCase().includes(query) ||
       p.skills?.some((skill: string) => skill.toLowerCase().includes(query))
     );
   });
@@ -58,7 +57,7 @@ export default function Participants() {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
-                placeholder="Search by name, email, or skills..."
+                placeholder="Search by name or skills..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -80,7 +79,6 @@ export default function Participants() {
                       </div>
                       <div>
                         <CardTitle className="text-lg">{participant.name || "Anonymous"}</CardTitle>
-                        <p className="text-sm text-muted-foreground">{participant.email}</p>
                       </div>
                     </div>
                     {participant.role === "admin" && (
@@ -108,25 +106,63 @@ export default function Participants() {
                     </div>
                   )}
 
-                  {/* GitHub Link */}
-                  {participant.github_username && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full"
-                      asChild
-                    >
-                      <a
-                        href={`https://github.com/${participant.github_username}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2"
+                  {/* Social Links */}
+                  <div className="flex gap-2">
+                    {participant.github_url && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        asChild
                       >
-                        <Github className="h-4 w-4" />
-                        View GitHub
-                      </a>
-                    </Button>
-                  )}
+                        <a
+                          href={participant.github_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2"
+                        >
+                          <Github className="h-4 w-4" />
+                          GitHub
+                        </a>
+                      </Button>
+                    )}
+                    {participant.linkedin_url && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        asChild
+                      >
+                        <a
+                          href={participant.linkedin_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2"
+                        >
+                          <Linkedin className="h-4 w-4" />
+                          LinkedIn
+                        </a>
+                      </Button>
+                    )}
+                    {participant.portfolio_url && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        asChild
+                      >
+                        <a
+                          href={participant.portfolio_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2"
+                        >
+                          <Globe className="h-4 w-4" />
+                          Portfolio
+                        </a>
+                      </Button>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             ))}

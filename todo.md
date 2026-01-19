@@ -316,3 +316,9 @@
 - [x] Remove has_portal_access filter (using portal_access_granted)
 - [x] Remove non-existent fields (school, major, graduation_year)
 - [x] Test participant page loads all users correctly
+
+## Participant Card Privacy & URL Validation
+- [x] Remove email display from participant cards for privacy
+- [x] Validate GitHub URLs are properly formatted with regex extraction
+- [x] Add LinkedIn and portfolio URL display if available
+- [x] Ensure all social media links have proper protocols and open to correct sites
