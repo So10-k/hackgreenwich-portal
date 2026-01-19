@@ -256,3 +256,14 @@
 - [x] Modify registration flow to automatically grant portal access after signup
 - [x] Remove Devpost verification step requirement
 - [x] Remove admin approval requirement for initial access
+
+## Logo and Branding Update
+- [x] Upload HackGreenwich logo to public folder
+- [x] Update all logo references to use the new logo image
+- [x] Change "RoleColorOne" to "ONERCF" throughout the site
+
+## Color Scheme Redesign
+- [x] Update CSS variables to use logo colors (Red #ED1C24, Yellow #FFD100, Green #00A651)
+- [x] Update homepage gradient backgrounds to match new color scheme
+- [x] Update button colors and UI components
+- [x] Update navigation and footer styling

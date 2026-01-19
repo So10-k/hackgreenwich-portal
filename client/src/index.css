@@ -43,15 +43,16 @@
 }
 
 :root {
-  --primary: oklch(0.623 0.214 290);
+  /* HackGreenwich brand colors: Red #ED1C24, Yellow #FFD100, Green #00A651 */
+  --primary: oklch(0.55 0.22 25); /* Red #ED1C24 */
   --primary-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.623 0.214 290);
+  --sidebar-primary: oklch(0.55 0.22 25); /* Red */
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
+  --chart-1: oklch(0.85 0.18 100); /* Yellow #FFD100 */
+  --chart-2: oklch(0.60 0.18 150); /* Green #00A651 */
+  --chart-3: oklch(0.55 0.22 25); /* Red */
+  --chart-4: oklch(0.75 0.18 100); /* Darker Yellow */
+  --chart-5: oklch(0.50 0.18 150); /* Darker Green */
   --radius: 0.65rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.235 0.015 65);
@@ -79,9 +80,9 @@
 }
 
 .dark {
-  --primary: oklch(0.7 0.24 290);
+  --primary: oklch(0.60 0.22 25); /* Brighter Red for dark mode */
   --primary-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.7 0.24 290);
+  --sidebar-primary: oklch(0.60 0.22 25); /* Red */
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.85 0.005 65);
