@@ -216,3 +216,12 @@
 - [x] Add loading skeletons to Teammates page
 - [x] Migrate test suite to use Supabase instead of MySQL
 - [x] Create comprehensive Supabase database tests
+
+## Add Sponsors and Schedule Configuration
+- [x] Create Supabase SQL schema for sponsors and schedule tables
+- [x] Add Supabase functions for sponsors CRUD operations
+- [x] Add Supabase functions for schedule CRUD operations
+- [x] Add tRPC procedures for sponsors management
+- [x] Add tRPC procedures for schedule management
+- [x] Add Sponsors tab to Admin Panel with CRUD UI
+- [x] Add Schedule tab to Admin Panel with CRUD UI

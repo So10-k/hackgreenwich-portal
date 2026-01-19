@@ -11,6 +11,364 @@ import { toast } from "sonner";
 
 type TabType = "users" | "announcements" | "teams" | "submissions" | "schedule" | "sponsors";
 
+function ScheduleTab() {
+  const [title, setTitle] = useState("");
+  const [eventType, setEventType] = useState("workshop");
+  const [description, setDescription] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [location, setLocation] = useState("");
+  const [isFeatured, setIsFeatured] = useState(false);
+
+  const { data: scheduleEvents, isLoading, refetch } = trpc.schedule.list.useQuery();
+  const createEvent = trpc.schedule.create.useMutation({
+    onSuccess: () => {
+      toast.success("Event created!");
+      setTitle("");
+      setDescription("");
+      setStartTime("");
+      setEndTime("");
+      setLocation("");
+      setIsFeatured(false);
+      refetch();
+    },
+    onError: (error) => toast.error(error.message),
+  });
+
+  const deleteEvent = trpc.schedule.delete.useMutation({
+    onSuccess: () => {
+      toast.success("Event deleted!");
+      refetch();
+    },
+    onError: (error) => toast.error(error.message),
+  });
+
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Create Schedule Event</CardTitle>
+          <CardDescription>Add events, workshops, meals, and deadlines</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createEvent.mutate({
+                title,
+                eventType: eventType as any,
+                startTime,
+                endTime,
+                description,
+                location,
+                isFeatured,
+              });
+            }}
+            className="space-y-4"
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                placeholder="Event Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+              <select
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                value={eventType}
+                onChange={(e) => setEventType(e.target.value)}
+                required
+              >
+                <option value="workshop">Workshop</option>
+                <option value="keynote">Keynote</option>
+                <option value="meal">Meal</option>
+                <option value="activity">Activity</option>
+                <option value="deadline">Deadline</option>
+                <option value="ceremony">Ceremony</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+            />
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                type="datetime-local"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                required
+              />
+              <Input
+                type="datetime-local"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                required
+              />
+            </div>
+            <Input
+              placeholder="Location (optional)"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="featured"
+                checked={isFeatured}
+                onChange={(e) => setIsFeatured(e.target.checked)}
+                className="h-4 w-4"
+              />
+              <label htmlFor="featured" className="text-sm">
+                Mark as featured
+              </label>
+            </div>
+            <Button type="submit" disabled={createEvent.isPending}>
+              {createEvent.isPending ? "Creating..." : "Create Event"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Scheduled Events</CardTitle>
+          <CardDescription>Manage all hackathon events</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
+            <div className="flex justify-center py-8">
+              <Loader2 className="h-6 w-6 animate-spin" />
+            </div>
+          ) : scheduleEvents && scheduleEvents.length > 0 ? (
+            <div className="space-y-4">
+              {scheduleEvents.map((event: any) => (
+                <div
+                  key={event.id}
+                  className="flex items-start justify-between p-4 border rounded-lg"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-semibold">{event.title}</h3>
+                      {event.is_featured && (
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                          Featured
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {event.description}
+                    </p>
+                    <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+                      <span className="capitalize">{event.event_type}</span>
+                      {event.location && <span>📍 {event.location}</span>}
+                      <span>
+                        {new Date(event.start_time).toLocaleString()} -{" "}
+                        {new Date(event.end_time).toLocaleTimeString()}
+                      </span>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => deleteEvent.mutate({ id: event.id })}
+                    disabled={deleteEvent.isPending}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">No events scheduled yet</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function SponsorsTab() {
+  const [name, setName] = useState("");
+  const [tier, setTier] = useState("gold");
+  const [description, setDescription] = useState("");
+  const [logoUrl, setLogoUrl] = useState("");
+  const [websiteUrl, setWebsiteUrl] = useState("");
+  const [displayOrder, setDisplayOrder] = useState("0");
+
+  const { data: sponsors, isLoading, refetch } = trpc.sponsors.listAll.useQuery();
+  const createSponsor = trpc.sponsors.create.useMutation({
+    onSuccess: () => {
+      toast.success("Sponsor added!");
+      setName("");
+      setDescription("");
+      setLogoUrl("");
+      setWebsiteUrl("");
+      setDisplayOrder("0");
+      refetch();
+    },
+    onError: (error) => toast.error(error.message),
+  });
+
+  const deleteSponsor = trpc.sponsors.delete.useMutation({
+    onSuccess: () => {
+      toast.success("Sponsor removed!");
+      refetch();
+    },
+    onError: (error) => toast.error(error.message),
+  });
+
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Add Sponsor</CardTitle>
+          <CardDescription>
+            Add companies and partners supporting the hackathon
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createSponsor.mutate({
+                name,
+                tier: tier as any,
+                description,
+                logoUrl,
+                websiteUrl,
+                displayOrder: parseInt(displayOrder),
+              });
+            }}
+            className="space-y-4"
+          >
+            <Input
+              placeholder="Sponsor Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+            />
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                placeholder="Logo URL"
+                value={logoUrl}
+                onChange={(e) => setLogoUrl(e.target.value)}
+              />
+              <Input
+                placeholder="Website URL"
+                value={websiteUrl}
+                onChange={(e) => setWebsiteUrl(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <select
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                value={tier}
+                onChange={(e) => setTier(e.target.value)}
+                required
+              >
+                <option value="platinum">Platinum Tier</option>
+                <option value="gold">Gold Tier</option>
+                <option value="silver">Silver Tier</option>
+                <option value="bronze">Bronze Tier</option>
+                <option value="partner">Partner</option>
+              </select>
+              <Input
+                type="number"
+                placeholder="Display Order"
+                value={displayOrder}
+                onChange={(e) => setDisplayOrder(e.target.value)}
+              />
+            </div>
+            <Button type="submit" disabled={createSponsor.isPending}>
+              {createSponsor.isPending ? "Adding..." : "Add Sponsor"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Current Sponsors</CardTitle>
+          <CardDescription>Manage sponsor information</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
+            <div className="flex justify-center py-8">
+              <Loader2 className="h-6 w-6 animate-spin" />
+            </div>
+          ) : sponsors && sponsors.length > 0 ? (
+            <div className="space-y-4">
+              {sponsors.map((sponsor: any) => (
+                <div
+                  key={sponsor.id}
+                  className="flex items-start justify-between p-4 border rounded-lg"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-semibold">{sponsor.name}</h3>
+                      <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded capitalize">
+                        {sponsor.tier}
+                      </span>
+                      {!sponsor.is_active && (
+                        <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
+                          Inactive
+                        </span>
+                      )}
+                    </div>
+                    {sponsor.description && (
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {sponsor.description}
+                      </p>
+                    )}
+                    <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+                      {sponsor.website_url && (
+                        <a
+                          href={sponsor.website_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
+                          🔗 Website
+                        </a>
+                      )}
+                      <span>Order: {sponsor.display_order}</span>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => deleteSponsor.mutate({ id: sponsor.id })}
+                    disabled={deleteSponsor.isPending}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <Award className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">No sponsors added yet</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 export default function AdminPanel() {
   const { user, loading, isAuthenticated } = useAuth();
   const [, setLocation] = useLocation();
@@ -391,121 +749,10 @@ export default function AdminPanel() {
         )}
 
         {/* Schedule Tab */}
-        {activeTab === "schedule" && (
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Create Schedule Event</CardTitle>
-                <CardDescription>Add events, workshops, meals, and deadlines</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    toast.info("Schedule event creation coming soon");
-                  }}
-                  className="space-y-4"
-                >
-                  <div className="grid grid-cols-2 gap-4">
-                    <Input placeholder="Event Title" required />
-                    <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" required>
-                      <option value="workshop">Workshop</option>
-                      <option value="meal">Meal</option>
-                      <option value="deadline">Deadline</option>
-                      <option value="ceremony">Ceremony</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                  <textarea
-                    placeholder="Description"
-                    className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  />
-                  <div className="grid grid-cols-2 gap-4">
-                    <Input type="datetime-local" placeholder="Start Time" required />
-                    <Input type="datetime-local" placeholder="End Time" required />
-                  </div>
-                  <Input placeholder="Location (optional)" />
-                  <div className="flex items-center gap-2">
-                    <input type="checkbox" id="important" className="h-4 w-4" />
-                    <label htmlFor="important" className="text-sm">Mark as important</label>
-                  </div>
-                  <Button type="submit">Create Event</Button>
-                </form>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Scheduled Events</CardTitle>
-                <CardDescription>Manage all hackathon events</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    Event management interface coming soon
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
+        {activeTab === "schedule" && <ScheduleTab />}
 
         {/* Sponsors Tab */}
-        {activeTab === "sponsors" && (
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Add Sponsor</CardTitle>
-                <CardDescription>Add companies and partners supporting the hackathon</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    toast.info("Sponsor creation coming soon");
-                  }}
-                  className="space-y-4"
-                >
-                  <Input placeholder="Sponsor Name" required />
-                  <textarea
-                    placeholder="Description"
-                    className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  />
-                  <div className="grid grid-cols-2 gap-4">
-                    <Input placeholder="Logo URL" />
-                    <Input placeholder="Website URL" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" required>
-                      <option value="gold">Gold Tier</option>
-                      <option value="silver">Silver Tier</option>
-                      <option value="bronze">Bronze Tier</option>
-                      <option value="partner">Partner</option>
-                    </select>
-                    <Input type="number" placeholder="Display Order" defaultValue="0" />
-                  </div>
-                  <Button type="submit">Add Sponsor</Button>
-                </form>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Current Sponsors</CardTitle>
-                <CardDescription>Manage sponsor information</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <Award className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    Sponsor management interface coming soon
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
+        {activeTab === "sponsors" && <SponsorsTab />}
 
         {/* Submissions Tab */}
         {activeTab === "submissions" && (

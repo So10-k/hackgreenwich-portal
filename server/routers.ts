@@ -371,6 +371,133 @@ export const appRouter = router({
       }),
   }),
 
+  // Sponsors
+  sponsors: router({ list: publicProcedure.query(async () => {
+      return await db.getSponsors();
+    }),
+    
+    listAll: adminProcedure.query(async () => {
+      return await db.getSponsors();
+    }),
+    
+    create: adminProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        tier: z.enum(['platinum', 'gold', 'silver', 'bronze', 'partner']),
+        logoUrl: z.string().optional(),
+        websiteUrl: z.string().optional(),
+        description: z.string().optional(),
+        displayOrder: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const sponsor = await db.createSponsor({
+          name: input.name,
+          tier: input.tier,
+          logoUrl: input.logoUrl,
+          websiteUrl: input.websiteUrl,
+          description: input.description,
+          displayOrder: input.displayOrder,
+        });
+        return { sponsorId: sponsor.id };
+      }),
+    
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().optional(),
+        tier: z.enum(['platinum', 'gold', 'silver', 'bronze', 'partner']).optional(),
+        logoUrl: z.string().optional(),
+        websiteUrl: z.string().optional(),
+        description: z.string().optional(),
+        displayOrder: z.number().optional(),
+        isActive: z.boolean().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...updates } = input;
+        const updatedFields: any = {};
+        if (updates.name) updatedFields.name = updates.name;
+        if (updates.tier) updatedFields.tier = updates.tier;
+        if (updates.logoUrl !== undefined) updatedFields.logo_url = updates.logoUrl;
+        if (updates.websiteUrl !== undefined) updatedFields.website_url = updates.websiteUrl;
+        if (updates.description !== undefined) updatedFields.description = updates.description;
+        if (updates.displayOrder !== undefined) updatedFields.display_order = updates.displayOrder;
+        if (updates.isActive !== undefined) updatedFields.is_active = updates.isActive;
+        
+        await db.updateSponsor(id, updatedFields);
+        return { success: true };
+      }),
+    
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteSponsor(input.id);
+        return { success: true };
+      }),
+  }),
+
+  // Schedule
+  schedule: router({
+    list: publicProcedure.query(async () => {
+      return await db.getScheduleEvents();
+    }),
+    
+    create: adminProcedure
+      .input(z.object({
+        title: z.string().min(1),
+        eventType: z.enum(['workshop', 'keynote', 'meal', 'activity', 'deadline', 'ceremony', 'other']),
+        startTime: z.string(),
+        endTime: z.string(),
+        description: z.string().optional(),
+        location: z.string().optional(),
+        isFeatured: z.boolean().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const event = await db.createScheduleEvent({
+          title: input.title,
+          eventType: input.eventType,
+          startTime: new Date(input.startTime),
+          endTime: new Date(input.endTime),
+          description: input.description,
+          location: input.location,
+          isImportant: input.isFeatured,
+        });
+        return { eventId: event.id };
+      }),
+    
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().optional(),
+        eventType: z.enum(['workshop', 'keynote', 'meal', 'activity', 'deadline', 'ceremony', 'other']).optional(),
+        startTime: z.string().optional(),
+        endTime: z.string().optional(),
+        description: z.string().optional(),
+        location: z.string().optional(),
+        isFeatured: z.boolean().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...updates } = input;
+        const updatedFields: any = {};
+        if (updates.title) updatedFields.title = updates.title;
+        if (updates.eventType) updatedFields.event_type = updates.eventType;
+        if (updates.startTime) updatedFields.start_time = updates.startTime;
+        if (updates.endTime) updatedFields.end_time = updates.endTime;
+        if (updates.description !== undefined) updatedFields.description = updates.description;
+        if (updates.location !== undefined) updatedFields.location = updates.location;
+        if (updates.isFeatured !== undefined) updatedFields.is_featured = updates.isFeatured;
+        
+        await db.updateScheduleEvent(id, updatedFields);
+        return { success: true };
+      }),
+    
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteScheduleEvent(input.id);
+        return { success: true };
+      }),
+  }),
+
   // Admin panel
   admin: router({
     getAllUsers: adminProcedure.query(async () => {
