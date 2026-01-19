@@ -21,7 +21,7 @@ export default function SignUp() {
 
     try {
       await signUp(email, password, name);
-      toast.success("Account created! Please check your email to confirm.");
+      toast.success("Account created! You may now login.");
       setLocation("/signin");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to sign up");
