@@ -337,3 +337,8 @@
 - [x] Integrate into Homepage navigation
 - [x] Integrate into Sponsors and Schedule pages
 - [x] Hide desktop navigation on mobile, show hamburger instead
+
+## Portal Mobile Menu
+- [x] Add hamburger menu to PortalLayout component
+- [x] Make sidebar collapsible on mobile with hamburger toggle
+- [x] Test on Dashboard, Participants, and other portal pages
