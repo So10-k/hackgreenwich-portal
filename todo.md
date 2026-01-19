@@ -309,3 +309,10 @@
 - [x] Display GitHub repository links if available
 - [x] Add search and filter functionality
 - [x] Create backend endpoint for participant listing
+
+## Participant Page Fix
+- [x] Check Supabase users table schema
+- [x] Update getAllParticipants query to match correct schema
+- [x] Remove has_portal_access filter (using portal_access_granted)
+- [x] Remove non-existent fields (school, major, graduation_year)
+- [x] Test participant page loads all users correctly

@@ -16,8 +16,6 @@ export default function Participants() {
     return (
       p.name?.toLowerCase().includes(query) ||
       p.email?.toLowerCase().includes(query) ||
-      p.school?.toLowerCase().includes(query) ||
-      p.major?.toLowerCase().includes(query) ||
       p.skills?.some((skill: string) => skill.toLowerCase().includes(query))
     );
   });
@@ -60,7 +58,7 @@ export default function Participants() {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
-                placeholder="Search by name, email, school, major, or skills..."
+                placeholder="Search by name, email, or skills..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -94,25 +92,6 @@ export default function Participants() {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {/* School & Major */}
-                  {(participant.school || participant.major) && (
-                    <div className="text-sm">
-                      {participant.school && (
-                        <p className="font-medium">{participant.school}</p>
-                      )}
-                      {participant.major && (
-                        <p className="text-muted-foreground">{participant.major}</p>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Graduation Year */}
-                  {participant.graduation_year && (
-                    <p className="text-sm text-muted-foreground">
-                      Class of {participant.graduation_year}
-                    </p>
-                  )}
-
                   {/* Skills */}
                   {participant.skills && participant.skills.length > 0 && (
                     <div className="flex flex-wrap gap-1">

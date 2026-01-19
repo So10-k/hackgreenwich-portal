@@ -86,8 +86,7 @@ export async function getAllUsers() {
 export async function getAllParticipants() {
   const { data, error } = await supabaseAdmin
     .from("users")
-    .select("id, name, email, role, school, major, graduation_year, skills, github_username")
-    .eq("has_portal_access", true)
+    .select("id, name, email, role, skills, github_url")
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -95,7 +94,13 @@ export async function getAllParticipants() {
     throw error;
   }
 
-  return data || [];
+  // Transform github_url to github_username for frontend compatibility
+  const participants = data?.map(user => ({
+    ...user,
+    github_username: user.github_url ? user.github_url.replace('https://github.com/', '').replace('/', '') : null
+  })) || [];
+
+  return participants;
 }
 
 export async function approvePortalAccess(userId: number) {
