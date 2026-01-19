@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 
-type TabType = "users" | "announcements" | "teams" | "submissions" | "schedule" | "sponsors";
+type TabType = "users" | "announcements" | /* "teams" | */ "submissions" | "schedule" | "sponsors";
 
 function ScheduleTab() {
   const [title, setTitle] = useState("");
@@ -380,10 +380,10 @@ export default function AdminPanel() {
 
   const { data: allUsers, isLoading: usersLoading, refetch: refetchUsers } = trpc.admin.getAllUsers.useQuery();
   const { data: announcements, isLoading: announcementsLoading, refetch: refetchAnnouncements } = trpc.announcements.list.useQuery();
-  const { data: allTeams, isLoading: teamsLoading } = trpc.teams.list.useQuery();
-  const { data: teamsWithMembers, isLoading: teamsWithMembersLoading } = trpc.teams.getAllTeamsWithMembers.useQuery(undefined, {
-    enabled: activeTab === 'teams' && user?.role === 'admin',
-  });
+  // const { data: allTeams, isLoading: teamsLoading } = trpc.teams.list.useQuery();
+  // const { data: teamsWithMembers, isLoading: teamsWithMembersLoading } = trpc.teams.getAllTeamsWithMembers.useQuery(undefined, {
+  //   enabled: activeTab === 'teams' && user?.role === 'admin',
+  // });
 
   const approveAccess = trpc.admin.approvePortalAccess.useMutation({
     onSuccess: () => {
@@ -437,7 +437,7 @@ export default function AdminPanel() {
           {[
             { id: "users" as TabType, label: "Users", icon: Users },
             { id: "announcements" as TabType, label: "Announcements", icon: MessageSquare },
-            { id: "teams" as TabType, label: "Teams", icon: Trophy },
+            // { id: "teams" as TabType, label: "Teams", icon: Trophy }, // Using Devpost for teams
             { id: "schedule" as TabType, label: "Schedule", icon: Calendar },
             { id: "sponsors" as TabType, label: "Sponsors", icon: Award },
             { id: "submissions" as TabType, label: "Submissions", icon: Settings },
@@ -641,8 +641,8 @@ export default function AdminPanel() {
           </div>
         )}
 
-        {/* Teams Tab */}
-        {activeTab === "teams" && (
+        {/* Teams Tab - Commented out, using Devpost */}
+        {/* {activeTab === "teams" && (
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">

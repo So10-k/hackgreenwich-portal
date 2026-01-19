@@ -9,9 +9,10 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
-import Teammates from "./pages/Teammates";
-import Teams from "./pages/Teams";
+// import Teammates from "./pages/Teammates";
+// import Teams from "./pages/Teams";
 import Resources from "./pages/Resources";
+import Participants from "./pages/Participants";
 import Announcements from "./pages/Announcements";
 import AdminPanel from "./pages/AdminPanel";
 import Submissions from "./pages/Submissions";
@@ -67,9 +68,11 @@ function Router() {
       {/* Protected routes */}
       <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} />} />
       <Route path="/profile" component={() => <ProtectedRoute component={Profile} />} />
-      <Route path="/teammates" component={() => <ProtectedRoute component={Teammates} />} />
-      <Route path="/teams" component={() => <ProtectedRoute component={Teams} />} />
+      {/* Team features commented out - using Devpost */}
+      {/* <Route path="/teammates" component={() => <ProtectedRoute component={Teammates} />} /> */}
+      {/* <Route path="/teams" component={() => <ProtectedRoute component={Teams} />} /> */}
       <Route path="/resources" component={() => <ProtectedRoute component={Resources} />} />
+      <Route path="/participants" component={() => <ProtectedRoute component={Participants} />} />
       <Route path="/announcements" component={() => <ProtectedRoute component={Announcements} />} />
       <Route path="/admin" component={() => <ProtectedRoute component={AdminPanel} />} />
       <Route path="/submissions" component={() => <ProtectedRoute component={Submissions} />} />

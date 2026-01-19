@@ -287,3 +287,25 @@
 - [x] Increase HackGreenwich logo size in navigation (h-16)
 - [x] Increase OneRCF logo size (h-12)
 - [x] Move OneRCF logo to separate line under "Sponsored by"
+
+## Logo Size Increase
+- [x] Increase HackGreenwich logo to h-20 across all pages
+- [x] Increase OneRCF logo to h-16
+
+## Theme Application
+- [x] Apply dark slate theme to all remaining pages
+- [x] Update Dashboard and internal pages with consistent branding
+- [x] Add navigation headers to all pages
+
+## Team Features Removal
+- [x] Comment out team-related navigation items
+- [x] Comment out team pages and features
+- [x] Remove team references from AdminPanel
+
+## Participant Browser
+- [x] Create Participants page with user listing
+- [x] Display user status (admin/user badge)
+- [x] Show skills for each participant
+- [x] Display GitHub repository links if available
+- [x] Add search and filter functionality
+- [x] Create backend endpoint for participant listing

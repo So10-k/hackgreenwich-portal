@@ -83,6 +83,21 @@ export async function getAllUsers() {
   return data || [];
 }
 
+export async function getAllParticipants() {
+  const { data, error } = await supabaseAdmin
+    .from("users")
+    .select("id, name, email, role, school, major, graduation_year, skills, github_username")
+    .eq("has_portal_access", true)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching participants:", error);
+    throw error;
+  }
+
+  return data || [];
+}
+
 export async function approvePortalAccess(userId: number) {
   const { data, error } = await supabaseAdmin
     .from("users")

@@ -317,6 +317,12 @@ export const appRouterSupabase = router({
       }),
   }),
 
+  participants: router({  
+    list: protectedProcedure.query(async () => {
+      return await db.getAllParticipants();
+    }),
+  }),
+
   schedule: router({
     list: publicProcedure.query(async () => {
       return await db.getScheduleEvents();
