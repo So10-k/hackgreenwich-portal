@@ -258,6 +258,113 @@ export const appRouterSupabase = router({
       }),
   }),
 
+  schedule: router({
+    list: publicProcedure.query(async () => {
+      return await db.getScheduleEvents();
+    }),
+
+    create: protectedProcedure
+      .input(
+        z.object({
+          title: z.string(),
+          description: z.string().optional(),
+          eventType: z.string(),
+          startTime: z.date(),
+          endTime: z.date(),
+          location: z.string().optional(),
+          isImportant: z.boolean().optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can create schedule events" });
+        }
+        return await db.createScheduleEvent(input);
+      }),
+
+    update: protectedProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          title: z.string().optional(),
+          description: z.string().optional(),
+          eventType: z.string().optional(),
+          startTime: z.date().optional(),
+          endTime: z.date().optional(),
+          location: z.string().optional(),
+          isImportant: z.boolean().optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can update schedule events" });
+        }
+        return await db.updateScheduleEvent(input.id, input);
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can delete schedule events" });
+        }
+        return await db.deleteScheduleEvent(input.id);
+      }),
+  }),
+
+  sponsors: router({
+    list: publicProcedure.query(async () => {
+      return await db.getSponsors();
+    }),
+
+    create: protectedProcedure
+      .input(
+        z.object({
+          name: z.string(),
+          description: z.string().optional(),
+          logoUrl: z.string().optional(),
+          websiteUrl: z.string().optional(),
+          tier: z.string(),
+          displayOrder: z.number().optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can create sponsors" });
+        }
+        return await db.createSponsor(input);
+      }),
+
+    update: protectedProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          name: z.string().optional(),
+          description: z.string().optional(),
+          logoUrl: z.string().optional(),
+          websiteUrl: z.string().optional(),
+          tier: z.string().optional(),
+          displayOrder: z.number().optional(),
+          isActive: z.boolean().optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can update sponsors" });
+        }
+        return await db.updateSponsor(input.id, input);
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can delete sponsors" });
+        }
+        return await db.deleteSponsor(input.id);
+      }),
+  }),
+
   submissions: router({
     create: protectedProcedure
       .input(

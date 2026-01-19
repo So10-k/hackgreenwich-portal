@@ -1,6 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Sparkles, LogOut, Users, Trophy, BookOpen, MessageSquare, Settings, BarChart3, FileText } from "lucide-react";
+import { Sparkles, LogOut, Users, Trophy, BookOpen, MessageSquare, Settings, BarChart3, FileText, Calendar, Award } from "lucide-react";
 import { useLocation } from "wouter";
 import { ReactNode } from "react";
 
@@ -16,6 +16,8 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
     { label: "Dashboard", path: "/dashboard", icon: BarChart3 },
     { label: "Find Teammates", path: "/teammates", icon: Users },
     { label: "Teams", path: "/teams", icon: Trophy },
+    { label: "Schedule", path: "/schedule", icon: Calendar },
+    { label: "Sponsors", path: "/sponsors", icon: Award },
     { label: "Resources", path: "/resources", icon: BookOpen },
     { label: "Announcements", path: "/announcements", icon: MessageSquare },
     { label: "Profile", path: "/profile", icon: Settings },

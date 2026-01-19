@@ -16,6 +16,8 @@ import Announcements from "./pages/Announcements";
 import AdminPanel from "./pages/AdminPanel";
 import Submissions from "./pages/Submissions";
 import Registration from "./pages/Registration";
+import Schedule from "./pages/Schedule";
+import Sponsors from "./pages/Sponsors";
 import { useSupabaseAuth } from "./_core/hooks/useSupabaseAuth";
 import { Loader2 } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -71,6 +73,8 @@ function Router() {
       <Route path="/announcements" component={() => <ProtectedRoute component={Announcements} />} />
       <Route path="/admin" component={() => <ProtectedRoute component={AdminPanel} />} />
       <Route path="/submissions" component={() => <ProtectedRoute component={Submissions} />} />
+      <Route path="/schedule" component={() => <ProtectedRoute component={Schedule} />} />
+      <Route path="/sponsors" component={() => <ProtectedRoute component={Sponsors} />} />
       
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}

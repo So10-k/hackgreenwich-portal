@@ -150,3 +150,24 @@
 ## Production tRPC URL Fix
 - [x] Fix tRPC client to use correct production URL
 - [x] Handle both development and production environments
+
+## Schedule Page
+- [x] Create schedule_events table in database
+- [x] Add backend API for schedule CRUD operations
+- [x] Create Schedule page with timeline view
+- [x] Add day/date filtering
+- [x] Show event times in user's timezone
+- [x] Admin interface for managing schedule events
+
+## Sponsor Showcase
+- [x] Create sponsors table in database
+- [x] Add backend API for sponsor CRUD operations
+- [x] Create Sponsors page with company cards
+- [x] Display sponsor logos, descriptions, and links
+- [x] Add sponsor tiers (Gold, Silver, Bronze)
+- [x] Admin interface for managing sponsors
+
+## Remove Manus Analytics
+- [x] Remove VITE_ANALYTICS_ENDPOINT references
+- [x] Remove analytics script from index.html
+- [x] Fix Invalid URL errors on dashboard

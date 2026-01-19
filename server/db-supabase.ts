@@ -492,3 +492,194 @@ export async function getProjectSubmissions() {
 
   return data || [];
 }
+
+
+// ===== Schedule Events =====
+
+export async function getScheduleEvents() {
+  const { data, error } = await supabaseAdmin
+    .from("schedule_events")
+    .select("*")
+    .order("start_time", { ascending: true });
+
+  if (error) {
+    console.error("Error fetching schedule events:", error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+export async function createScheduleEvent(event: {
+  title: string;
+  description?: string;
+  eventType: string;
+  startTime: Date;
+  endTime: Date;
+  location?: string;
+  isImportant?: boolean;
+}) {
+  const { data, error } = await supabaseAdmin
+    .from("schedule_events")
+    .insert({
+      title: event.title,
+      description: event.description,
+      event_type: event.eventType,
+      start_time: event.startTime.toISOString(),
+      end_time: event.endTime.toISOString(),
+      location: event.location,
+      is_important: event.isImportant || false,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error creating schedule event:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function updateScheduleEvent(
+  id: number,
+  updates: {
+    title?: string;
+    description?: string;
+    eventType?: string;
+    startTime?: Date;
+    endTime?: Date;
+    location?: string;
+    isImportant?: boolean;
+  }
+) {
+  const updateData: any = {};
+  if (updates.title !== undefined) updateData.title = updates.title;
+  if (updates.description !== undefined) updateData.description = updates.description;
+  if (updates.eventType !== undefined) updateData.event_type = updates.eventType;
+  if (updates.startTime !== undefined) updateData.start_time = updates.startTime.toISOString();
+  if (updates.endTime !== undefined) updateData.end_time = updates.endTime.toISOString();
+  if (updates.location !== undefined) updateData.location = updates.location;
+  if (updates.isImportant !== undefined) updateData.is_important = updates.isImportant;
+  updateData.updated_at = new Date().toISOString();
+
+  const { data, error } = await supabaseAdmin
+    .from("schedule_events")
+    .update(updateData)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error updating schedule event:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function deleteScheduleEvent(id: number) {
+  const { error } = await supabaseAdmin.from("schedule_events").delete().eq("id", id);
+
+  if (error) {
+    console.error("Error deleting schedule event:", error);
+    throw error;
+  }
+
+  return { success: true };
+}
+
+// ===== Sponsors =====
+
+export async function getSponsors() {
+  const { data, error } = await supabaseAdmin
+    .from("sponsors")
+    .select("*")
+    .eq("is_active", true)
+    .order("display_order", { ascending: true });
+
+  if (error) {
+    console.error("Error fetching sponsors:", error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+export async function createSponsor(sponsor: {
+  name: string;
+  description?: string;
+  logoUrl?: string;
+  websiteUrl?: string;
+  tier: string;
+  displayOrder?: number;
+}) {
+  const { data, error } = await supabaseAdmin
+    .from("sponsors")
+    .insert({
+      name: sponsor.name,
+      description: sponsor.description,
+      logo_url: sponsor.logoUrl,
+      website_url: sponsor.websiteUrl,
+      tier: sponsor.tier,
+      display_order: sponsor.displayOrder || 0,
+      is_active: true,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error creating sponsor:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function updateSponsor(
+  id: number,
+  updates: {
+    name?: string;
+    description?: string;
+    logoUrl?: string;
+    websiteUrl?: string;
+    tier?: string;
+    displayOrder?: number;
+    isActive?: boolean;
+  }
+) {
+  const updateData: any = {};
+  if (updates.name !== undefined) updateData.name = updates.name;
+  if (updates.description !== undefined) updateData.description = updates.description;
+  if (updates.logoUrl !== undefined) updateData.logo_url = updates.logoUrl;
+  if (updates.websiteUrl !== undefined) updateData.website_url = updates.websiteUrl;
+  if (updates.tier !== undefined) updateData.tier = updates.tier;
+  if (updates.displayOrder !== undefined) updateData.display_order = updates.displayOrder;
+  if (updates.isActive !== undefined) updateData.is_active = updates.isActive;
+  updateData.updated_at = new Date().toISOString();
+
+  const { data, error } = await supabaseAdmin
+    .from("sponsors")
+    .update(updateData)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error updating sponsor:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function deleteSponsor(id: number) {
+  const { error } = await supabaseAdmin.from("sponsors").delete().eq("id", id);
+
+  if (error) {
+    console.error("Error deleting sponsor:", error);
+    throw error;
+  }
+
+  return { success: true };
+}

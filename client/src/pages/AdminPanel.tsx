@@ -4,12 +4,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import PortalLayout from "@/components/PortalLayout";
 import { trpc } from "@/lib/trpc";
-import { Loader2, Check, X, Users, MessageSquare, Trophy, Settings } from "lucide-react";
+import { Loader2, Check, X, Users, MessageSquare, Trophy, Settings, Calendar, Award } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 
-type TabType = "users" | "announcements" | "teams" | "submissions";
+type TabType = "users" | "announcements" | "teams" | "submissions" | "schedule" | "sponsors";
 
 export default function AdminPanel() {
   const { user, loading, isAuthenticated } = useAuth();
@@ -77,6 +77,8 @@ export default function AdminPanel() {
             { id: "users" as TabType, label: "Users", icon: Users },
             { id: "announcements" as TabType, label: "Announcements", icon: MessageSquare },
             { id: "teams" as TabType, label: "Teams", icon: Trophy },
+            { id: "schedule" as TabType, label: "Schedule", icon: Calendar },
+            { id: "sponsors" as TabType, label: "Sponsors", icon: Award },
             { id: "submissions" as TabType, label: "Submissions", icon: Settings },
           ].map((tab) => {
             const Icon = tab.icon;
@@ -316,6 +318,123 @@ export default function AdminPanel() {
               )}
             </CardContent>
           </Card>
+        )}
+
+        {/* Schedule Tab */}
+        {activeTab === "schedule" && (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Create Schedule Event</CardTitle>
+                <CardDescription>Add events, workshops, meals, and deadlines</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    toast.info("Schedule event creation coming soon");
+                  }}
+                  className="space-y-4"
+                >
+                  <div className="grid grid-cols-2 gap-4">
+                    <Input placeholder="Event Title" required />
+                    <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" required>
+                      <option value="workshop">Workshop</option>
+                      <option value="meal">Meal</option>
+                      <option value="deadline">Deadline</option>
+                      <option value="ceremony">Ceremony</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <textarea
+                    placeholder="Description"
+                    className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  />
+                  <div className="grid grid-cols-2 gap-4">
+                    <Input type="datetime-local" placeholder="Start Time" required />
+                    <Input type="datetime-local" placeholder="End Time" required />
+                  </div>
+                  <Input placeholder="Location (optional)" />
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" id="important" className="h-4 w-4" />
+                    <label htmlFor="important" className="text-sm">Mark as important</label>
+                  </div>
+                  <Button type="submit">Create Event</Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Scheduled Events</CardTitle>
+                <CardDescription>Manage all hackathon events</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-12">
+                  <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">
+                    Event management interface coming soon
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Sponsors Tab */}
+        {activeTab === "sponsors" && (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Add Sponsor</CardTitle>
+                <CardDescription>Add companies and partners supporting the hackathon</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    toast.info("Sponsor creation coming soon");
+                  }}
+                  className="space-y-4"
+                >
+                  <Input placeholder="Sponsor Name" required />
+                  <textarea
+                    placeholder="Description"
+                    className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  />
+                  <div className="grid grid-cols-2 gap-4">
+                    <Input placeholder="Logo URL" />
+                    <Input placeholder="Website URL" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" required>
+                      <option value="gold">Gold Tier</option>
+                      <option value="silver">Silver Tier</option>
+                      <option value="bronze">Bronze Tier</option>
+                      <option value="partner">Partner</option>
+                    </select>
+                    <Input type="number" placeholder="Display Order" defaultValue="0" />
+                  </div>
+                  <Button type="submit">Add Sponsor</Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Current Sponsors</CardTitle>
+                <CardDescription>Manage sponsor information</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-12">
+                  <Award className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">
+                    Sponsor management interface coming soon
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         )}
 
         {/* Submissions Tab */}
