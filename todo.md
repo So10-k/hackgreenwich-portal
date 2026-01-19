@@ -137,3 +137,9 @@
 - [x] Remove old vercel.json builds configuration
 - [x] Update to use modern Vercel Build Output API
 - [x] Test deployment configuration
+
+## Railway Deployment
+- [x] Create railway.json configuration file
+- [x] Create Nixpacks configuration for build
+- [x] Remove Vercel-specific files
+- [x] Create Railway deployment guide
