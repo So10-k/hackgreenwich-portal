@@ -143,3 +143,6 @@
 - [x] Create Nixpacks configuration for build
 - [x] Remove Vercel-specific files
 - [x] Create Railway deployment guide
+
+## Railway Deployment Fix
+- [x] Fix nixpacks.toml Node.js package name
