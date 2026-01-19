@@ -258,3 +258,7 @@
 - [x] Improve error logging in useSupabaseAuth
 - [x] Silently ignore profile fetch errors when user is already authenticated
 - [x] Prevent duplicate error logs during auth state changes
+
+## Eliminate Profile Fetching Error Messages
+- [x] Remove all error logging for profile fetch when user is authenticated
+- [x] Silently ignore all profile fetch errors (user redirected if truly unauthenticated)
