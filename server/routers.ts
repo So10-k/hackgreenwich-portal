@@ -86,6 +86,15 @@ export const appRouter = router({
         });
         return { success: true };
       }),
+    
+    confirmDevpostRegistration: protectedProcedure
+      .mutation(async ({ ctx }) => {
+        await db.updateUserProfile(ctx.user.id, {
+          devpostVerified: true,
+          registrationStep: 3,
+        });
+        return { success: true };
+      }),
   }),
 
   // Teammate finder

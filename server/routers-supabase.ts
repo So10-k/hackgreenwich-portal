@@ -80,6 +80,48 @@ export const appRouterSupabase = router({
           registration_step: 2,
         });
       }),
+    
+    completeRegistration: protectedProcedure
+      .input(z.object({
+        devpostUsername: z.string().min(1),
+        bio: z.string().optional(),
+        skills: z.array(z.string()).optional(),
+        interests: z.array(z.string()).optional(),
+        experienceLevel: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+        return await db.updateUserProfile(ctx.user.id, {
+          devpost_username: input.devpostUsername,
+          bio: input.bio,
+          skills: input.skills,
+          interests: input.interests,
+          experience_level: input.experienceLevel,
+          registration_step: 2,
+        });
+      }),
+    
+    confirmDevpostRegistration: protectedProcedure
+      .mutation(async ({ ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+        return await db.updateUserProfile(ctx.user.id, {
+          devpost_verified: true,
+          registration_step: 3,
+        });
+      }),
+    
+    getRegistrationStatus: protectedProcedure
+      .query(async ({ ctx }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        const profile = await db.getUserProfile(ctx.user.id);
+        return {
+          step: profile.registration_step || 1,
+          devpostVerified: profile.devpost_verified || false,
+          portalAccessGranted: profile.portal_access_granted || false,
+        };
+      }),
   }),
 
   teammates: router({
@@ -152,6 +194,20 @@ export const appRouterSupabase = router({
 
     list: publicProcedure.query(async () => {
       return await db.getAllTeams();
+    }),
+    
+    getAllTeamsWithMembers: protectedProcedure.query(async ({ ctx }) => {
+      if (!ctx.user || ctx.user.role !== "admin") {
+        throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can view all teams with members" });
+      }
+      const teams = await db.getAllTeams();
+      const teamsWithMembers = await Promise.all(
+        teams.map(async (team: any) => {
+          const teamWithMembers = await db.getTeamWithMembers(team.id);
+          return teamWithMembers;
+        })
+      );
+      return teamsWithMembers;
     }),
 
     getInvitations: protectedProcedure.query(async ({ ctx }) => {

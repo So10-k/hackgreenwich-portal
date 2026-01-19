@@ -25,11 +25,33 @@ export default function Registration() {
   const { data: userProfile } = trpc.profile.getProfile.useQuery(undefined, {
     enabled: isAuthenticated,
   });
+  
+  // Query registration status to persist step
+  const { data: registrationStatus } = trpc.profile.getRegistrationStatus.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
+  
+  // Update currentStep based on registration status from backend
+  useEffect(() => {
+    if (registrationStatus) {
+      setCurrentStep(registrationStatus.step || 1);
+    }
+  }, [registrationStatus]);
 
-  const completeRegistration = trpc.profile.updateProfile.useMutation({
+  const completeRegistration = trpc.profile.completeRegistration.useMutation({
     onSuccess: () => {
       toast.success("Profile completed! Moving to next step.");
       setCurrentStep(2);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+  
+  const confirmDevpost = trpc.profile.confirmDevpostRegistration.useMutation({
+    onSuccess: () => {
+      toast.success("Devpost registration confirmed!");
+      setCurrentStep(3);
     },
     onError: (error) => {
       toast.error(error.message);
@@ -51,10 +73,11 @@ export default function Registration() {
     const formData = new FormData(e.currentTarget);
     
     await completeRegistration.mutateAsync({
+      devpostUsername: formData.get("devpostUsername") as string,
       bio: formData.get("bio") as string,
       skills,
       interests,
-      experienceLevel: formData.get("experienceLevel") as string,
+      experienceLevel: formData.get("experienceLevel") as any,
     });
   };
 
@@ -250,8 +273,10 @@ export default function Registration() {
               <Button 
                 variant="outline" 
                 className="w-full" 
-                onClick={() => setCurrentStep(3)}
+                onClick={() => confirmDevpost.mutate()}
+                disabled={confirmDevpost.isPending}
               >
+                {confirmDevpost.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 I've Completed Devpost Registration
               </Button>
             </CardContent>

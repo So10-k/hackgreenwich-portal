@@ -225,3 +225,14 @@
 - [x] Add tRPC procedures for schedule management
 - [x] Add Sponsors tab to Admin Panel with CRUD UI
 - [x] Add Schedule tab to Admin Panel with CRUD UI
+
+## Fix Registration Flow Issues
+- [x] Debug why Devpost verification doesn't persist when returning to register page
+- [x] Add completeRegistration and confirmDevpostRegistration procedures
+- [x] Add getRegistrationStatus to persist step across page refreshes
+- [x] Fix Registration component to use correct Supabase procedures
+- [x] Fix users not appearing in pending portal access after Devpost verification
+- [x] Change AdminPanel to use Supabase tRPC client
+- [x] Add getAllTeamsWithMembers to Supabase teams router
+- [x] Fix sponsors.listAll to sponsors.list
+- [x] Test complete registration flow from sign-up to admin approval

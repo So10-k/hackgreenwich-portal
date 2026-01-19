@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import PortalLayout from "@/components/PortalLayout";
-import { trpc } from "@/lib/trpc";
+import { trpc } from "@/lib/trpc-supabase";
 import { Loader2, Check, X, Users, MessageSquare, Trophy, Settings, Calendar, Award } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
@@ -57,11 +57,11 @@ function ScheduleTab() {
               createEvent.mutate({
                 title,
                 eventType: eventType as any,
-                startTime,
-                endTime,
+                startTime: new Date(startTime),
+                endTime: new Date(endTime),
                 description,
                 location,
-                isFeatured,
+                isImportant: isFeatured,
               });
             }}
             className="space-y-4"
@@ -201,7 +201,7 @@ function SponsorsTab() {
   const [websiteUrl, setWebsiteUrl] = useState("");
   const [displayOrder, setDisplayOrder] = useState("0");
 
-  const { data: sponsors, isLoading, refetch } = trpc.sponsors.listAll.useQuery();
+  const { data: sponsors, isLoading, refetch } = trpc.sponsors.list.useQuery();
   const createSponsor = trpc.sponsors.create.useMutation({
     onSuccess: () => {
       toast.success("Sponsor added!");
