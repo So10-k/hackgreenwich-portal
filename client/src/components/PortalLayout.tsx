@@ -14,8 +14,8 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
 
   const navItems = [
     { label: "Dashboard", path: "/dashboard", icon: BarChart3 },
-    { label: "Find Teammates", path: "/teammates", icon: Users },
-    { label: "Teams", path: "/teams", icon: Trophy },
+    // { label: "Find Teammates", path: "/teammates", icon: Users },
+    // { label: "Teams", path: "/teams", icon: Trophy },
     { label: "Schedule", path: "/schedule", icon: Calendar },
     { label: "Sponsors", path: "/sponsors", icon: Award },
     { label: "Resources", path: "/resources", icon: BookOpen },
