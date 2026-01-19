@@ -118,3 +118,11 @@
 - [x] Ensure dist/index.js is created during build
 - [x] Disable email verification for Supabase signups
 - [x] Test production build locally
+
+## Homepage Redesign & Bug Fixes
+- [x] Fix registration redirect loop between dashboard and register page
+- [x] Fix routing so authenticated users don't get stuck in redirect loop
+- [x] Create parallax scrolling background effect
+- [x] Add animated text that flies into screen on scroll
+- [x] Implement smooth scroll animations with framer-motion
+- [x] Test all authentication flows and redirects

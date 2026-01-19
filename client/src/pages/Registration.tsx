@@ -1,31 +1,35 @@
-import { useAuth } from "@/_core/hooks/useAuth";
+import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { trpc } from "@/lib/trpc";
+import { trpc } from "@/lib/trpc-supabase";
 import { CheckCircle2, ExternalLink, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 
 export default function Registration() {
-  const { user, loading: authLoading, isAuthenticated } = useAuth();
+  const { user: supabaseUser, loading: authLoading } = useSupabaseAuth();
+  const isAuthenticated = !!supabaseUser;
   const [, setLocation] = useLocation();
   const [skills, setSkills] = useState<string[]>([]);
   const [interests, setInterests] = useState<string[]>([]);
   const [skillInput, setSkillInput] = useState("");
   const [interestInput, setInterestInput] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
 
-  const { data: regStatus } = trpc.registration.getStatus.useQuery(undefined, {
+  // Query user profile to check registration status
+  const { data: userProfile } = trpc.profile.getProfile.useQuery(undefined, {
     enabled: isAuthenticated,
   });
 
-  const completeRegistration = trpc.profile.completeRegistration.useMutation({
+  const completeRegistration = trpc.profile.updateProfile.useMutation({
     onSuccess: () => {
-      toast.success("Profile completed! Waiting for admin approval.");
+      toast.success("Profile completed! Moving to next step.");
+      setCurrentStep(2);
     },
     onError: (error) => {
       toast.error(error.message);
@@ -34,23 +38,23 @@ export default function Registration() {
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      setLocation("/");
+      setLocation("/signin");
     }
-    if (user?.portalAccessGranted) {
+    // If user has portal access, redirect to dashboard
+    if (userProfile?.portalAccessGranted) {
       setLocation("/dashboard");
     }
-  }, [authLoading, isAuthenticated, user, setLocation]);
+  }, [authLoading, isAuthenticated, userProfile, setLocation]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     
     await completeRegistration.mutateAsync({
-      devpostUsername: formData.get("devpostUsername") as string,
       bio: formData.get("bio") as string,
       skills,
       interests,
-      experienceLevel: formData.get("experienceLevel") as "beginner" | "intermediate" | "advanced",
+      experienceLevel: formData.get("experienceLevel") as string,
     });
   };
 
@@ -75,8 +79,6 @@ export default function Registration() {
       </div>
     );
   }
-
-  const currentStep = regStatus?.step || 1;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background py-12">
@@ -244,11 +246,19 @@ export default function Registration() {
                   Go to Devpost <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
               </Button>
+
+              <Button 
+                variant="outline" 
+                className="w-full" 
+                onClick={() => setCurrentStep(3)}
+              >
+                I've Completed Devpost Registration
+              </Button>
             </CardContent>
           </Card>
         )}
 
-        {currentStep >= 2 && !user?.portalAccessGranted && (
+        {currentStep >= 3 && !userProfile?.portalAccessGranted && (
           <Card className="mt-6">
             <CardContent className="pt-6 text-center space-y-4">
               <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
@@ -256,7 +266,7 @@ export default function Registration() {
               </div>
               <h3 className="text-xl font-semibold">Waiting for Approval</h3>
               <p className="text-muted-foreground max-w-md mx-auto">
-                Your registration is being reviewed. You'll receive access once verified.
+                Your registration is being reviewed. You'll receive access once verified by an admin.
               </p>
             </CardContent>
           </Card>

@@ -15,6 +15,7 @@ import Resources from "./pages/Resources";
 import Announcements from "./pages/Announcements";
 import AdminPanel from "./pages/AdminPanel";
 import Submissions from "./pages/Submissions";
+import Registration from "./pages/Registration";
 import { useSupabaseAuth } from "./_core/hooks/useSupabaseAuth";
 import { Loader2 } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -59,6 +60,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
+      <Route path="/register" component={() => <ProtectedRoute component={Registration} />} />
       
       {/* Protected routes */}
       <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} />} />
