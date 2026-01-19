@@ -242,3 +242,9 @@
 - [x] Create /sponsors page with tier-based sponsor showcase
 - [x] Add navigation links to both pages (Home nav bar)
 - [x] Style pages with responsive design (gradient backgrounds, cards)
+
+## Fix Logout Functionality
+- [x] Debug why logout button doesn't work (using wrong auth hook)
+- [x] Fix logout implementation to use useSupabaseAuth
+- [x] Update AuthUser type to include all user fields
+- [x] Fetch full user profile from database on auth state change

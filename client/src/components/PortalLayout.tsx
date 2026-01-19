@@ -1,4 +1,4 @@
-import { useAuth } from "@/_core/hooks/useAuth";
+import { useSupabaseAuth as useAuth } from "@/_core/hooks/useSupabaseAuth";
 import { Button } from "@/components/ui/button";
 import { Sparkles, LogOut, Users, Trophy, BookOpen, MessageSquare, Settings, BarChart3, FileText, Calendar, Award } from "lucide-react";
 import { useLocation } from "wouter";

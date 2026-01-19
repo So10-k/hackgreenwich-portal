@@ -3,9 +3,14 @@ import { supabase } from "@/lib/supabase";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 export type AuthUser = {
-  id: string;
+  id: number;
+  authId: string;
   email: string;
-  name?: string;
+  name: string;
+  role: 'admin' | 'user';
+  portalAccessGranted: boolean;
+  registrationStep: number;
+  avatarUrl?: string | null;
 };
 
 export function useSupabaseAuth() {
@@ -14,7 +19,7 @@ export function useSupabaseAuth() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check current session
+    // Check current session and fetch user profile
     const checkSession = async () => {
       try {
         const {
@@ -22,11 +27,28 @@ export function useSupabaseAuth() {
         } = await supabase.auth.getSession();
 
         if (session?.user) {
-          setUser({
-            id: session.user.id,
-            email: session.user.email || "",
-            name: session.user.user_metadata?.name,
-          });
+          // Fetch full user profile from database
+          const { data: userProfile, error: profileError } = await supabase
+            .from('users')
+            .select('*')
+            .eq('auth_id', session.user.id)
+            .single();
+
+          if (profileError) {
+            console.error("Error fetching user profile:", profileError);
+            setUser(null);
+          } else if (userProfile) {
+            setUser({
+              id: userProfile.id,
+              authId: userProfile.auth_id,
+              email: userProfile.email,
+              name: userProfile.name,
+              role: userProfile.role,
+              portalAccessGranted: userProfile.portal_access_granted,
+              registrationStep: userProfile.registration_step,
+              avatarUrl: userProfile.avatar_url,
+            });
+          }
         }
       } catch (err) {
         console.error("Error checking session:", err);
@@ -41,13 +63,30 @@ export function useSupabaseAuth() {
     // Subscribe to auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session?.user) {
-        setUser({
-          id: session.user.id,
-          email: session.user.email || "",
-          name: session.user.user_metadata?.name,
-        });
+        // Fetch full user profile from database
+        const { data: userProfile, error: profileError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('auth_id', session.user.id)
+          .single();
+
+        if (profileError) {
+          console.error("Error fetching user profile:", profileError);
+          setUser(null);
+        } else if (userProfile) {
+          setUser({
+            id: userProfile.id,
+            authId: userProfile.auth_id,
+            email: userProfile.email,
+            name: userProfile.name,
+            role: userProfile.role,
+            portalAccessGranted: userProfile.portal_access_granted,
+            registrationStep: userProfile.registration_step,
+            avatarUrl: userProfile.avatar_url,
+          });
+        }
       } else {
         setUser(null);
       }
