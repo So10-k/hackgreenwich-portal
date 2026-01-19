@@ -271,3 +271,7 @@
 - [x] Fix ProtectedRoute redirecting authenticated users back to sign-in
 - [x] Increased sign-in delay to 500ms for auth state to fully propagate
 - [x] ProtectedRoute already shows loading spinner and waits for auth
+
+## Fix RLS Blocking Profile Fetch - CRITICAL
+- [x] Created SQL file with RLS policy to allow users to read own profile
+- [x] User must run supabase-rls-fix.sql in Supabase SQL editor
