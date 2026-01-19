@@ -97,7 +97,7 @@ export default function Teams() {
             <p className="text-muted-foreground">Create or join a team for the hackathon</p>
           </div>
           {!myTeam && (
-            <Button onClick={() => setShowCreateForm(!showCreateForm)} size="lg">
+            <Button size="lg">
               <Plus className="h-5 w-5 mr-2" />
               Create Team
             </Button>
