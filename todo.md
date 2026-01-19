@@ -177,3 +177,8 @@
 - [x] Check for undefined or placeholder environment variables
 - [x] Fix all URL construction that might use invalid values
 - [x] Test production build locally
+
+## Fix Teams Page Error
+- [x] Fix Teams page to handle undefined member data
+- [x] Add null checks for team member properties
+- [x] Test Teams page with empty and populated data

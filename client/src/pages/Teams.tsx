@@ -161,7 +161,7 @@ export default function Teams() {
                       <div key={member.userId} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
                         <Users className="h-5 w-5 text-muted-foreground" />
                         <div className="flex-1">
-                          <p className="font-medium text-sm">{member.user.name}</p>
+                          <p className="font-medium text-sm">{member.user?.name || "Unknown User"}</p>
                           <p className="text-xs text-muted-foreground capitalize">{member.role}</p>
                         </div>
                       </div>
