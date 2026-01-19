@@ -9,7 +9,9 @@ export function getTrpcClient() {
   return trpc.createClient({
     links: [
       httpBatchLink({
-        url: "/api/trpc",
+        url: typeof window !== 'undefined' && window.location.origin
+          ? `${window.location.origin}/api/trpc`
+          : "/api/trpc",
         transformer: superjson,
         async headers() {
           // Get the token from Supabase

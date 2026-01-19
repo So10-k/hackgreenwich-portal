@@ -146,3 +146,7 @@
 
 ## Railway Deployment Fix
 - [x] Fix nixpacks.toml Node.js package name
+
+## Production tRPC URL Fix
+- [x] Fix tRPC client to use correct production URL
+- [x] Handle both development and production environments
