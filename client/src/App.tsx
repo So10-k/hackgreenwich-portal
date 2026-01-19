@@ -73,8 +73,10 @@ function Router() {
       <Route path="/announcements" component={() => <ProtectedRoute component={Announcements} />} />
       <Route path="/admin" component={() => <ProtectedRoute component={AdminPanel} />} />
       <Route path="/submissions" component={() => <ProtectedRoute component={Submissions} />} />
-      <Route path="/schedule" component={() => <ProtectedRoute component={Schedule} />} />
-      <Route path="/sponsors" component={() => <ProtectedRoute component={Sponsors} />} />
+      
+      {/* Public pages */}
+      <Route path="/schedule" component={Schedule} />
+      <Route path="/sponsors" component={Sponsors} />
       
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}

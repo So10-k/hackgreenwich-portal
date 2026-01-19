@@ -1,5 +1,5 @@
 import { trpc } from "@/lib/trpc-supabase";
-import PortalLayout from "@/components/PortalLayout";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,14 +10,16 @@ export default function Sponsors() {
 
   if (isLoading) {
     return (
-      <PortalLayout>
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Loading sponsors...</p>
+      <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
+        <div className="container py-12">
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Loading sponsors...</p>
+            </div>
           </div>
         </div>
-      </PortalLayout>
+      </div>
     );
   }
 
@@ -58,8 +60,8 @@ export default function Sponsors() {
   };
 
   return (
-    <PortalLayout>
-      <div className="space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
+      <div className="container py-12 space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -194,6 +196,6 @@ export default function Sponsors() {
           </CardContent>
         </Card>
       </div>
-    </PortalLayout>
+    </div>
   );
 }

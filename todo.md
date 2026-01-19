@@ -236,3 +236,9 @@
 - [x] Add getAllTeamsWithMembers to Supabase teams router
 - [x] Fix sponsors.listAll to sponsors.list
 - [x] Test complete registration flow from sign-up to admin approval
+
+## Create Public Schedule and Sponsors Pages
+- [x] Create /schedule page with event timeline display
+- [x] Create /sponsors page with tier-based sponsor showcase
+- [x] Add navigation links to both pages (Home nav bar)
+- [x] Style pages with responsive design (gradient backgrounds, cards)

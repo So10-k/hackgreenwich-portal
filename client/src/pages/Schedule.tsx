@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { trpc } from "@/lib/trpc-supabase";
-import PortalLayout from "@/components/PortalLayout";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, MapPin, AlertCircle } from "lucide-react";
@@ -12,14 +12,16 @@ export default function Schedule() {
 
   if (isLoading) {
     return (
-      <PortalLayout>
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Loading schedule...</p>
+      <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
+        <div className="container py-12">
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Loading schedule...</p>
+            </div>
           </div>
         </div>
-      </PortalLayout>
+      </div>
     );
   }
 
@@ -60,8 +62,8 @@ export default function Schedule() {
   };
 
   return (
-    <PortalLayout>
-      <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background">
+      <div className="container py-12 space-y-6">
         {/* Header */}
         <div>
           <h1 className="text-3xl font-bold">Event Schedule</h1>
@@ -197,6 +199,6 @@ export default function Schedule() {
           </Card>
         )}
       </div>
-    </PortalLayout>
+    </div>
   );
 }

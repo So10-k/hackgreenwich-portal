@@ -55,7 +55,21 @@ export default function Home() {
             <Sparkles className="h-6 w-6 text-purple-400" />
             <span className="text-xl font-bold">HackGreenwich</span>
           </div>
-          <div className="flex gap-3">
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              className="text-white hover:bg-white/10"
+              onClick={() => setLocation("/schedule")}
+            >
+              Schedule
+            </Button>
+            <Button
+              variant="ghost"
+              className="text-white hover:bg-white/10"
+              onClick={() => setLocation("/sponsors")}
+            >
+              Sponsors
+            </Button>
             <Button
               variant="ghost"
               className="text-white hover:bg-white/10"
