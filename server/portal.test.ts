@@ -138,7 +138,8 @@ describe("Teammate Finder", () => {
 
 describe("Team Management", () => {
   it("should create a team", async () => {
-    const ctx = createTestContext({ id: 99999 });
+    const uniqueId = 100000 + Math.floor(Math.random() * 900000);
+    const ctx = createTestContext({ id: uniqueId });
     const caller = appRouter.createCaller(ctx);
 
     const result = await caller.teams.create({

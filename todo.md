@@ -112,3 +112,9 @@
 - [x] Remove all Manus OAuth dependencies
 - [x] Test full authentication flow
 - [x] Verify database operations with Supabase
+
+## Deployment Fixes
+- [x] Fix build script to compile server entry point correctly
+- [x] Ensure dist/index.js is created during build
+- [x] Disable email verification for Supabase signups
+- [x] Test production build locally
