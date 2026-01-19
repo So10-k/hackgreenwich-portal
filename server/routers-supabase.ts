@@ -92,13 +92,16 @@ export const appRouterSupabase = router({
       .mutation(async ({ ctx, input }) => {
         if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
 
+        // Auto-approve users and grant portal access immediately
         return await db.updateUserProfile(ctx.user.id, {
           devpost_username: input.devpostUsername,
           bio: input.bio,
           skills: input.skills,
           interests: input.interests,
           experience_level: input.experienceLevel,
-          registration_step: 2,
+          registration_step: 3,
+          devpost_verified: true,
+          portal_access_granted: true,
         });
       }),
     

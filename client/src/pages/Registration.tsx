@@ -40,8 +40,9 @@ export default function Registration() {
 
   const completeRegistration = trpc.profile.completeRegistration.useMutation({
     onSuccess: () => {
-      toast.success("Profile completed! Moving to next step.");
-      setCurrentStep(2);
+      toast.success("Registration complete! Redirecting to dashboard...");
+      // Auto-approved, redirect to dashboard
+      setTimeout(() => setLocation("/dashboard"), 1000);
     },
     onError: (error) => {
       toast.error(error.message);
@@ -106,37 +107,7 @@ export default function Registration() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background py-12">
       <div className="container max-w-4xl mx-auto px-4">
-        <div className="mb-12">
-          <div className="flex items-center justify-between">
-            {[1, 2, 3].map((step) => (
-              <div key={step} className="flex items-center flex-1">
-                <div className="flex items-center">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-                      step <= currentStep
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {step < currentStep ? <CheckCircle2 className="h-6 w-6" /> : step}
-                  </div>
-                  <div className="ml-3 text-sm font-medium">
-                    {step === 1 && "Complete Profile"}
-                    {step === 2 && "Register on Devpost"}
-                    {step === 3 && "Portal Access"}
-                  </div>
-                </div>
-                {step < 3 && (
-                  <div
-                    className={`flex-1 h-1 mx-4 ${
-                      step < currentStep ? "bg-primary" : "bg-muted"
-                    }`}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+
 
         {currentStep === 1 && (
           <Card>

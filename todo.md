@@ -246,3 +246,13 @@
 ## Update Homepage for Logged-In Users
 - [x] Show "Dashboard" button instead of "Sign In" and "Get Started" for authenticated users
 - [x] Keep existing buttons for non-authenticated visitors
+
+## Branding Update
+- [x] Change all instances of "Hack Greenwich" to "HackGreenwich" (already correct)
+- [x] Update page titles and meta tags
+- [x] Update navigation and footer text
+
+## Auto-Approval Registration
+- [x] Modify registration flow to automatically grant portal access after signup
+- [x] Remove Devpost verification step requirement
+- [x] Remove admin approval requirement for initial access
