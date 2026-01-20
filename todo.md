@@ -468,3 +468,9 @@
 ## Fix Scroll Video Vertical Position
 - [x] Add proper spacing/padding above scroll video section
 - [x] Position section lower on page so it appears at correct scroll position
+
+## Fix Scroll Video Flow and Positioning
+- [x] Move scroll video section much further down the page
+- [x] Fix initial display to show headline first, not overlay content
+- [x] Ensure proper scroll distance before video section appears
+- [x] Fix scroll trigger so overlay appears at correct time

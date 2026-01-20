@@ -312,7 +312,7 @@ export default function Home() {
       </section>
 
       {/* Scroll Animated Video Section */}
-      <section className="relative py-20">
+      <section className="relative pt-40 pb-20">
       <HeroScrollVideo
         title="Ready to Build the Future?"
         subtitle="Join HackGreenwich 2026"
@@ -336,8 +336,8 @@ export default function Home() {
             </Button>
           ),
         }}
-        initialBoxSize={320}
-        scrollHeightVh={180}
+        initialBoxSize={400}
+        scrollHeightVh={250}
         showHeroExitAnimation={true}
         smoothScroll={false}
       />
