@@ -20,6 +20,7 @@ import Registration from "./pages/Registration";
 import Schedule from "./pages/Schedule";
 import Sponsors from "./pages/Sponsors";
 import JudgesDashboard from "./pages/JudgesDashboard";
+import Winners from "./pages/Winners";
 import { useSupabaseAuth } from "./_core/hooks/useSupabaseAuth";
 import { Loader2 } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -82,6 +83,7 @@ function Router() {
       {/* Public pages */}
       <Route path="/schedule" component={Schedule} />
       <Route path="/sponsors" component={Sponsors} />
+      <Route path="/winners" component={Winners} />
       
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}

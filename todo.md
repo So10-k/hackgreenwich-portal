@@ -358,3 +358,18 @@
 - [x] Create backend endpoints for judge data
 - [x] Add judge navigation in PortalLayout
 - [x] Generate Supabase SQL queries for setup
+
+## Admin Judge Announcements Interface
+- [x] Add judge announcements tab to Admin Panel
+- [x] Create form to post new judge announcements
+- [x] Display list of existing judge announcements
+- [x] Add backend endpoints for CRUD operations
+
+## Winners Announcement Page
+- [x] Create winners database table in Supabase (winners-setup.sql)
+- [x] Build public winners page at /winners route
+- [x] Display winning teams with photos and descriptions
+- [x] Show prize categories (1st, 2nd, 3rd, special awards)
+- [x] Add project links and team member information
+- [x] Create admin interface placeholder for winners
+- [x] Add winners to navigation menu

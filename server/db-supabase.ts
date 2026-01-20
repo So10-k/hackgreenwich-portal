@@ -868,3 +868,88 @@ export async function createJudgeAnnouncement(title: string, content: string, po
 
   return data;
 }
+
+// ============================================
+// Winners Functions
+// ============================================
+
+export async function getAllWinners() {
+  const { data, error } = await supabaseAdmin
+    .from("winners")
+    .select("*")
+    .order("display_order", { ascending: true });
+
+  if (error) {
+    console.error("Error fetching winners:", error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+export async function createWinner(winnerData: {
+  teamName: string;
+  projectTitle: string;
+  projectDescription: string;
+  prizeCategory: string;
+  prizeAmount?: string;
+  projectImageUrl?: string;
+  devpostUrl?: string;
+  githubUrl?: string;
+  teamMembers?: string[];
+  displayOrder?: number;
+}) {
+  const { data, error} = await supabaseAdmin
+    .from("winners")
+    .insert({
+      team_name: winnerData.teamName,
+      project_title: winnerData.projectTitle,
+      project_description: winnerData.projectDescription,
+      prize_category: winnerData.prizeCategory,
+      prize_amount: winnerData.prizeAmount,
+      project_image_url: winnerData.projectImageUrl,
+      devpost_url: winnerData.devpostUrl,
+      github_url: winnerData.githubUrl,
+      team_members: winnerData.teamMembers || [],
+      display_order: winnerData.displayOrder || 0,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error creating winner:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function updateWinner(id: number, updates: any) {
+  const { data, error } = await supabaseAdmin
+    .from("winners")
+    .update(updates)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error updating winner:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function deleteWinner(id: number) {
+  const { error } = await supabaseAdmin
+    .from("winners")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error deleting winner:", error);
+    throw error;
+  }
+
+  return { success: true };
+}

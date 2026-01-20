@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 
-type TabType = "users" | "announcements" | /* "teams" | */ "submissions" | "schedule" | "sponsors";
+type TabType = "users" | "announcements" | "judge_announcements" | /* "teams" | */ "submissions" | "schedule" | "sponsors" | "winners";
 
 function ScheduleTab() {
   const [title, setTitle] = useState("");
@@ -377,9 +377,12 @@ export default function AdminPanel() {
   const [announcementContent, setAnnouncementContent] = useState("");
   const [announcementCategory, setAnnouncementCategory] = useState("general");
   const [isPinned, setIsPinned] = useState(false);
+  const [judgeAnnouncementTitle, setJudgeAnnouncementTitle] = useState("");
+  const [judgeAnnouncementContent, setJudgeAnnouncementContent] = useState("");
 
   const { data: allUsers, isLoading: usersLoading, refetch: refetchUsers } = trpc.admin.getAllUsers.useQuery();
   const { data: announcements, isLoading: announcementsLoading, refetch: refetchAnnouncements } = trpc.announcements.list.useQuery();
+  const { data: judgeAnnouncements, isLoading: judgeAnnouncementsLoading, refetch: refetchJudgeAnnouncements } = trpc.admin.listJudgeAnnouncements.useQuery();
   // const { data: allTeams, isLoading: teamsLoading } = trpc.teams.list.useQuery();
   // const { data: teamsWithMembers, isLoading: teamsWithMembersLoading } = trpc.teams.getAllTeamsWithMembers.useQuery(undefined, {
   //   enabled: activeTab === 'teams' && user?.role === 'admin',
@@ -403,6 +406,16 @@ export default function AdminPanel() {
       setAnnouncementCategory("general");
       setIsPinned(false);
       refetchAnnouncements();
+    },
+    onError: (error: any) => toast.error(error.message),
+  });
+
+  const createJudgeAnnouncement = trpc.admin.createJudgeAnnouncement.useMutation({
+    onSuccess: () => {
+      toast.success("Judge announcement created!");
+      setJudgeAnnouncementTitle("");
+      setJudgeAnnouncementContent("");
+      refetchJudgeAnnouncements();
     },
     onError: (error: any) => toast.error(error.message),
   });
@@ -437,9 +450,11 @@ export default function AdminPanel() {
           {[
             { id: "users" as TabType, label: "Users", icon: Users },
             { id: "announcements" as TabType, label: "Announcements", icon: MessageSquare },
+            { id: "judge_announcements" as TabType, label: "Judge Announcements", icon: MessageSquare },
             // { id: "teams" as TabType, label: "Teams", icon: Trophy }, // Using Devpost for teams
             { id: "schedule" as TabType, label: "Schedule", icon: Calendar },
             { id: "sponsors" as TabType, label: "Sponsors", icon: Award },
+            { id: "winners" as TabType, label: "Winners", icon: Trophy },
             { id: "submissions" as TabType, label: "Submissions", icon: Settings },
           ].map((tab) => {
             const Icon = tab.icon;
@@ -641,6 +656,82 @@ export default function AdminPanel() {
           </div>
         )}
 
+        {/* Judge Announcements Tab */}
+        {activeTab === "judge_announcements" && (
+          <div className="space-y-6">
+            {/* Create Judge Announcement */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Create Judge Announcement</CardTitle>
+                <CardDescription>Post announcements visible only to judges</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">Title</label>
+                  <Input
+                    value={judgeAnnouncementTitle}
+                    onChange={(e) => setJudgeAnnouncementTitle(e.target.value)}
+                    placeholder="Announcement title"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Content</label>
+                  <textarea
+                    value={judgeAnnouncementContent}
+                    onChange={(e) => setJudgeAnnouncementContent(e.target.value)}
+                    placeholder="Announcement content for judges"
+                    rows={5}
+                    className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                  />
+                </div>
+                <Button
+                  className="w-full"
+                  onClick={() => {
+                    createJudgeAnnouncement.mutate({
+                      title: judgeAnnouncementTitle,
+                      content: judgeAnnouncementContent,
+                    });
+                  }}
+                  disabled={!judgeAnnouncementTitle || !judgeAnnouncementContent}
+                >
+                  Post Judge Announcement
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Recent Judge Announcements */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Judge Announcements</CardTitle>
+                <CardDescription>Announcements visible only to judges</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 max-h-96 overflow-y-auto">
+                  {judgeAnnouncementsLoading ? (
+                    <div className="flex justify-center py-8">
+                      <Loader2 className="h-6 w-6 animate-spin" />
+                    </div>
+                  ) : judgeAnnouncements && judgeAnnouncements.length > 0 ? (
+                    judgeAnnouncements.map((a: any) => (
+                      <div key={a.id} className="p-4 rounded-lg border">
+                        <h4 className="font-semibold mb-2">{a.title}</h4>
+                        <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{a.content}</p>
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(a.created_at).toLocaleDateString()}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-center text-muted-foreground py-8">
+                      No judge announcements yet. Create one above.
+                    </p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
         {/* Teams Tab - Commented out, using Devpost */}
         {/* {activeTab === "teams" && (
           <Card>
@@ -770,6 +861,37 @@ export default function AdminPanel() {
               </div>
             </CardContent>
           </Card>
+        )}
+
+        {/* Winners Tab */}
+        {activeTab === "winners" && (
+          <div className="space-y-6">
+            {/* Create Winner */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Add Winner</CardTitle>
+                <CardDescription>Add a winning team to the winners page</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-center text-muted-foreground py-8">
+                  Winners management interface coming soon. Run winners-setup.sql in Supabase first.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Winners List */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Current Winners</CardTitle>
+                <CardDescription>Manage winners displayed on the public page</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-center text-muted-foreground py-8">
+                  No winners added yet.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         )}
       </div>
     </PortalLayout>

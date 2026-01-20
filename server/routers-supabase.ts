@@ -315,6 +315,31 @@ export const appRouterSupabase = router({
 
         return await db.approvePortalAccess(input.userId);
       }),
+
+    createJudgeAnnouncement: protectedProcedure
+      .input(
+        z.object({
+          title: z.string(),
+          content: z.string(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+        if (ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can create judge announcements" });
+        }
+
+        return await db.createJudgeAnnouncement(input.title, input.content, ctx.user.id);
+      }),
+
+    listJudgeAnnouncements: protectedProcedure.query(async ({ ctx }) => {
+      if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (ctx.user.role !== "admin") {
+        throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can view judge announcements" });
+      }
+
+      return await db.getJudgeAnnouncements();
+    }),
   }),
 
   participants: router({  
@@ -487,6 +512,43 @@ export const appRouterSupabase = router({
 
       return await db.getJudgeAnnouncements();
     }),
+  }),
+
+  winners: router({
+    list: publicProcedure.query(async () => {
+      return await db.getAllWinners();
+    }),
+
+    create: protectedProcedure
+      .input(
+        z.object({
+          teamName: z.string(),
+          projectTitle: z.string(),
+          projectDescription: z.string(),
+          prizeCategory: z.string(),
+          prizeAmount: z.string().optional(),
+          projectImageUrl: z.string().optional(),
+          devpostUrl: z.string().optional(),
+          githubUrl: z.string().optional(),
+          teamMembers: z.array(z.string()).optional(),
+          displayOrder: z.number().optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can create winners" });
+        }
+        return await db.createWinner(input);
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        if (!ctx.user || ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Only admins can delete winners" });
+        }
+        return await db.deleteWinner(input.id);
+      }),
   }),
 });
 

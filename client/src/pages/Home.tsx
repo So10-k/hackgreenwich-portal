@@ -67,6 +67,13 @@ export default function Home() {
             >
               Sponsors
             </Button>
+            <Button
+              variant="ghost"
+              className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
+              onClick={() => setLocation("/winners")}
+            >
+              Winners
+            </Button>
             {user ? (
               <Button
                 className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white text-sm md:text-base px-3 md:px-4"
