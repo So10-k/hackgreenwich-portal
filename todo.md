@@ -389,3 +389,9 @@
 - [x] Add GlassFilter SVG component
 - [x] Update homepage Register Now button to use LiquidButton
 - [x] Test glass effect on dark background
+
+## Register Button Fix & Scroll Expansion
+- [x] Update LiquidButton to support red tint color variant
+- [x] Replace dual buttons (Register Now + Learn More) with single red-tinted liquid glass button
+- [x] Add scroll-based hero expansion effect with Framer Motion
+- [x] Implement smooth transitions as user scrolls down

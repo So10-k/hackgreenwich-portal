@@ -21,6 +21,10 @@ export default function Home() {
   const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
+  
+  // Logo expansion effect
+  const logoScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.5]);
+  const logoY = useTransform(scrollYProgress, [0, 0.3], [0, -50]);
 
   // Allow logged-in users to view homepage - they'll see Dashboard button instead
 
@@ -125,6 +129,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            style={{ scale: logoScale, y: logoY }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 text-white px-4"
           >
             Build the Future at
@@ -146,22 +151,15 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex justify-center items-center"
           >
             <LiquidButton
               size="xxl"
-              className="bg-gradient-to-r from-red-600 to-red-700 text-white font-bold shadow-lg shadow-red-500/50"
+              className="text-white font-bold text-xl px-12"
               onClick={() => setLocation("/signup")}
             >
-              Register Now <ArrowRight className="ml-2 h-5 w-5" />
+              Register Now <ArrowRight className="ml-2 h-6 w-6" />
             </LiquidButton>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-2 border-white/30 text-white hover:bg-white/10 text-lg px-8 py-6 rounded-full backdrop-blur-sm"
-            >
-              Learn More
-            </Button>
           </motion.div>
 
           <motion.div
