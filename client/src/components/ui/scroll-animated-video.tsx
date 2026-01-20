@@ -485,7 +485,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         /* System theme: define light defaults, override in dark */
         .hsv-root {
           /* Dark theme for HackGreenwich */
-          --bg: #0b0c10;
+          --bg: transparent;
           --text: #e5e7eb;
           --muted: #9ca3af;
           --muted-bg: rgba(229,231,235,0.08);
@@ -497,7 +497,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
           --shadow: 0 12px 36px rgba(0,0,0,0.35);
 
           color-scheme: dark;
-          background: var(--bg);
+          background: transparent;
           color: var(--text);
           font-family: Inter, Inter var, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
           overflow-x: clip;

@@ -336,7 +336,7 @@ export default function Home() {
           ),
         }}
         initialBoxSize={320}
-        scrollHeightVh={300}
+        scrollHeightVh={180}
         showHeroExitAnimation={true}
         smoothScroll={false}
       />
