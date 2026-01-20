@@ -464,3 +464,7 @@
 - [x] Fix scroll trigger timing so animation starts at correct scroll position
 - [x] Fix video and text positioning to be in correct place on screen
 - [x] Ensure smooth scroll experience with proper trigger points
+
+## Fix Scroll Video Vertical Position
+- [x] Add proper spacing/padding above scroll video section
+- [x] Position section lower on page so it appears at correct scroll position

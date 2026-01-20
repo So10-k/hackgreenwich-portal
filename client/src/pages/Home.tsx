@@ -312,6 +312,7 @@ export default function Home() {
       </section>
 
       {/* Scroll Animated Video Section */}
+      <section className="relative py-20">
       <HeroScrollVideo
         title="Ready to Build the Future?"
         subtitle="Join HackGreenwich 2026"
@@ -340,6 +341,7 @@ export default function Home() {
         showHeroExitAnimation={true}
         smoothScroll={false}
       />
+      </section>
 
       {/* Footer */}
       <footer className="relative py-12 border-t border-white/10 bg-black/20 backdrop-blur-md">
