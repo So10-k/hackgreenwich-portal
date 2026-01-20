@@ -316,6 +316,7 @@ export default function Home() {
         title="Ready to Build the Future?"
         subtitle="Join HackGreenwich 2026"
         meta="March 2026 • Greenwich, CT"
+        credits={null}
         media="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4"
         overlay={{
           caption: "HACKATHON • 2026",
@@ -334,8 +335,9 @@ export default function Home() {
             </Button>
           ),
         }}
-        initialBoxSize={360}
-        scrollHeightVh={200}
+        initialBoxSize={320}
+        scrollHeightVh={300}
+        showHeroExitAnimation={true}
         smoothScroll={false}
       />
 

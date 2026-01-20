@@ -458,3 +458,9 @@
 - [x] Fix video positioning to properly center on all screen sizes
 - [x] Make video box responsive and fill screen appropriately
 - [x] Ensure proper vertical centering without being too high
+
+## Critical Scroll Video Fixes
+- [x] Remove "Crafted by Scott Clayton" credits
+- [x] Fix scroll trigger timing so animation starts at correct scroll position
+- [x] Fix video and text positioning to be in correct place on screen
+- [x] Ensure smooth scroll experience with proper trigger points

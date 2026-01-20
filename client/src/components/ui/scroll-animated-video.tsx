@@ -88,12 +88,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
   title = "Future Forms",
   subtitle = "Design in Motion",
   meta = "2025",
-  credits = (
-    <>
-      <p>Crafted by</p>
-      <p>Scott Clayton</p>
-    </>
-  ),
+  credits = null,
 
   media,
   poster,
@@ -234,9 +229,9 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         heroTl = gsap.timeline({
           scrollTrigger: {
             trigger: headline,
-            start: "top top",
-            end: "top+=420 top",
-            scrub: 1.1,
+            start: "center center",
+            end: "bottom top",
+            scrub: 1.5,
           },
         });
 
