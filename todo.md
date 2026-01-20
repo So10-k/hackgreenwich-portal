@@ -433,3 +433,9 @@
 - [x] Update Winners page to use PublicHeader component
 - [x] Update Judges page to use PublicHeader component
 - [x] Remove all team references from Dashboard page
+
+## Improve Card Styling for Dark Theme
+- [x] Update Participants page cards with glassmorphism and better contrast
+- [x] Update Announcements page cards with glassmorphism and better contrast
+- [x] Update Profile page cards with glassmorphism and better contrast
+- [x] Update Judges Dashboard cards with glassmorphism and better contrast

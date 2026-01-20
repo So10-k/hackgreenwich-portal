@@ -20,26 +20,26 @@ export default function Announcements() {
 
   return (
     <PortalLayout>
-      <div className="p-8 space-y-6 bg-gradient-to-br from-background via-primary/5 to-background py-12">
+      <div className="p-8 space-y-6">
       <div className="container max-w-4xl mx-auto px-4">
-        <h1 className="text-4xl font-bold mb-8">Announcements</h1>
+        <h1 className="text-4xl font-bold mb-8 text-white">Announcements</h1>
         <div className="space-y-4">
           {announcements?.map((announcement) => (
-            <Card key={announcement.id}>
+            <Card key={announcement.id} className="bg-white/5 border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
               <CardHeader>
                 <div className="flex items-start justify-between">
-                  <CardTitle className="flex items-center gap-2">
-                    {announcement.isPinned && <Pin className="h-5 w-5 text-primary" />}
+                  <CardTitle className="flex items-center gap-2 text-white">
+                    {announcement.isPinned && <Pin className="h-5 w-5 text-red-400" />}
                     {announcement.title}
                   </CardTitle>
                   {announcement.category && (
-                    <span className="px-2 py-1 bg-primary/10 text-primary rounded text-xs">{announcement.category}</span>
+                    <span className="px-2 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded text-xs">{announcement.category}</span>
                   )}
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground whitespace-pre-wrap">{announcement.content}</p>
-                <p className="text-xs text-muted-foreground mt-4">
+                <p className="text-white/80 whitespace-pre-wrap">{announcement.content}</p>
+                <p className="text-xs text-white/50 mt-4">
                   {new Date(announcement.createdAt).toLocaleString()}
                 </p>
               </CardContent>

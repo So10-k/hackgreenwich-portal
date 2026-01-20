@@ -158,7 +158,7 @@ export default function Profile() {
     return (
       <PortalLayout>
         <div className="flex items-center justify-center min-h-[60vh]">
-          <Loader2 className="h-8 w-8 animate-spin text-purple-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-red-400" />
         </div>
       </PortalLayout>
     );
@@ -166,11 +166,11 @@ export default function Profile() {
 
   return (
     <PortalLayout>
-      <div className="space-y-6">
+      <div className="p-8 space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Your Profile</h1>
-          <p className="text-gray-600 mt-2">Complete your profile to help others find you for team formation</p>
+          <h1 className="text-3xl font-bold text-white">Your Profile</h1>
+          <p className="text-white/70 mt-2">Complete your profile to help others find you for team formation</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
@@ -178,28 +178,28 @@ export default function Profile() {
           <div className="lg:col-span-2 space-y-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Basic Info */}
-              <Card>
+              <Card className="bg-white/5 border-white/10 backdrop-blur-md">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <User className="h-5 w-5 text-purple-600" />
+                  <CardTitle className="flex items-center gap-2 text-white">
+                    <User className="h-5 w-5 text-red-400" />
                     Basic Information
                   </CardTitle>
-                  <CardDescription>Tell others about yourself</CardDescription>
+                  <CardDescription className="text-white/60">Tell others about yourself</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <Label htmlFor="name">Display Name</Label>
+                    <Label htmlFor="name" className="text-white">Display Name</Label>
                     <Input
                       id="name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Your name"
-                      className="mt-1"
+                      className="mt-1 bg-white/5 border-white/20 text-white placeholder:text-white/40"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="bio">Bio</Label>
+                    <Label htmlFor="bio" className="text-white">Bio</Label>
                     <Textarea
                       id="bio"
                       value={bio}
@@ -207,20 +207,20 @@ export default function Profile() {
                       placeholder="Write a brief introduction about yourself, your background, and what you're hoping to build at HackGreenwich..."
                       rows={4}
                       maxLength={500}
-                      className="mt-1"
+                      className="mt-1 bg-white/5 border-white/20 text-white placeholder:text-white/40"
                     />
-                    <p className="text-sm text-gray-500 mt-1">{bio.length}/500 characters</p>
+                    <p className="text-sm text-white/50 mt-1">{bio.length}/500 characters</p>
                   </div>
 
                   <div>
-                    <Label htmlFor="experienceLevel">Experience Level</Label>
+                    <Label htmlFor="experienceLevel" className="text-white">Experience Level</Label>
                     <Select value={experienceLevel} onValueChange={setExperienceLevel}>
-                      <SelectTrigger className="mt-1">
+                      <SelectTrigger className="mt-1 bg-white/5 border-white/20 text-white">
                         <SelectValue placeholder="Select your experience level" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-slate-900 border-white/20">
                         {EXPERIENCE_LEVELS.map((level) => (
-                          <SelectItem key={level.value} value={level.value}>
+                          <SelectItem key={level.value} value={level.value} className="text-white hover:bg-white/10">
                             {level.label}
                           </SelectItem>
                         ))}
@@ -231,13 +231,13 @@ export default function Profile() {
               </Card>
 
               {/* Skills */}
-              <Card>
+              <Card className="bg-white/5 border-white/10 backdrop-blur-md">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Code className="h-5 w-5 text-purple-600" />
+                  <CardTitle className="flex items-center gap-2 text-white">
+                    <Code className="h-5 w-5 text-yellow-400" />
                     Skills
                   </CardTitle>
-                  <CardDescription>What technologies and skills do you bring to a team?</CardDescription>
+                  <CardDescription className="text-white/60">What technologies and skills do you bring to a team?</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {/* Selected Skills */}
@@ -245,21 +245,20 @@ export default function Profile() {
                     {skills.map((skill) => (
                       <Badge
                         key={skill}
-                        variant="secondary"
-                        className="bg-purple-100 text-purple-700 hover:bg-purple-200 cursor-pointer"
+                        className="bg-gradient-to-r from-yellow-500/20 to-red-500/20 text-white border-white/10 hover:bg-yellow-500/30 cursor-pointer"
                       >
                         {skill}
                         <button
                           type="button"
                           onClick={() => handleRemoveSkill(skill)}
-                          className="ml-1 hover:text-purple-900"
+                          className="ml-1 hover:text-red-300"
                         >
                           <X className="h-3 w-3" />
                         </button>
                       </Badge>
                     ))}
                     {skills.length === 0 && (
-                      <p className="text-sm text-gray-500">No skills added yet</p>
+                      <p className="text-sm text-white/50">No skills added yet</p>
                     )}
                   </div>
 
@@ -274,13 +273,14 @@ export default function Profile() {
                         }}
                         onFocus={() => setShowSkillDropdown(true)}
                         placeholder="Type to search or add a skill..."
-                        className="flex-1"
+                        className="flex-1 bg-white/5 border-white/20 text-white placeholder:text-white/40"
                       />
                       <Button
                         type="button"
                         variant="outline"
                         onClick={() => customSkill && handleAddSkill(customSkill)}
                         disabled={!customSkill}
+                        className="bg-white/5 border-white/20 text-white hover:bg-white/10"
                       >
                         <Plus className="h-4 w-4" />
                       </Button>
@@ -288,13 +288,13 @@ export default function Profile() {
                     
                     {/* Dropdown */}
                     {showSkillDropdown && customSkill && filteredSkills.length > 0 && (
-                      <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-48 overflow-auto">
+                      <div className="absolute z-10 w-full mt-1 bg-slate-900 border border-white/20 rounded-md shadow-lg max-h-48 overflow-auto">
                         {filteredSkills.map((skill) => (
                           <button
                             key={skill}
                             type="button"
                             onClick={() => handleAddSkill(skill)}
-                            className="w-full px-3 py-2 text-left text-sm hover:bg-purple-50 hover:text-purple-700"
+                            className="w-full px-3 py-2 text-left text-sm text-white hover:bg-white/10"
                           >
                             {skill}
                           </button>
@@ -306,13 +306,13 @@ export default function Profile() {
               </Card>
 
               {/* Interests */}
-              <Card>
+              <Card className="bg-white/5 border-white/10 backdrop-blur-md">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Heart className="h-5 w-5 text-purple-600" />
+                  <CardTitle className="flex items-center gap-2 text-white">
+                    <Heart className="h-5 w-5 text-green-400" />
                     Interests
                   </CardTitle>
-                  <CardDescription>What areas are you passionate about?</CardDescription>
+                  <CardDescription className="text-white/60">What areas are you passionate about?</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {/* Selected Interests */}
@@ -320,21 +320,20 @@ export default function Profile() {
                     {interests.map((interest) => (
                       <Badge
                         key={interest}
-                        variant="secondary"
-                        className="bg-blue-100 text-blue-700 hover:bg-blue-200 cursor-pointer"
+                        className="bg-gradient-to-r from-green-500/20 to-blue-500/20 text-white border-white/10 hover:bg-green-500/30 cursor-pointer"
                       >
                         {interest}
                         <button
                           type="button"
                           onClick={() => handleRemoveInterest(interest)}
-                          className="ml-1 hover:text-blue-900"
+                          className="ml-1 hover:text-green-300"
                         >
                           <X className="h-3 w-3" />
                         </button>
                       </Badge>
                     ))}
                     {interests.length === 0 && (
-                      <p className="text-sm text-gray-500">No interests added yet</p>
+                      <p className="text-sm text-white/50">No interests added yet</p>
                     )}
                   </div>
 
@@ -349,13 +348,14 @@ export default function Profile() {
                         }}
                         onFocus={() => setShowInterestDropdown(true)}
                         placeholder="Type to search or add an interest..."
-                        className="flex-1"
+                        className="flex-1 bg-white/5 border-white/20 text-white placeholder:text-white/40"
                       />
                       <Button
                         type="button"
                         variant="outline"
                         onClick={() => customInterest && handleAddInterest(customInterest)}
                         disabled={!customInterest}
+                        className="bg-white/5 border-white/20 text-white hover:bg-white/10"
                       >
                         <Plus className="h-4 w-4" />
                       </Button>
@@ -363,13 +363,13 @@ export default function Profile() {
                     
                     {/* Dropdown */}
                     {showInterestDropdown && customInterest && filteredInterests.length > 0 && (
-                      <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-48 overflow-auto">
+                      <div className="absolute z-10 w-full mt-1 bg-slate-900 border border-white/20 rounded-md shadow-lg max-h-48 overflow-auto">
                         {filteredInterests.map((interest) => (
                           <button
                             key={interest}
                             type="button"
                             onClick={() => handleAddInterest(interest)}
-                            className="w-full px-3 py-2 text-left text-sm hover:bg-blue-50 hover:text-blue-700"
+                            className="w-full px-3 py-2 text-left text-sm text-white hover:bg-white/10"
                           >
                             {interest}
                           </button>
@@ -381,17 +381,17 @@ export default function Profile() {
               </Card>
 
               {/* Social Links */}
-              <Card>
+              <Card className="bg-white/5 border-white/10 backdrop-blur-md">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Globe className="h-5 w-5 text-purple-600" />
+                  <CardTitle className="flex items-center gap-2 text-white">
+                    <Globe className="h-5 w-5 text-blue-400" />
                     Social Links
                   </CardTitle>
-                  <CardDescription>Help others connect with you outside the platform</CardDescription>
+                  <CardDescription className="text-white/60">Help others connect with you outside the platform</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <Label htmlFor="githubUrl" className="flex items-center gap-2">
+                    <Label htmlFor="githubUrl" className="flex items-center gap-2 text-white">
                       <Github className="h-4 w-4" />
                       GitHub
                     </Label>
@@ -400,12 +400,12 @@ export default function Profile() {
                       value={githubUrl}
                       onChange={(e) => setGithubUrl(e.target.value)}
                       placeholder="https://github.com/username"
-                      className="mt-1"
+                      className="mt-1 bg-white/5 border-white/20 text-white placeholder:text-white/40"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="linkedinUrl" className="flex items-center gap-2">
+                    <Label htmlFor="linkedinUrl" className="flex items-center gap-2 text-white">
                       <Linkedin className="h-4 w-4" />
                       LinkedIn
                     </Label>
@@ -414,41 +414,41 @@ export default function Profile() {
                       value={linkedinUrl}
                       onChange={(e) => setLinkedinUrl(e.target.value)}
                       placeholder="https://linkedin.com/in/username"
-                      className="mt-1"
+                      className="mt-1 bg-white/5 border-white/20 text-white placeholder:text-white/40"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="portfolioUrl" className="flex items-center gap-2">
+                    <Label htmlFor="portfolioUrl" className="flex items-center gap-2 text-white">
                       <Globe className="h-4 w-4" />
-                      Portfolio/Website
+                      Portfolio
                     </Label>
                     <Input
                       id="portfolioUrl"
                       value={portfolioUrl}
                       onChange={(e) => setPortfolioUrl(e.target.value)}
-                      placeholder="https://yourportfolio.com"
-                      className="mt-1"
+                      placeholder="https://yourwebsite.com"
+                      className="mt-1 bg-white/5 border-white/20 text-white placeholder:text-white/40"
                     />
                   </div>
                 </CardContent>
               </Card>
 
               {/* Team Preferences */}
-              <Card>
+              <Card className="bg-white/5 border-white/10 backdrop-blur-md">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-purple-600" />
+                  <CardTitle className="flex items-center gap-2 text-white">
+                    <Users className="h-5 w-5 text-purple-400" />
                     Team Preferences
                   </CardTitle>
-                  <CardDescription>Let others know if you're looking for a team</CardDescription>
+                  <CardDescription className="text-white/60">Let others know if you're looking for a team</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label htmlFor="lookingForTeam">Looking for a team</Label>
-                      <p className="text-sm text-gray-500">
-                        Enable this to appear in the teammate finder
+                      <Label htmlFor="lookingForTeam" className="text-white">Looking for Team</Label>
+                      <p className="text-sm text-white/60">
+                        Show that you're open to team invitations
                       </p>
                     </div>
                     <Switch
@@ -463,7 +463,7 @@ export default function Profile() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
                 disabled={updateProfile.isPending}
               >
                 {updateProfile.isPending ? (
@@ -472,10 +472,7 @@ export default function Profile() {
                     Saving...
                   </>
                 ) : (
-                  <>
-                    <Sparkles className="mr-2 h-4 w-4" />
-                    Save Profile
-                  </>
+                  "Save Profile"
                 )}
               </Button>
             </form>
@@ -484,20 +481,20 @@ export default function Profile() {
           {/* Profile Preview */}
           <div className="lg:col-span-1">
             <div className="sticky top-6">
-              <Card>
+              <Card className="bg-white/5 border-white/10 backdrop-blur-md">
                 <CardHeader>
-                  <CardTitle className="text-lg">Profile Preview</CardTitle>
-                  <CardDescription>How others will see your profile</CardDescription>
+                  <CardTitle className="text-lg text-white">Profile Preview</CardTitle>
+                  <CardDescription className="text-white/60">How others will see your profile</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {/* Avatar and Name */}
                   <div className="text-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full mx-auto flex items-center justify-center text-white text-2xl font-bold">
-                      {name ? name.charAt(0).toUpperCase() : "?"}
+                    <div className="h-20 w-20 rounded-full bg-gradient-to-br from-red-400 via-yellow-400 to-green-400 flex items-center justify-center text-white font-bold text-2xl mx-auto mb-3">
+                      {name?.[0]?.toUpperCase() || <User className="h-10 w-10" />}
                     </div>
-                    <h3 className="mt-3 font-semibold text-gray-900">{name || "Your Name"}</h3>
+                    <h3 className="font-semibold text-lg text-white">{name || "Your Name"}</h3>
                     {experienceLevel && (
-                      <Badge variant="outline" className="mt-1">
+                      <Badge variant="outline" className="mt-2 bg-white/5 border-white/20 text-white/70">
                         {EXPERIENCE_LEVELS.find(l => l.value === experienceLevel)?.label || experienceLevel}
                       </Badge>
                     )}
@@ -505,34 +502,24 @@ export default function Profile() {
 
                   {/* Bio */}
                   {bio && (
-                    <div>
-                      <p className="text-sm text-gray-600 text-center">{bio}</p>
-                    </div>
-                  )}
-
-                  {/* Looking for Team Badge */}
-                  {lookingForTeam && (
-                    <div className="flex justify-center">
-                      <Badge className="bg-green-100 text-green-700">
-                        <Users className="h-3 w-3 mr-1" />
-                        Looking for team
-                      </Badge>
+                    <div className="pt-4 border-t border-white/10">
+                      <p className="text-sm text-white/70">{bio}</p>
                     </div>
                   )}
 
                   {/* Skills Preview */}
                   {skills.length > 0 && (
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">Skills</h4>
+                    <div className="pt-4 border-t border-white/10">
+                      <p className="text-sm font-medium mb-2 text-white">Skills</p>
                       <div className="flex flex-wrap gap-1">
-                        {skills.slice(0, 5).map((skill) => (
-                          <Badge key={skill} variant="secondary" className="text-xs bg-purple-100 text-purple-700">
+                        {skills.slice(0, 6).map((skill) => (
+                          <Badge key={skill} className="text-xs bg-gradient-to-r from-yellow-500/20 to-red-500/20 text-white border-white/10">
                             {skill}
                           </Badge>
                         ))}
-                        {skills.length > 5 && (
-                          <Badge variant="secondary" className="text-xs">
-                            +{skills.length - 5} more
+                        {skills.length > 6 && (
+                          <Badge variant="outline" className="text-xs bg-white/5 border-white/20 text-white/70">
+                            +{skills.length - 6}
                           </Badge>
                         )}
                       </div>
@@ -541,17 +528,17 @@ export default function Profile() {
 
                   {/* Interests Preview */}
                   {interests.length > 0 && (
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-700 mb-2">Interests</h4>
+                    <div className="pt-4 border-t border-white/10">
+                      <p className="text-sm font-medium mb-2 text-white">Interests</p>
                       <div className="flex flex-wrap gap-1">
                         {interests.slice(0, 4).map((interest) => (
-                          <Badge key={interest} variant="secondary" className="text-xs bg-blue-100 text-blue-700">
+                          <Badge key={interest} className="text-xs bg-gradient-to-r from-green-500/20 to-blue-500/20 text-white border-white/10">
                             {interest}
                           </Badge>
                         ))}
                         {interests.length > 4 && (
-                          <Badge variant="secondary" className="text-xs">
-                            +{interests.length - 4} more
+                          <Badge variant="outline" className="text-xs bg-white/5 border-white/20 text-white/70">
+                            +{interests.length - 4}
                           </Badge>
                         )}
                       </div>
@@ -560,22 +547,35 @@ export default function Profile() {
 
                   {/* Social Links Preview */}
                   {(githubUrl || linkedinUrl || portfolioUrl) && (
-                    <div className="flex justify-center gap-3 pt-2">
-                      {githubUrl && (
-                        <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">
-                          <Github className="h-5 w-5" />
-                        </a>
-                      )}
-                      {linkedinUrl && (
-                        <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600">
-                          <Linkedin className="h-5 w-5" />
-                        </a>
-                      )}
-                      {portfolioUrl && (
-                        <a href={portfolioUrl} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-purple-600">
-                          <Globe className="h-5 w-5" />
-                        </a>
-                      )}
+                    <div className="pt-4 border-t border-white/10">
+                      <p className="text-sm font-medium mb-2 text-white">Connect</p>
+                      <div className="flex gap-2">
+                        {githubUrl && (
+                          <Button size="sm" variant="outline" className="flex-1 bg-white/5 border-white/20 text-white hover:bg-white/10">
+                            <Github className="h-4 w-4" />
+                          </Button>
+                        )}
+                        {linkedinUrl && (
+                          <Button size="sm" variant="outline" className="flex-1 bg-white/5 border-white/20 text-white hover:bg-white/10">
+                            <Linkedin className="h-4 w-4" />
+                          </Button>
+                        )}
+                        {portfolioUrl && (
+                          <Button size="sm" variant="outline" className="flex-1 bg-white/5 border-white/20 text-white hover:bg-white/10">
+                            <Globe className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Team Status */}
+                  {lookingForTeam && (
+                    <div className="pt-4 border-t border-white/10">
+                      <Badge className="w-full justify-center bg-green-500/20 text-green-400 border-green-500/30">
+                        <Sparkles className="h-3 w-3 mr-1" />
+                        Looking for Team
+                      </Badge>
                     </div>
                   )}
                 </CardContent>

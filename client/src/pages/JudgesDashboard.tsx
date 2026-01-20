@@ -21,29 +21,29 @@ export default function JudgesDashboard() {
 
   return (
     <PortalLayout>
-      <div className="space-y-8">
+      <div className="p-8 space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-4xl font-bold mb-2">Judges Portal</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-4xl font-bold mb-2 text-white">Judges Portal</h1>
+          <p className="text-white/70">
             Welcome to the HackGreenwich judges dashboard. View participants, announcements, and access Devpost submissions.
           </p>
         </div>
 
         {/* Devpost Link Card */}
-        <Card className="border-purple-500/20 bg-gradient-to-r from-purple-500/5 to-violet-500/10">
+        <Card className="bg-white/5 border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <ExternalLink className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-white">
+              <ExternalLink className="h-5 w-5 text-purple-400" />
               Devpost Submissions
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-white/60">
               View all project submissions on Devpost
             </CardDescription>
           </CardHeader>
           <CardContent>
             <SafeExternalLink href="https://hackgreenwich.devpost.com">
-              <Button className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700">
+              <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white">
                 Open Devpost <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
             </SafeExternalLink>
@@ -51,13 +51,13 @@ export default function JudgesDashboard() {
         </Card>
 
         {/* Judge Announcements */}
-        <Card>
+        <Card className="bg-white/5 border-white/10 backdrop-blur-md">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Bell className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Bell className="h-5 w-5 text-yellow-400" />
               Judge Announcements
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-white/60">
               Important updates and information for judges
             </CardDescription>
           </CardHeader>
@@ -71,11 +71,11 @@ export default function JudgesDashboard() {
                 {announcements.map((announcement: any) => (
                   <div
                     key={announcement.id}
-                    className="p-4 bg-muted rounded-lg border"
+                    className="p-4 bg-white/5 rounded-lg border border-white/10"
                   >
-                    <h3 className="font-semibold text-lg mb-2">{announcement.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">{announcement.content}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <h3 className="font-semibold text-lg mb-2 text-white">{announcement.title}</h3>
+                    <p className="text-sm text-white/70 mb-2">{announcement.content}</p>
+                    <p className="text-xs text-white/50">
                       Posted {new Date(announcement.created_at).toLocaleDateString()} at{" "}
                       {new Date(announcement.created_at).toLocaleTimeString()}
                     </p>
@@ -83,7 +83,7 @@ export default function JudgesDashboard() {
                 ))}
               </div>
             ) : (
-              <p className="text-center text-muted-foreground py-8">
+              <p className="text-center text-white/60 py-8">
                 No announcements yet. Check back later for updates.
               </p>
             )}
@@ -91,13 +91,13 @@ export default function JudgesDashboard() {
         </Card>
 
         {/* Participants List */}
-        <Card>
+        <Card className="bg-white/5 border-white/10 backdrop-blur-md">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Users className="h-5 w-5 text-red-400" />
               All Participants
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-white/60">
               View all registered participants with their contact information and skills
             </CardDescription>
           </CardHeader>
@@ -105,12 +105,12 @@ export default function JudgesDashboard() {
             {/* Search */}
             <div className="mb-6">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
                 <Input
                   placeholder="Search by name, email, or skills..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-white/40"
                 />
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function JudgesDashboard() {
               <div className="flex items-center justify-center py-12">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-                  <p className="text-muted-foreground">Loading participants...</p>
+                  <p className="text-white/60">Loading participants...</p>
                 </div>
               </div>
             ) : filteredParticipants && filteredParticipants.length > 0 ? (
@@ -127,32 +127,32 @@ export default function JudgesDashboard() {
                 {filteredParticipants.map((participant: any) => (
                   <div
                     key={participant.id}
-                    className="p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                    className="p-4 border border-white/10 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                       <div className="flex-1 space-y-2">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-semibold text-lg">{participant.name || "No name provided"}</h3>
+                          <h3 className="font-semibold text-lg text-white">{participant.name || "No name provided"}</h3>
                           {participant.role === "admin" && (
-                            <Badge variant="destructive">Admin</Badge>
+                            <Badge className="bg-red-500/20 text-red-400 border-red-500/30">Admin</Badge>
                           )}
                         </div>
                         
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2 text-sm text-white/70">
                           <Mail className="h-4 w-4" />
-                          <a href={`mailto:${participant.email}`} className="hover:underline">
+                          <a href={`mailto:${participant.email}`} className="hover:underline hover:text-white">
                             {participant.email}
                           </a>
                         </div>
 
                         {participant.bio && (
-                          <p className="text-sm text-muted-foreground">{participant.bio}</p>
+                          <p className="text-sm text-white/70">{participant.bio}</p>
                         )}
 
                         {participant.skills && participant.skills.length > 0 && (
                           <div className="flex flex-wrap gap-2">
                             {participant.skills.map((skill: string, idx: number) => (
-                              <Badge key={idx} variant="secondary" className="text-xs">
+                              <Badge key={idx} className="text-xs bg-gradient-to-r from-red-500/20 to-yellow-500/20 text-white border-white/10">
                                 {skill}
                               </Badge>
                             ))}
@@ -162,7 +162,7 @@ export default function JudgesDashboard() {
                         <div className="flex flex-wrap gap-2">
                           {participant.github_username && (
                             <SafeExternalLink href={`https://github.com/${participant.github_username}`}>
-                              <Button variant="outline" size="sm" className="gap-2">
+                              <Button variant="outline" size="sm" className="gap-2 bg-white/5 border-white/20 text-white hover:bg-white/10">
                                 <Github className="h-4 w-4" />
                                 GitHub
                               </Button>
@@ -170,7 +170,7 @@ export default function JudgesDashboard() {
                           )}
                           {participant.linkedin_username && (
                             <SafeExternalLink href={`https://linkedin.com/in/${participant.linkedin_username}`}>
-                              <Button variant="outline" size="sm" className="gap-2">
+                              <Button variant="outline" size="sm" className="gap-2 bg-white/5 border-white/20 text-white hover:bg-white/10">
                                 <Linkedin className="h-4 w-4" />
                                 LinkedIn
                               </Button>
@@ -178,7 +178,7 @@ export default function JudgesDashboard() {
                           )}
                           {participant.portfolio_url && (
                             <SafeExternalLink href={participant.portfolio_url}>
-                              <Button variant="outline" size="sm" className="gap-2">
+                              <Button variant="outline" size="sm" className="gap-2 bg-white/5 border-white/20 text-white hover:bg-white/10">
                                 <Globe className="h-4 w-4" />
                                 Portfolio
                               </Button>
@@ -191,7 +191,7 @@ export default function JudgesDashboard() {
                 ))}
               </div>
             ) : (
-              <p className="text-center text-muted-foreground py-12">
+              <p className="text-center text-white/60 py-12">
                 {searchQuery ? "No participants match your search." : "No participants registered yet."}
               </p>
             )}
