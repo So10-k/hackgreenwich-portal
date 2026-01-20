@@ -2,7 +2,7 @@ import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
 import { Button, LiquidButton } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Code, Users, Trophy, Sparkles, ArrowRight, Calendar, MapPin } from "lucide-react";
-import { MobileMenu } from "@/components/MobileMenu";
+import { PublicHeader } from "@/components/PublicHeader";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 
@@ -123,60 +123,7 @@ export default function Home() {
         />
       </div>
 
-      {/* Glassmorphism Navigation */}
-      <header className="fixed top-0 left-0 right-0 z-50 xl:top-4">
-        <div className="mx-6 flex items-center justify-between pt-4">
-            <img 
-              src="/hackgreenwich-logo.png" 
-              alt="HackGreenwich" 
-              className="h-10 md:h-12 cursor-pointer" 
-              onClick={() => setLocation("/")}
-            />
-
-            <nav className="hidden md:flex items-center gap-2">
-              <div className="flex items-center gap-1 rounded-full bg-white/5 px-1 py-1 ring-1 ring-white/10 backdrop-blur">
-                <button
-                  onClick={() => setLocation("/schedule")}
-                  className="px-3 py-2 text-sm font-medium text-white/80 hover:text-white/90 transition-colors"
-                >
-                  Schedule
-                </button>
-                <button
-                  onClick={() => setLocation("/sponsors")}
-                  className="px-3 py-2 text-sm font-medium text-white/80 hover:text-white/90 transition-colors"
-                >
-                  Sponsors
-                </button>
-                <button
-                  onClick={() => setLocation("/winners")}
-                  className="px-3 py-2 text-sm font-medium text-white/80 hover:text-white/90 transition-colors"
-                >
-                  Winners
-                </button>
-                {user ? (
-                  <button
-                    onClick={() => setLocation("/dashboard")}
-                    className="ml-1 inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-sm font-medium text-neutral-900 hover:bg-white/90 transition-colors"
-                  >
-                    Dashboard
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => setLocation("/signup")}
-                    className="ml-1 inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-sm font-medium text-neutral-900 hover:bg-white/90 transition-colors"
-                  >
-                    Get Started
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                )}
-              </div>
-            </nav>
-          
-            {/* Mobile Menu */}
-            <MobileMenu user={user} onNavigate={setLocation} />
-        </div>
-      </header>
+      <PublicHeader />
 
       {/* Hero Section with Scroll Expansion */}
       <section className="min-h-screen flex items-center justify-center relative pt-20">

@@ -439,3 +439,7 @@
 - [x] Update Announcements page cards with glassmorphism and better contrast
 - [x] Update Profile page cards with glassmorphism and better contrast
 - [x] Update Judges Dashboard cards with glassmorphism and better contrast
+
+## Fix Homepage Header and Participant Cards
+- [x] Update homepage header to use PublicHeader component
+- [x] Redesign participant cards to match profile preview style (avatar circles, better layout)

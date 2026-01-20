@@ -71,92 +71,96 @@ export default function Participants() {
         {filteredParticipants && filteredParticipants.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"> {filteredParticipants.map((participant: any) => (
               <Card key={participant.id} className="bg-white/5 border-white/10 backdrop-blur-md hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="h-12 w-12 rounded-full bg-gradient-to-br from-red-400 via-yellow-400 to-green-400 flex items-center justify-center text-white font-bold text-lg">
-                        {participant.name?.[0]?.toUpperCase() || <User className="h-6 w-6" />}
-                      </div>
-                      <div>
-                        <CardTitle className="text-lg text-white">{participant.name || "Anonymous"}</CardTitle>
-                      </div>
+                <CardContent className="pt-6 space-y-4">
+                  {/* Avatar and Name - Centered */}
+                  <div className="text-center">
+                    <div className="h-20 w-20 rounded-full bg-gradient-to-br from-red-400 via-yellow-400 to-green-400 flex items-center justify-center text-white font-bold text-2xl mx-auto mb-3">
+                      {participant.name?.[0]?.toUpperCase() || <User className="h-10 w-10" />}
                     </div>
+                    <h3 className="font-semibold text-lg text-white">{participant.name || "Anonymous"}</h3>
                     {participant.role === "admin" && (
-                      <Badge className="flex items-center gap-1 bg-red-500/20 text-red-400 border-red-500/30">
-                        <Shield className="h-3 w-3" />
+                      <Badge className="mt-2 bg-red-500/20 text-red-400 border-red-500/30">
+                        <Shield className="h-3 w-3 mr-1" />
                         Admin
                       </Badge>
                     )}
+                    {participant.experience_level && (
+                      <Badge variant="outline" className="mt-2 bg-white/5 border-white/20 text-white/70">
+                        {participant.experience_level}
+                      </Badge>
+                    )}
                   </div>
-                </CardHeader>
-                <CardContent className="space-y-3">
+
+                  {/* Bio */}
+                  {participant.bio && (
+                    <div className="pt-4 border-t border-white/10">
+                      <p className="text-sm text-white/70 text-center line-clamp-3">{participant.bio}</p>
+                    </div>
+                  )}
+
                   {/* Skills */}
                   {participant.skills && participant.skills.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
-                      {participant.skills.slice(0, 5).map((skill: string, idx: number) => (
-                        <Badge key={idx} className="text-xs bg-gradient-to-r from-red-500/20 to-yellow-500/20 text-white border-white/10">
-                          {skill}
-                        </Badge>
-                      ))}
-                      {participant.skills.length > 5 && (
-                        <Badge variant="outline" className="text-xs bg-white/5 border-white/20 text-white/70">
-                          +{participant.skills.length - 5} more
-                        </Badge>
-                      )}
+                    <div className="pt-4 border-t border-white/10">
+                      <p className="text-sm font-medium mb-2 text-white text-center">Skills</p>
+                      <div className="flex flex-wrap gap-1 justify-center">
+                        {participant.skills.slice(0, 6).map((skill: string, idx: number) => (
+                          <Badge key={idx} className="text-xs bg-gradient-to-r from-yellow-500/20 to-red-500/20 text-white border-white/10">
+                            {skill}
+                          </Badge>
+                        ))}
+                        {participant.skills.length > 6 && (
+                          <Badge variant="outline" className="text-xs bg-white/5 border-white/20 text-white/70">
+                            +{participant.skills.length - 6}
+                          </Badge>
+                        )}
+                      </div>
                     </div>
                   )}
 
                   {/* Social Links */}
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    {participant.github_url && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex-1 bg-white/5 border-white/20 text-white hover:bg-white/10"
-                        asChild
-                      >
-                        <SafeExternalLink
-                          href={participant.github_url}
-                          className="flex items-center justify-center gap-2"
-                        >
-                          <Github className="h-4 w-4" />
-                          GitHub
-                        </SafeExternalLink>
-                      </Button>
-                    )}
-                    {participant.linkedin_url && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex-1 bg-white/5 border-white/20 text-white hover:bg-white/10"
-                        asChild
-                      >
-                        <SafeExternalLink
-                          href={participant.linkedin_url}
-                          className="flex items-center justify-center gap-2"
-                        >
-                          <Linkedin className="h-4 w-4" />
-                          LinkedIn
-                        </SafeExternalLink>
-                      </Button>
-                    )}
-                    {participant.portfolio_url && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex-1 bg-white/5 border-white/20 text-white hover:bg-white/10"
-                        asChild
-                      >
-                        <SafeExternalLink
-                          href={participant.portfolio_url}
-                          className="flex items-center justify-center gap-2"
-                        >
-                          <Globe className="h-4 w-4" />
-                          Portfolio
-                        </SafeExternalLink>
-                      </Button>
-                    )}
-                  </div>
+                  {(participant.github_url || participant.linkedin_url || participant.portfolio_url) && (
+                    <div className="pt-4 border-t border-white/10">
+                      <p className="text-sm font-medium mb-2 text-white text-center">Connect</p>
+                      <div className="flex gap-2 justify-center">
+                        {participant.github_url && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="bg-white/5 border-white/20 text-white hover:bg-white/10"
+                            asChild
+                          >
+                            <SafeExternalLink href={participant.github_url}>
+                              <Github className="h-4 w-4" />
+                            </SafeExternalLink>
+                          </Button>
+                        )}
+                        {participant.linkedin_url && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="bg-white/5 border-white/20 text-white hover:bg-white/10"
+                            asChild
+                          >
+                            <SafeExternalLink href={participant.linkedin_url}>
+                              <Linkedin className="h-4 w-4" />
+                            </SafeExternalLink>
+                          </Button>
+                        )}
+                        {participant.portfolio_url && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="bg-white/5 border-white/20 text-white hover:bg-white/10"
+                            asChild
+                          >
+                            <SafeExternalLink href={participant.portfolio_url}>
+                              <Globe className="h-4 w-4" />
+                            </SafeExternalLink>
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
