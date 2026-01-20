@@ -4,14 +4,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Award } from "lucide-react";
-import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
 import { SafeExternalLink } from "@/components/ExternalLinkDialog";
-import { MobileMenu } from "@/components/MobileMenu";
+import { PublicHeader } from "@/components/PublicHeader";
 
 export default function Sponsors() {
   const { data: sponsors, isLoading } = trpc.sponsors.list.useQuery();
   const [, setLocation] = useLocation();
-  const { user } = useSupabaseAuth();
 
   const handleBecomeASponsor = () => {
     const subject = encodeURIComponent("HackGreenwich 2026 - Sponsorship Inquiry");
@@ -85,58 +83,7 @@ export default function Sponsors() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
-        <div className="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-12 md:h-16 lg:h-20 cursor-pointer" onClick={() => setLocation("/")} />
-          </div>
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-3">
-            <Button
-              variant="ghost"
-              className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
-              onClick={() => setLocation("/schedule")}
-            >
-              Schedule
-            </Button>
-            <Button
-              variant="ghost"
-              className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
-              onClick={() => setLocation("/sponsors")}
-            >
-              Sponsors
-            </Button>
-            {user ? (
-              <Button
-                className="bg-red-600 hover:bg-red-700 text-white text-sm md:text-base px-3 md:px-4"
-                onClick={() => setLocation("/dashboard")}
-              >
-                Dashboard
-              </Button>
-            ) : (
-              <>
-                <Button
-                  variant="ghost"
-                  className="text-white hover:bg-white/10 text-sm md:text-base px-2 md:px-4"
-                  onClick={() => setLocation("/signin")}
-                >
-                  Sign In
-                </Button>
-                <Button
-                  className="bg-red-600 hover:bg-red-700 text-white text-sm md:text-base px-3 md:px-4"
-                  onClick={() => setLocation("/signup")}
-                >
-                  Get Started
-                </Button>
-              </>
-            )}
-          </div>
-          
-          {/* Mobile Menu */}
-          <MobileMenu user={user} onNavigate={setLocation} />
-        </div>
-      </nav>
+      <PublicHeader />
 
       <div className="pt-20">
         <div className="container py-12 space-y-8">

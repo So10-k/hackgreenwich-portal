@@ -423,3 +423,13 @@
 - [x] Create "Judges" group (visible to judges only)
 - [x] Create "Admin" group (visible to admins only)
 - [x] Keep individual page components unchanged
+
+## Apply Sidebar Template and Consistent Headers
+- [x] Apply sidebar template from pasted_content_10.txt to PortalLayout
+- [x] Create reusable PublicHeader component with glassmorphism navigation
+- [x] Update Home page to use PublicHeader component
+- [x] Update Schedule page to use PublicHeader component
+- [x] Update Sponsors page to use PublicHeader component
+- [x] Update Winners page to use PublicHeader component
+- [x] Update Judges page to use PublicHeader component
+- [x] Remove all team references from Dashboard page

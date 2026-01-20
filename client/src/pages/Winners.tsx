@@ -4,12 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Trophy, ExternalLink, Github, Users } from "lucide-react";
 import { SafeExternalLink } from "@/components/ExternalLinkDialog";
 import { Link, useLocation } from "wouter";
-import { MobileMenu } from "@/components/MobileMenu";
-import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
+import { PublicHeader } from "@/components/PublicHeader";
 
 export default function Winners() {
   const { data: winners, isLoading } = trpc.winners.list.useQuery();
-  const { user } = useSupabaseAuth();
   const [, setLocation] = useLocation();
 
   const getPrizeBadgeColor = (category: string) => {
@@ -27,40 +25,7 @@ export default function Winners() {
 
   return (
     <div className="min-h-screen bg-slate-950">
-      {/* Navigation */}
-      <nav className="border-b border-slate-800 bg-slate-950/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/">
-              <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-20 cursor-pointer" />
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-6">
-              <Link href="/schedule">
-                <a className="text-slate-300 hover:text-white transition-colors">Schedule</a>
-              </Link>
-              <Link href="/sponsors">
-                <a className="text-slate-300 hover:text-white transition-colors">Sponsors</a>
-              </Link>
-              <Link href="/winners">
-                <a className="text-white font-semibold">Winners</a>
-              </Link>
-              <Link href="/signin">
-                <a className="text-slate-300 hover:text-white transition-colors">Sign In</a>
-              </Link>
-              <Link href="/signup">
-                <Button className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800">
-                  Get Started
-                </Button>
-              </Link>
-            </div>
-
-            {/* Mobile Menu */}
-            <MobileMenu user={user} onNavigate={(path) => setLocation(path)} />
-          </div>
-        </div>
-      </nav>
+      <PublicHeader />
 
       {/* Hero Section */}
       <div className="relative py-20 px-4">
