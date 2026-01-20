@@ -474,3 +474,9 @@
 - [x] Fix initial display to show headline first, not overlay content
 - [x] Ensure proper scroll distance before video section appears
 - [x] Fix scroll trigger so overlay appears at correct time
+
+## Fix Scroll Video Visibility and Add Content Sections
+- [x] Remove excessive pt-40 padding that pushed video off-screen
+- [x] Add "Why HackGreenwich?" section between stats and scroll video
+- [x] Implement scroll snap points for smooth section navigation
+- [x] Ensure scroll video is visible and properly positioned

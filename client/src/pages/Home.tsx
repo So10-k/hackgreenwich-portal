@@ -104,7 +104,16 @@ export default function Home() {
   // Allow logged-in users to view homepage - they'll see Dashboard button instead
 
   return (
-    <div ref={containerRef} className="relative overflow-hidden">
+    <div ref={containerRef} className="relative overflow-hidden scroll-smooth">
+      <style>{`
+        html {
+          scroll-snap-type: y proximity;
+        }
+        section {
+          scroll-snap-align: start;
+          scroll-snap-stop: normal;
+        }
+      `}</style>
       {/* Fixed background with gradient - Softer brand colors */}
       <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 -z-10" />
       
@@ -127,7 +136,7 @@ export default function Home() {
       <PublicHeader />
 
       {/* Hero Section with Scroll Expansion */}
-      <section className="min-h-screen flex items-center justify-center relative pt-20">
+      <section className="min-h-screen flex items-center justify-center relative pt-20 scroll-snap-align-start">
         <div className="relative w-full flex flex-col items-center min-h-screen">
           {/* Expanding container */}
           <div className="flex flex-col items-center justify-center w-full h-screen relative">
@@ -311,8 +320,61 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Why HackGreenwich Section */}
+      <section className="relative py-20">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Why <span className="bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">HackGreenwich</span>?
+            </h2>
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              More than just a hackathon—it's where innovation meets opportunity
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: "💡",
+                title: "Learn & Build",
+                description: "Workshops, mentorship, and hands-on experience with cutting-edge technologies"
+              },
+              {
+                icon: "🤝",
+                title: "Network",
+                description: "Connect with fellow innovators, industry professionals, and potential teammates"
+              },
+              {
+                icon: "🏆",
+                title: "Win Prizes",
+                description: "Compete for amazing prizes, recognition, and opportunities to showcase your work"
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="relative p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:transform hover:scale-105"
+              >
+                <div className="text-5xl mb-4">{feature.icon}</div>
+                <h3 className="text-2xl font-bold text-white mb-3">{feature.title}</h3>
+                <p className="text-white/70">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Scroll Animated Video Section */}
-      <section className="relative pt-40 pb-20">
+      <section className="relative py-20">
       <HeroScrollVideo
         title="Ready to Build the Future?"
         subtitle="Join HackGreenwich 2026"
