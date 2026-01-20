@@ -395,3 +395,10 @@
 - [x] Replace dual buttons (Register Now + Learn More) with single red-tinted liquid glass button
 - [x] Add scroll-based hero expansion effect with Framer Motion
 - [x] Implement smooth transitions as user scrolls down
+
+## Scroll Expansion Hero
+- [x] Create scroll progress state management with wheel and touch events
+- [x] Implement compact centered initial state for hero content
+- [x] Add expansion animations that morph into full-width layout
+- [x] Prevent normal scrolling until expansion completes
+- [x] Test on desktop (wheel) and mobile (touch) devices
