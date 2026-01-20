@@ -402,3 +402,10 @@
 - [x] Add expansion animations that morph into full-width layout
 - [x] Prevent normal scrolling until expansion completes
 - [x] Test on desktop (wheel) and mobile (touch) devices
+
+## Glassmorphism Navbar Adaptation
+- [x] Replace existing navigation with glassmorphism navbar from ResponsiveHeroBanner
+- [x] Keep HackGreenwich logo and branding
+- [x] Maintain mobile hamburger menu functionality
+- [x] Add fade-slide-in animations to CSS
+- [x] Add Instrument Serif font for headings
