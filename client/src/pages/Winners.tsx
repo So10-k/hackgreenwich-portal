@@ -70,7 +70,7 @@ export default function Winners() {
             <Trophy className="h-5 w-5 text-yellow-500" />
             <span className="text-yellow-500 font-semibold">HackGreenwich 2026 Winners</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
             Congratulations to Our
             <br />
             <span className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
@@ -108,8 +108,8 @@ export default function Winners() {
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4 mb-2">
                     <div className="flex-1">
-                      <CardTitle className="text-2xl mb-2">{winner.project_title}</CardTitle>
-                      <CardDescription className="text-slate-400">{winner.team_name}</CardDescription>
+                      <CardTitle className="text-2xl mb-2 text-white">{winner.project_title}</CardTitle>
+                      <CardDescription className="text-slate-300">{winner.team_name}</CardDescription>
                     </div>
                     <div className={`px-3 py-1 rounded-full border text-sm font-semibold whitespace-nowrap ${getPrizeBadgeColor(winner.prize_category)}`}>
                       {winner.prize_category}
@@ -122,14 +122,14 @@ export default function Winners() {
                   )}
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-slate-300">{winner.project_description}</p>
+                  <p className="text-slate-200">{winner.project_description}</p>
 
                   {winner.team_members && winner.team_members.length > 0 && (
                     <div className="flex items-start gap-2">
                       <Users className="h-5 w-5 text-slate-400 mt-0.5" />
                       <div className="flex flex-wrap gap-2">
                         {winner.team_members.map((member: string, idx: number) => (
-                          <span key={idx} className="px-2 py-1 bg-slate-800 rounded text-sm text-slate-300">
+                          <span key={idx} className="px-2 py-1 bg-slate-800 rounded text-sm text-slate-200">
                             {member}
                           </span>
                         ))}
@@ -140,7 +140,7 @@ export default function Winners() {
                   <div className="flex flex-wrap gap-2">
                     {winner.devpost_url && (
                       <SafeExternalLink href={winner.devpost_url}>
-                        <Button variant="outline" size="sm" className="gap-2">
+                        <Button variant="outline" size="sm" className="gap-2 border-slate-600 text-white hover:bg-slate-800 hover:text-white">
                           <ExternalLink className="h-4 w-4" />
                           Devpost
                         </Button>
@@ -148,7 +148,7 @@ export default function Winners() {
                     )}
                     {winner.github_url && (
                       <SafeExternalLink href={winner.github_url}>
-                        <Button variant="outline" size="sm" className="gap-2">
+                        <Button variant="outline" size="sm" className="gap-2 border-slate-600 text-white hover:bg-slate-800 hover:text-white">
                           <Github className="h-4 w-4" />
                           GitHub
                         </Button>

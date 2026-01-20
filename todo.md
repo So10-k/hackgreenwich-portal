@@ -378,3 +378,8 @@
 - [x] Add PortalLayout with sidebar navigation to Judges Dashboard
 - [x] Apply dark theme to match main site design
 - [x] Update card styling and colors for consistency
+
+## Winners Page Contrast Fix
+- [x] Fix text colors to be readable against dark background
+- [x] Update button text colors for better visibility
+- [x] Ensure all card text has proper contrast
