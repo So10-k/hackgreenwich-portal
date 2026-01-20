@@ -453,3 +453,8 @@
 ## Fix Scroll Video Positioning
 - [x] Adjust HeroScrollVideo component so video and text fill the screen properly
 - [x] Center content vertically instead of positioning too high
+
+## Fix Scroll Video Responsive Positioning
+- [x] Fix video positioning to properly center on all screen sizes
+- [x] Make video box responsive and fill screen appropriately
+- [x] Ensure proper vertical centering without being too high

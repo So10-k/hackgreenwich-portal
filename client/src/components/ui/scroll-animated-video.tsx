@@ -513,14 +513,16 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: clamp(16px, 3vw, 40px);
+          padding: 0;
           perspective: 900px;
         }
 
         .hsv-headline { 
           text-align: center;
           transform-style: preserve-3d;
-          max-width: min(100%, 1100px);
+          max-width: min(90%, 1100px);
+          width: 100%;
+          padding: 0 clamp(16px, 3vw, 40px);
         }
         .hsv-headline > * {
           transform-style: preserve-3d;
@@ -593,8 +595,9 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
 
         .hsv-media {
           position: relative;
-          width: var(--initial-size);
-          height: var(--initial-size);
+          width: min(var(--initial-size), 90vw);
+          height: min(var(--initial-size), 90vw);
+          aspect-ratio: 1;
           border-radius: 20px;
           overflow: hidden;
           background: #000;

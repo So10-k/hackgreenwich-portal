@@ -334,8 +334,8 @@ export default function Home() {
             </Button>
           ),
         }}
-        initialBoxSize={400}
-        scrollHeightVh={250}
+        initialBoxSize={360}
+        scrollHeightVh={200}
         smoothScroll={false}
       />
 
