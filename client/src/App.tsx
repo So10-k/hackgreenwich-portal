@@ -20,6 +20,7 @@ import Registration from "./pages/Registration";
 import Schedule from "./pages/Schedule";
 import Sponsors from "./pages/Sponsors";
 import JudgesDashboard from "./pages/JudgesDashboard";
+import Judges from "./pages/Judges";
 import Winners from "./pages/Winners";
 import { useSupabaseAuth } from "./_core/hooks/useSupabaseAuth";
 import { Loader2 } from "lucide-react";
@@ -78,12 +79,13 @@ function Router() {
       <Route path="/announcements" component={() => <ProtectedRoute component={Announcements} />} />
       <Route path="/admin" component={() => <ProtectedRoute component={AdminPanel} />} />
       <Route path="/submissions" component={() => <ProtectedRoute component={Submissions} />} />
-      <Route path="/judges" component={() => <ProtectedRoute component={JudgesDashboard} />} />
+      <Route path="/judges-dashboard" component={() => <ProtectedRoute component={JudgesDashboard} />} />
       
       {/* Public pages */}
       <Route path="/schedule" component={Schedule} />
       <Route path="/sponsors" component={Sponsors} />
       <Route path="/winners" component={Winners} />
+      <Route path="/judges" component={Judges} />
       
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}

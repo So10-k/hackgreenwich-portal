@@ -14,25 +14,37 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
   const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navItems = [
-    { label: "Dashboard", path: "/dashboard", icon: BarChart3 },
-    { label: "Participants", path: "/participants", icon: Users },
-    // { label: "Find Teammates", path: "/teammates", icon: Users },
-    // { label: "Teams", path: "/teams", icon: Trophy },
-    { label: "Schedule", path: "/schedule", icon: Calendar },
-    { label: "Sponsors", path: "/sponsors", icon: Award },
-    { label: "Resources", path: "/resources", icon: BookOpen },
-    { label: "Announcements", path: "/announcements", icon: MessageSquare },
-    { label: "Profile", path: "/profile", icon: Settings },
-  ];
-
-  const adminItems = [
-    { label: "Admin Panel", path: "/admin", icon: BarChart3 },
-    { label: "Submissions", path: "/admin/submissions", icon: FileText },
-  ];
-
-  const judgeItems = [
-    { label: "Judges Portal", path: "/judges", icon: Gavel },
+  // Link groups organized by access level
+  const linkGroups = [
+    {
+      title: "All Access",
+      items: [
+        { label: "Dashboard", path: "/dashboard", icon: BarChart3 },
+        { label: "Participants", path: "/participants", icon: Users },
+        { label: "Schedule", path: "/schedule", icon: Calendar },
+        { label: "Sponsors", path: "/sponsors", icon: Award },
+        { label: "Resources", path: "/resources", icon: BookOpen },
+        { label: "Announcements", path: "/announcements", icon: MessageSquare },
+        { label: "Profile", path: "/profile", icon: Settings },
+      ],
+      visible: true, // Always visible
+    },
+    {
+      title: "Judges",
+      items: [
+        { label: "Judges Page", path: "/judges", icon: Gavel },
+        { label: "Judges Dashboard", path: "/judges-dashboard", icon: BarChart3 },
+      ],
+      visible: user?.role === "judge" || user?.role === "admin",
+    },
+    {
+      title: "Admin",
+      items: [
+        { label: "Admin Panel", path: "/admin", icon: BarChart3 },
+        { label: "Submissions", path: "/submissions", icon: FileText },
+      ],
+      visible: user?.role === "admin",
+    },
   ];
 
   const handleLogout = async () => {
@@ -54,78 +66,38 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
         </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto p-4 space-y-2">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = location === item.path;
-          return (
-            <button
-              key={item.path}
-              onClick={() => handleNavigate(item.path)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted"
-              }`}
-            >
-              <Icon className="h-5 w-5" />
-              <span className="font-medium">{item.label}</span>
-            </button>
-          );
-        })}
-
-        {user?.role === "admin" && (
-          <>
-            <div className="px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-              Admin
+      {/* Navigation with Role-Based Groups */}
+      <nav className="flex-1 overflow-y-auto p-4 space-y-6">
+        {linkGroups
+          .filter((group) => group.visible)
+          .map((group, groupIndex) => (
+            <div key={groupIndex} className="space-y-2">
+              {/* Group Title */}
+              <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                {group.title}
+              </div>
+              
+              {/* Group Items */}
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                const isActive = location === item.path;
+                return (
+                  <button
+                    key={item.path}
+                    onClick={() => handleNavigate(item.path)}
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" />
+                    <span className="font-medium">{item.label}</span>
+                  </button>
+                );
+              })}
             </div>
-            {adminItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = location === item.path;
-              return (
-                <button
-                  key={item.path}
-                  onClick={() => handleNavigate(item.path)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted"
-                  }`}
-                >
-                  <Icon className="h-5 w-5" />
-                  <span className="font-medium">{item.label}</span>
-                </button>
-              );
-            })}
-          </>
-        )}
-
-        {user?.role === "judge" && (
-          <>
-            <div className="px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-              Judges
-            </div>
-            {judgeItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = location === item.path;
-              return (
-                <button
-                  key={item.path}
-                  onClick={() => handleNavigate(item.path)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted"
-                  }`}
-                >
-                  <Icon className="h-5 w-5" />
-                  <span className="font-medium">{item.label}</span>
-                </button>
-              );
-            })}
-          </>
-        )}
+          ))}
       </nav>
 
       {/* User Section */}

@@ -125,8 +125,7 @@ export default function Home() {
 
       {/* Glassmorphism Navigation */}
       <header className="fixed top-0 left-0 right-0 z-50 xl:top-4">
-        <div className="mx-6">
-          <div className="flex items-center justify-between pt-4">
+        <div className="mx-6 flex items-center justify-between pt-4">
             <img 
               src="/hackgreenwich-logo.png" 
               alt="HackGreenwich" 
@@ -176,7 +175,6 @@ export default function Home() {
           
             {/* Mobile Menu */}
             <MobileMenu user={user} onNavigate={setLocation} />
-          </div>
         </div>
       </header>
 

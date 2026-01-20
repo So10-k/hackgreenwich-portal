@@ -409,3 +409,17 @@
 - [x] Maintain mobile hamburger menu functionality
 - [x] Add fade-slide-in animations to CSS
 - [x] Add Instrument Serif font for headings
+
+## Static Judges Page with ProfileCard
+- [x] Install framer-motion dependency
+- [x] Create ProfileCard component based on pasted design
+- [x] Create static Judges page with placeholder judge profiles
+- [x] Add route and navigation for Judges page
+- [x] Convert Judges page to public route (no login required)
+
+## Sidebar Redesign with Role-Based Groups
+- [x] Redesign PortalLayout sidebar with link groups
+- [x] Create "All Access" group (visible to everyone)
+- [x] Create "Judges" group (visible to judges only)
+- [x] Create "Admin" group (visible to admins only)
+- [x] Keep individual page components unchanged
