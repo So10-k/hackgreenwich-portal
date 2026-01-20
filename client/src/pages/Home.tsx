@@ -3,6 +3,7 @@ import { Button, LiquidButton } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Code, Users, Trophy, Sparkles, ArrowRight, Calendar, MapPin } from "lucide-react";
 import { PublicHeader } from "@/components/PublicHeader";
+import { HeroScrollVideo } from "@/components/ui/scroll-animated-video";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 
@@ -310,30 +311,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="min-h-screen flex items-center justify-center relative py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="container mx-auto px-4 text-center"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 md:mb-8 px-4">
-            Ready to Build?
-          </h2>
-          <p className="text-lg md:text-xl lg:text-2xl text-white/90 mb-8 md:mb-12 max-w-2xl mx-auto px-4">
-            Join the next generation of innovators at HackGreenwich 2026
-          </p>
-          <Button
-            size="lg"
-            className="bg-red-600 hover:bg-red-700 text-white text-xl px-12 py-8 rounded-full shadow-lg"
-            onClick={() => setLocation("/signup")}
-          >
-            Register for Free <ArrowRight className="ml-2 h-6 w-6" />
-          </Button>
-        </motion.div>
-      </section>
+      {/* Scroll Animated Video Section */}
+      <HeroScrollVideo
+        title="Ready to Build the Future?"
+        subtitle="Join HackGreenwich 2026"
+        meta="March 2026 • Greenwich, CT"
+        media="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4"
+        overlay={{
+          caption: "HACKATHON • 2026",
+          heading: "Innovation Starts Here",
+          paragraphs: [
+            "Join 200+ students for 24 hours of coding, creativity, and collaboration.",
+            "Build groundbreaking projects, learn from industry mentors, and compete for amazing prizes.",
+          ],
+          extra: (
+            <Button
+              size="lg"
+              className="mt-6 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-lg px-8 py-6 rounded-full shadow-lg"
+              onClick={() => setLocation("/signup")}
+            >
+              Register for Free <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          ),
+        }}
+        initialBoxSize={400}
+        scrollHeightVh={250}
+        smoothScroll={false}
+      />
 
       {/* Footer */}
       <footer className="relative py-12 border-t border-white/10 bg-black/20 backdrop-blur-md">

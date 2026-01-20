@@ -443,3 +443,9 @@
 ## Fix Homepage Header and Participant Cards
 - [x] Update homepage header to use PublicHeader component
 - [x] Redesign participant cards to match profile preview style (avatar circles, better layout)
+
+## Transform "Ready to Build" Section with Scroll Video
+- [x] Install required dependencies (gsap, lenis)
+- [x] Create HeroScrollVideo component from attachment
+- [x] Replace "Ready to Build" section with scroll-animated video
+- [x] Add HackGreenwich-themed content and styling
