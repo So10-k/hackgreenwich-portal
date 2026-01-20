@@ -509,9 +509,10 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         }
 
         .hsv-container {
-          height: 100vh;
-          display: grid;
-          place-items: center;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           padding: clamp(16px, 3vw, 40px);
           perspective: 900px;
         }
@@ -584,9 +585,10 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         .hsv-sticky.is-sticky {
           position: sticky;
           top: 0;
-          height: 100vh;
-          display: grid;
-          place-items: center;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .hsv-media {

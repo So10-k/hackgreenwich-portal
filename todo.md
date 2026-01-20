@@ -449,3 +449,7 @@
 - [x] Create HeroScrollVideo component from attachment
 - [x] Replace "Ready to Build" section with scroll-animated video
 - [x] Add HackGreenwich-themed content and styling
+
+## Fix Scroll Video Positioning
+- [x] Adjust HeroScrollVideo component so video and text fill the screen properly
+- [x] Center content vertically instead of positioning too high
