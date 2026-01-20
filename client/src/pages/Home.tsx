@@ -1,5 +1,5 @@
 import { useSupabaseAuth } from "@/_core/hooks/useSupabaseAuth";
-import { Button } from "@/components/ui/button";
+import { Button, LiquidButton } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Code, Users, Trophy, Sparkles, ArrowRight, Calendar, MapPin } from "lucide-react";
 import { MobileMenu } from "@/components/MobileMenu";
@@ -148,13 +148,13 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <Button
-              size="lg"
-              className="bg-red-600 hover:bg-red-700 text-white text-lg px-8 py-6 rounded-full shadow-lg"
+            <LiquidButton
+              size="xxl"
+              className="bg-gradient-to-r from-red-600 to-red-700 text-white font-bold shadow-lg shadow-red-500/50"
               onClick={() => setLocation("/signup")}
             >
               Register Now <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            </LiquidButton>
             <Button
               size="lg"
               variant="outline"
