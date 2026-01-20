@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Users, Bell, ExternalLink, Search, Mail, Github, Linkedin, Globe } from "lucide-react";
 import { SafeExternalLink } from "@/components/ExternalLinkDialog";
+import PortalLayout from "@/components/PortalLayout";
 
 export default function JudgesDashboard() {
   const { data: participants, isLoading: participantsLoading } = trpc.judges.getAllParticipants.useQuery();
@@ -19,8 +20,8 @@ export default function JudgesDashboard() {
   );
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container py-8 space-y-8">
+    <PortalLayout>
+      <div className="space-y-8">
         {/* Header */}
         <div>
           <h1 className="text-4xl font-bold mb-2">Judges Portal</h1>
@@ -30,7 +31,7 @@ export default function JudgesDashboard() {
         </div>
 
         {/* Devpost Link Card */}
-        <Card className="border-primary/20 bg-gradient-to-r from-primary/5 to-primary/10">
+        <Card className="border-purple-500/20 bg-gradient-to-r from-purple-500/5 to-violet-500/10">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <ExternalLink className="h-5 w-5" />
@@ -42,7 +43,7 @@ export default function JudgesDashboard() {
           </CardHeader>
           <CardContent>
             <SafeExternalLink href="https://hackgreenwich.devpost.com">
-              <Button className="w-full sm:w-auto">
+              <Button className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700">
                 Open Devpost <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
             </SafeExternalLink>
@@ -197,6 +198,6 @@ export default function JudgesDashboard() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </PortalLayout>
   );
 }

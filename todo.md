@@ -373,3 +373,8 @@
 - [x] Add project links and team member information
 - [x] Create admin interface placeholder for winners
 - [x] Add winners to navigation menu
+
+## Judges Dashboard Styling
+- [x] Add PortalLayout with sidebar navigation to Judges Dashboard
+- [x] Apply dark theme to match main site design
+- [x] Update card styling and colors for consistency
