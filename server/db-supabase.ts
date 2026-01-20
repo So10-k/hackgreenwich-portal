@@ -795,3 +795,76 @@ export async function deleteAnnouncement(id: number) {
 
   return { success: true };
 }
+
+// ============================================
+// Judge Functions
+// ============================================
+
+export async function getAllParticipantsForJudges() {
+  const { data, error } = await supabaseAdmin
+    .from("users")
+    .select("id, name, email, role, skills, bio, github_url, linkedin_url, portfolio_url")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching participants for judges:", error);
+    throw error;
+  }
+
+  // Extract username/handle from social URLs
+  const participants = data?.map(user => {
+    let github_username = null;
+    if (user.github_url) {
+      const githubMatch = user.github_url.match(/github\.com\/([^\/\?]+)/i);
+      if (githubMatch) github_username = githubMatch[1];
+    }
+
+    let linkedin_username = null;
+    if (user.linkedin_url) {
+      const linkedinMatch = user.linkedin_url.match(/linkedin\.com\/in\/([^\/\?]+)/i);
+      if (linkedinMatch) linkedin_username = linkedinMatch[1];
+    }
+
+    return {
+      ...user,
+      github_username,
+      linkedin_username,
+      portfolio_url: user.portfolio_url,
+    };
+  }) || [];
+
+  return participants;
+}
+
+export async function getJudgeAnnouncements() {
+  const { data, error } = await supabaseAdmin
+    .from("judge_announcements")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching judge announcements:", error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+export async function createJudgeAnnouncement(title: string, content: string, postedById: number) {
+  const { data, error } = await supabaseAdmin
+    .from("judge_announcements")
+    .insert({
+      title,
+      content,
+      posted_by_id: postedById,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error creating judge announcement:", error);
+    throw error;
+  }
+
+  return data;
+}

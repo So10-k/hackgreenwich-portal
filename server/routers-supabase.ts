@@ -468,6 +468,26 @@ export const appRouterSupabase = router({
       return await db.getProjectSubmissions();
     }),
   }),
+
+  judges: router({
+    getAllParticipants: protectedProcedure.query(async ({ ctx }) => {
+      if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (ctx.user.role !== "judge") {
+        throw new TRPCError({ code: "FORBIDDEN", message: "Only judges can access this resource" });
+      }
+
+      return await db.getAllParticipantsForJudges();
+    }),
+
+    getAnnouncements: protectedProcedure.query(async ({ ctx }) => {
+      if (!ctx.user) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (ctx.user.role !== "judge") {
+        throw new TRPCError({ code: "FORBIDDEN", message: "Only judges can access this resource" });
+      }
+
+      return await db.getJudgeAnnouncements();
+    }),
+  }),
 });
 
 export type AppRouterSupabase = typeof appRouterSupabase;

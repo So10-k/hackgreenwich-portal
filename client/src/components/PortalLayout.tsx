@@ -1,6 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Sparkles, LogOut, Users, Trophy, BookOpen, MessageSquare, Settings, BarChart3, FileText, Calendar, Award, Menu, X } from "lucide-react";
+import { Sparkles, LogOut, Users, Trophy, BookOpen, MessageSquare, Settings, BarChart3, FileText, Calendar, Award, Menu, X, Gavel } from "lucide-react";
 import { useLocation } from "wouter";
 import { ReactNode, useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -29,6 +29,10 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
   const adminItems = [
     { label: "Admin Panel", path: "/admin", icon: BarChart3 },
     { label: "Submissions", path: "/admin/submissions", icon: FileText },
+  ];
+
+  const judgeItems = [
+    { label: "Judges Portal", path: "/judges", icon: Gavel },
   ];
 
   const handleLogout = async () => {
@@ -96,6 +100,32 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
             })}
           </>
         )}
+
+        {user?.role === "judge" && (
+          <>
+            <div className="px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              Judges
+            </div>
+            {judgeItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location === item.path;
+              return (
+                <button
+                  key={item.path}
+                  onClick={() => handleNavigate(item.path)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                    isActive
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  <Icon className="h-5 w-5" />
+                  <span className="font-medium">{item.label}</span>
+                </button>
+              );
+            })}
+          </>
+        )}
       </nav>
 
       {/* User Section */}
@@ -106,6 +136,11 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
           {user?.role === "admin" && (
             <span className="inline-block mt-1 px-2 py-1 bg-primary/10 text-primary text-xs rounded font-semibold">
               Admin
+            </span>
+          )}
+          {user?.role === "judge" && (
+            <span className="inline-block mt-1 px-2 py-1 bg-purple-500/10 text-purple-500 text-xs rounded font-semibold">
+              Judge
             </span>
           )}
         </div>

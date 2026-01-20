@@ -342,3 +342,19 @@
 - [x] Add hamburger menu to PortalLayout component
 - [x] Make sidebar collapsible on mobile with hamburger toggle
 - [x] Test on Dashboard, Participants, and other portal pages
+
+## Event Date Update
+- [x] Change event dates from March 15-17 to March 1-3
+- [x] Update homepage hero section
+- [x] Update all references across pages
+
+## Judges Portal
+- [x] Add 'judge' role to user role enum in schema
+- [x] Create judge_announcements table in Supabase
+- [x] Create judges portal dashboard page
+- [x] Show all participants with emails (judges can see emails)
+- [x] Display judge-specific announcements
+- [x] Add Devpost link section
+- [x] Create backend endpoints for judge data
+- [x] Add judge navigation in PortalLayout
+- [x] Generate Supabase SQL queries for setup

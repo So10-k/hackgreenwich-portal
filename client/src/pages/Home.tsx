@@ -165,7 +165,7 @@ export default function Home() {
           >
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />
-              <span>March 15-17, 2026</span>
+              <span>March 1-3, 2026</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="h-5 w-5" />
