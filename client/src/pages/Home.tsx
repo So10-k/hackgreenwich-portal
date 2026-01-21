@@ -373,6 +373,89 @@ export default function Home() {
         </div>
       </section>
 
+      {/* What Are We Looking For Section */}
+      <section className="relative py-20">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              What Are We <span className="bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">Looking For</span>?
+            </h2>
+            <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+              Build innovative platforms powered by RoleColorAI
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-3xl p-8 md:p-12">
+              <div className="flex items-start gap-4 mb-6">
+                <Sparkles className="h-8 w-8 text-yellow-400 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">The Challenge</h3>
+                  <p className="text-lg text-white/90 leading-relaxed mb-6">
+                    The goal of HackGreenwich is to <strong>develop a new platform using our RoleColorAI API</strong>. Every participant gets <strong className="text-yellow-400">free unlimited access</strong> to the API during the event!
+                  </p>
+                  <p className="text-white/80 mb-8">
+                    Whether you're building a career guidance tool, a team formation platform, a personality-based game, or something completely innovative—we want to see how you leverage AI-powered role and personality insights to create something amazing.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <motion.a
+                  href="https://rolecolorfinder.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  className="block p-6 rounded-xl bg-gradient-to-br from-red-500/20 to-yellow-500/20 border border-red-500/30 hover:border-red-500/50 transition-all duration-300"
+                >
+                  <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                    🎯 RoleColorFinder
+                  </h4>
+                  <p className="text-white/80 text-sm mb-3">
+                    Discover the platform behind the API. Learn about role-based personality insights and how they help people find their perfect career fit.
+                  </p>
+                  <span className="text-red-400 text-sm font-semibold">Learn More →</span>
+                </motion.a>
+
+                <motion.a
+                  href="https://rolecolorai.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  className="block p-6 rounded-xl bg-gradient-to-br from-green-500/20 to-blue-500/20 border border-green-500/30 hover:border-green-500/50 transition-all duration-300"
+                >
+                  <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                    🤖 RoleColorAI API
+                  </h4>
+                  <p className="text-white/80 text-sm mb-3">
+                    Explore the AI-powered API you'll be using. Access comprehensive documentation, examples, and get your free unlimited API key for the hackathon.
+                  </p>
+                  <span className="text-green-400 text-sm font-semibold">Get API Access →</span>
+                </motion.a>
+              </div>
+
+              <div className="mt-8 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                <p className="text-white/90 text-center">
+                  <strong className="text-yellow-400">💡 Pro Tip:</strong> Check out the API documentation early to brainstorm ideas and plan your project architecture before the event starts!
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Scroll Animated Video Section */}
       <section className="relative py-20">
       <HeroScrollVideo

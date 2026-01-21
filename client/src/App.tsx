@@ -23,6 +23,7 @@ import JudgesDashboard from "./pages/JudgesDashboard";
 import Judges from "./pages/Judges";
 import Winners from "./pages/Winners";
 import Rules from "./pages/Rules";
+import DashboardRules from "./pages/DashboardRules";
 import { useSupabaseAuth } from "./_core/hooks/useSupabaseAuth";
 import { Loader2 } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -78,6 +79,7 @@ function Router() {
       <Route path="/resources" component={() => <ProtectedRoute component={Resources} />} />
       <Route path="/participants" component={() => <ProtectedRoute component={Participants} />} />
       <Route path="/announcements" component={() => <ProtectedRoute component={Announcements} />} />
+      <Route path="/dashboard-rules" component={() => <ProtectedRoute component={DashboardRules} />} />
       <Route path="/admin" component={() => <ProtectedRoute component={AdminPanel} />} />
       <Route path="/submissions" component={() => <ProtectedRoute component={Submissions} />} />
       <Route path="/judges-dashboard" component={() => <ProtectedRoute component={JudgesDashboard} />} />
