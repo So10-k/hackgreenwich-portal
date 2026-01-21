@@ -5,11 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Users, Search, Github, Shield, User, Linkedin, Globe } from "lucide-react";
+import { Users, Search, Github, Shield, User, Linkedin, Globe, Lock, Clock } from "lucide-react";
 import { SafeExternalLink } from "@/components/ExternalLinkDialog";
 
 export default function Participants() {
   const [searchQuery, setSearchQuery] = useState("");
+  
+  // Check if hackathon has started (March 1st, 2026 at 12:00pm EST)
+  const hackathonStartDate = new Date('2026-03-01T12:00:00-05:00');
+  const hasHackathonStarted = new Date() >= hackathonStartDate;
+  
   const { data: participants, isLoading } = trpc.participants.list.useQuery();
 
   const filteredParticipants = participants?.filter((p: any) => {
@@ -52,7 +57,29 @@ export default function Participants() {
           </Badge>
         </div>
 
+        {/* Locked Notice */}
+        {!hasHackathonStarted && (
+          <Card className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border-yellow-500/30">
+            <CardContent className="pt-6">
+              <div className="flex items-start gap-4">
+                <Lock className="h-6 w-6 text-yellow-400 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-xl font-bold text-yellow-400 mb-2">Participant List Locked Until Event Start</h3>
+                  <p className="text-white/80 mb-2">
+                    The participant directory will automatically unlock on <strong>March 1st, 2026 at 12:00pm EST</strong> when the hackathon officially begins.
+                  </p>
+                  <div className="flex items-center gap-2 text-white/70">
+                    <Clock className="h-4 w-4" />
+                    <span className="text-sm">You'll be able to browse participants, view profiles, and connect with teammates once the event starts!</span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Search */}
+        {hasHackathonStarted && (
         <Card className="bg-white/5 border-white/10 backdrop-blur-md">
           <CardContent className="pt-6">
             <div className="relative">
@@ -66,9 +93,10 @@ export default function Participants() {
             </div>
           </CardContent>
         </Card>
+        )}
 
         {/* Participants Grid */}
-        {filteredParticipants && filteredParticipants.length > 0 ? (
+        {hasHackathonStarted && filteredParticipants && filteredParticipants.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"> {filteredParticipants.map((participant: any) => (
               <Card key={participant.id} className="bg-white/5 border-white/10 backdrop-blur-md hover:bg-white/10 hover:border-white/20 transition-all duration-300">
                 <CardContent className="pt-6 space-y-4">
