@@ -1,6 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { LogOut, Users, BookOpen, MessageSquare, Settings, BarChart3, FileText, Calendar, Award, Menu, Gavel, ChevronDown, ChevronRight } from "lucide-react";
+import { LogOut, Users, BookOpen, MessageSquare, Settings, BarChart3, FileText, Calendar, Award, Menu, Gavel, ChevronDown, ChevronRight, Scale } from "lucide-react";
 import { useLocation } from "wouter";
 import { ReactNode, useState } from "react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
@@ -26,6 +26,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
         { label: "Sponsors", path: "/sponsors", icon: Award },
         { label: "Resources", path: "/resources", icon: BookOpen },
         { label: "Announcements", path: "/announcements", icon: MessageSquare },
+        { label: "Rules", path: "/dashboard-rules", icon: Scale },
         { label: "Profile", path: "/profile", icon: Settings },
       ],
       visible: true, // Always visible
