@@ -24,9 +24,9 @@ export default function Rules() {
             <div className="flex items-start gap-4">
               <AlertCircle className="h-6 w-6 text-red-400 flex-shrink-0 mt-1" />
               <div>
-                <h3 className="text-xl font-bold text-red-400 mb-2">Important: Event Start Date</h3>
+                <h3 className="text-xl font-bold text-red-400 mb-2">Important: Event Dates & Times</h3>
                 <p className="text-white/90">
-                  All projects must be started <strong>after March 1st, 2026</strong>. Any work done before this date will result in disqualification.
+                  HackGreenwich 2026 runs from <strong>March 1st, 2026 at 12:00pm EST</strong> to <strong>March 3rd, 2026 at 12:00pm EST</strong>. All projects must be started after the official start time. Any work done before this will result in disqualification.
                 </p>
               </div>
             </div>
@@ -96,11 +96,11 @@ export default function Rules() {
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-1">•</span>
-                    <span><strong className="text-white">First commit:</strong> Must be timestamped after March 1st, 2026, 12:00 AM EST</span>
+                    <span><strong className="text-white">First commit:</strong> Must be timestamped after March 1st, 2026, 12:00pm EST</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-1">•</span>
-                    <span><strong className="text-white">Regular commits:</strong> Show consistent progress throughout the 24-hour period</span>
+                    <span><strong className="text-white">Regular commits:</strong> Show consistent progress throughout the hackathon period (March 1-3)</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-1">•</span>

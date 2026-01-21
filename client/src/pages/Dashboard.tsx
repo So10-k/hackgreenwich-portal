@@ -16,10 +16,29 @@ export default function Dashboard() {
   const [projectTitle, setProjectTitle] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   
-  // Check if hackathon has started (March 1st, 2026)
-  const hackathonStartDate = new Date('2026-03-01T00:00:00-05:00'); // EST
-  const hasHackathonStarted = new Date() >= hackathonStartDate;
-  const daysUntilStart = Math.ceil((hackathonStartDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+  // Check if hackathon has started (March 1st, 2026 at 12:00pm EST)
+  const hackathonStartDate = new Date('2026-03-01T12:00:00-05:00'); // EST
+  const hackathonEndDate = new Date('2026-03-03T12:00:00-05:00'); // EST
+  const now = new Date();
+  const hasHackathonStarted = now >= hackathonStartDate;
+  const hasHackathonEnded = now >= hackathonEndDate;
+  
+  // Calculate time until start
+  const timeUntilStart = hackathonStartDate.getTime() - now.getTime();
+  const daysUntilStart = Math.floor(timeUntilStart / (1000 * 60 * 60 * 24));
+  const hoursUntilStart = Math.floor((timeUntilStart % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutesUntilStart = Math.floor((timeUntilStart % (1000 * 60 * 60)) / (1000 * 60));
+  
+  // Auto-refresh countdown every minute
+  const [, setRefresh] = useState(0);
+  useEffect(() => {
+    if (!hasHackathonStarted) {
+      const interval = setInterval(() => {
+        setRefresh(prev => prev + 1);
+      }, 60000); // Update every minute
+      return () => clearInterval(interval);
+    }
+  }, [hasHackathonStarted]);
 
   const { data: announcements } = trpc.announcements.list.useQuery(undefined, {
     enabled: isAuthenticated && user?.portalAccessGranted === true,
@@ -108,11 +127,17 @@ export default function Dashboard() {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Hackathon Hasn't Started Yet</h3>
                   <p className="text-white/80 mb-3">
-                    HackGreenwich 2026 begins on <strong>March 1st, 2026</strong>. You're registered and ready to go!
+                    HackGreenwich 2026 begins on <strong>March 1st, 2026 at 12:00pm EST</strong> and ends on <strong>March 3rd, 2026 at 12:00pm EST</strong>. You're registered and ready to go!
                   </p>
-                  <p className="text-white/70">
-                    <strong className="text-red-400">{daysUntilStart} days</strong> until the event starts. Resources and participant information will be available once the hackathon begins.
-                  </p>
+                  <div className="text-white/70 space-y-2">
+                    <p className="text-2xl font-bold text-red-400">
+                      {daysUntilStart > 0 && `${daysUntilStart}d `}
+                      {hoursUntilStart}h {minutesUntilStart}m
+                    </p>
+                    <p className="text-sm">
+                      until the event starts. Resources and participant information will be available once the hackathon begins.
+                    </p>
+                  </div>
                 </div>
               </div>
             </CardContent>
