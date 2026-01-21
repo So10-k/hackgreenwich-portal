@@ -1,6 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { LogOut, Users, BookOpen, MessageSquare, Settings, BarChart3, FileText, Calendar, Award, Menu, Gavel, ChevronDown, ChevronRight } from "lucide-react";
+import { LogOut, Users, BookOpen, MessageSquare, Settings, BarChart3, FileText, Calendar, Award, Menu, Gavel, ChevronDown, ChevronRight, Scale } from "lucide-react";
 import { useLocation } from "wouter";
 import { ReactNode, useState } from "react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
@@ -13,22 +13,35 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
   const { user, logout } = useAuth();
   const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(["All Access"]));
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(["Main", "Event Info", "Community"]));
 
   // Link groups organized by access level
   const linkGroups = [
     {
-      title: "All Access",
+      title: "Main",
       items: [
         { label: "Dashboard", path: "/dashboard", icon: BarChart3 },
-        { label: "Participants", path: "/participants", icon: Users },
-        { label: "Schedule", path: "/schedule", icon: Calendar },
-        { label: "Sponsors", path: "/sponsors", icon: Award },
-        { label: "Resources", path: "/resources", icon: BookOpen },
-        { label: "Announcements", path: "/announcements", icon: MessageSquare },
         { label: "Profile", path: "/profile", icon: Settings },
       ],
-      visible: true, // Always visible
+      visible: true,
+    },
+    {
+      title: "Event Info",
+      items: [
+        { label: "Schedule", path: "/schedule", icon: Calendar },
+        { label: "Sponsors", path: "/sponsors", icon: Award },
+        { label: "Rules", path: "/dashboard-rules", icon: Scale },
+      ],
+      visible: true,
+    },
+    {
+      title: "Community",
+      items: [
+        { label: "Participants", path: "/participants", icon: Users },
+        { label: "Resources", path: "/resources", icon: BookOpen },
+        { label: "Announcements", path: "/announcements", icon: MessageSquare },
+      ],
+      visible: true,
     },
     {
       title: "Judges",
