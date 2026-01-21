@@ -15,6 +15,11 @@ export default function Dashboard() {
   const [submissionsEnabled, setSubmissionsEnabled] = useState(false);
   const [projectTitle, setProjectTitle] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
+  
+  // Check if hackathon has started (March 1st, 2026)
+  const hackathonStartDate = new Date('2026-03-01T00:00:00-05:00'); // EST
+  const hasHackathonStarted = new Date() >= hackathonStartDate;
+  const daysUntilStart = Math.ceil((hackathonStartDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
 
   const { data: announcements } = trpc.announcements.list.useQuery(undefined, {
     enabled: isAuthenticated && user?.portalAccessGranted === true,
@@ -93,6 +98,26 @@ export default function Dashboard() {
             Ready to build something amazing at HackGreenwich?
           </p>
         </div>
+
+        {/* Event Start Notice */}
+        {!hasHackathonStarted && (
+          <Card className="bg-gradient-to-r from-red-500/10 to-yellow-500/10 border-red-500/30">
+            <CardContent className="pt-6">
+              <div className="flex items-start gap-4">
+                <AlertCircle className="h-6 w-6 text-red-400 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-2">Hackathon Hasn't Started Yet</h3>
+                  <p className="text-white/80 mb-3">
+                    HackGreenwich 2026 begins on <strong>March 1st, 2026</strong>. You're registered and ready to go!
+                  </p>
+                  <p className="text-white/70">
+                    <strong className="text-red-400">{daysUntilStart} days</strong> until the event starts. Resources and participant information will be available once the hackathon begins.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -226,35 +251,39 @@ export default function Dashboard() {
 
         {/* Quick Actions */}
         <div className="grid md:grid-cols-4 gap-4">
-          <Card 
-            className="cursor-pointer hover:border-red-500/50 transition-colors bg-white/5 border-white/10" 
-            onClick={() => setLocation("/participants")}
-          >
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-white/60">View</p>
-                  <h3 className="text-lg font-bold text-white">Participants</h3>
-                </div>
-                <MessageSquare className="h-8 w-8 text-red-400" />
-              </div>
-            </CardContent>
-          </Card>
+          {hasHackathonStarted && (
+            <>
+              <Card 
+                className="cursor-pointer hover:border-red-500/50 transition-colors bg-white/5 border-white/10" 
+                onClick={() => setLocation("/participants")}
+              >
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-white/60">View</p>
+                      <h3 className="text-lg font-bold text-white">Participants</h3>
+                    </div>
+                    <MessageSquare className="h-8 w-8 text-red-400" />
+                  </div>
+                </CardContent>
+              </Card>
 
-          <Card 
-            className="cursor-pointer hover:border-red-500/50 transition-colors bg-white/5 border-white/10" 
-            onClick={() => setLocation("/resources")}
-          >
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-white/60">Browse</p>
-                  <h3 className="text-lg font-bold text-white">Resources</h3>
-                </div>
-                <BookOpen className="h-8 w-8 text-yellow-400" />
-              </div>
-            </CardContent>
-          </Card>
+              <Card 
+                className="cursor-pointer hover:border-red-500/50 transition-colors bg-white/5 border-white/10" 
+                onClick={() => setLocation("/resources")}
+              >
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-white/60">Browse</p>
+                      <h3 className="text-lg font-bold text-white">Resources</h3>
+                    </div>
+                    <BookOpen className="h-8 w-8 text-yellow-400" />
+                  </div>
+                </CardContent>
+              </Card>
+            </>
+          )}
 
           <Card 
             className="cursor-pointer hover:border-red-500/50 transition-colors bg-white/5 border-white/10" 

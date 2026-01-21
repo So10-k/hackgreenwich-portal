@@ -12,6 +12,7 @@ export function PublicHeader() {
     { label: "Sponsors", path: "/sponsors" },
     { label: "Winners", path: "/winners" },
     { label: "Judges", path: "/judges" },
+    { label: "Rules", path: "/rules" },
   ];
 
   return (

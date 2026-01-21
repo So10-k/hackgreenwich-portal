@@ -22,6 +22,7 @@ import Sponsors from "./pages/Sponsors";
 import JudgesDashboard from "./pages/JudgesDashboard";
 import Judges from "./pages/Judges";
 import Winners from "./pages/Winners";
+import Rules from "./pages/Rules";
 import { useSupabaseAuth } from "./_core/hooks/useSupabaseAuth";
 import { Loader2 } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -86,6 +87,7 @@ function Router() {
       <Route path="/sponsors" component={Sponsors} />
       <Route path="/winners" component={Winners} />
       <Route path="/judges" component={Judges} />
+      <Route path="/rules" component={Rules} />
       
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}

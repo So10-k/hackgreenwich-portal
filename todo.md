@@ -480,3 +480,10 @@
 - [x] Add "Why HackGreenwich?" section between stats and scroll video
 - [x] Implement scroll snap points for smooth section navigation
 - [x] Ensure scroll video is visible and properly positioned
+
+## Date-Based Access Control and Rules Page
+- [x] Create Rules page with vibe coding limits (max 75%) and GitHub commit requirements
+- [x] Add Rules link to PublicHeader navigation
+- [x] Implement date check on Dashboard (hide resources/participants before March 1st)
+- [x] Show notice on Dashboard about event start date
+- [x] Add route for Rules page in App.tsx
