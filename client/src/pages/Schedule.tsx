@@ -71,9 +71,11 @@ export default function Schedule() {
       <div className="pt-20">
         <div className="container py-12 space-y-6">
           {/* Header */}
-          <div>
-            <h1 className="text-3xl font-bold text-white">Event Schedule</h1>
-            <p className="text-white/80 mt-2">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Event <span className="bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">Schedule</span>
+            </h1>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
               Stay on track with all hackathon events, workshops, and deadlines
             </p>
           </div>
@@ -117,15 +119,15 @@ export default function Schedule() {
               .map((dateStr) => (
                 <div key={dateStr} className="space-y-4">
                   {/* Date Header */}
-                  <div className="flex items-center gap-3">
-                    <Calendar className="h-5 w-5 text-primary" />
-                    <h2 className="text-2xl font-bold">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Calendar className="h-6 w-6 text-red-400" />
+                    <h2 className="text-2xl md:text-3xl font-bold text-white">
                       {format(parseISO(dateStr), "EEEE, MMMM d, yyyy")}
                     </h2>
                   </div>
 
                   {/* Events for this date */}
-                  <div className="space-y-3 pl-8 border-l-2 border-border">
+                  <div className="space-y-4 pl-8 border-l-2 border-white/20">
                     {eventsByDate?.[dateStr]
                       ?.sort(
                         (a: any, b: any) =>
@@ -134,12 +136,12 @@ export default function Schedule() {
                       .map((event: any) => (
                         <Card
                           key={event.id}
-                          className={`ml-4 relative ${
-                            event.is_important ? "border-primary shadow-md" : ""
+                          className={`ml-4 relative bg-white/5 backdrop-blur-md border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 ${
+                            event.is_important ? "border-red-500/50 shadow-lg shadow-red-500/20" : ""
                           }`}
                         >
                           {/* Timeline dot */}
-                          <div className="absolute -left-[2.15rem] top-6 w-4 h-4 rounded-full bg-primary border-4 border-background"></div>
+                          <div className="absolute -left-[2.15rem] top-6 w-4 h-4 rounded-full bg-gradient-to-r from-red-500 to-yellow-500 border-4 border-slate-900"></div>
 
                           <CardHeader>
                             <div className="flex items-start justify-between gap-4">
@@ -158,9 +160,9 @@ export default function Schedule() {
                                     <Badge variant="destructive">Important</Badge>
                                   )}
                                 </div>
-                                <CardTitle className="text-xl">{event.title}</CardTitle>
+                                <CardTitle className="text-xl text-white">{event.title}</CardTitle>
                                 {event.description && (
-                                  <CardDescription className="mt-2">
+                                  <CardDescription className="mt-2 text-white/70">
                                     {event.description}
                                   </CardDescription>
                                 )}
@@ -169,7 +171,7 @@ export default function Schedule() {
                           </CardHeader>
 
                           <CardContent>
-                            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                            <div className="flex flex-wrap gap-4 text-sm text-white/80">
                               <div className="flex items-center gap-2">
                                 <Clock className="h-4 w-4" />
                                 <span>
@@ -192,12 +194,12 @@ export default function Schedule() {
               ))}
           </div>
         ) : (
-          <Card>
+          <Card className="bg-white/5 backdrop-blur-md border-white/10">
             <CardContent className="py-12">
               <div className="text-center">
-                <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No Events Scheduled</h3>
-                <p className="text-muted-foreground">
+                <Calendar className="h-12 w-12 text-white/50 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold mb-2 text-white">No Events Scheduled</h3>
+                <p className="text-white/70">
                   Check back later for the hackathon schedule
                 </p>
               </div>
