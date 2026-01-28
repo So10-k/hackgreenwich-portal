@@ -176,8 +176,8 @@ export default function Home() {
                   animate={{ opacity: scrollProgress > 0.5 ? 1 : 0 }}
                   className="text-lg md:text-xl lg:text-2xl text-white max-w-3xl mx-auto mb-8 md:mb-12 leading-relaxed text-center px-4"
                 >
-                  <p className="mb-2 text-base md:text-lg">Sponsored by</p>
-                  <img src="/techmonium-logo.png" alt="Techmonium" className="h-12 md:h-16 mx-auto" />
+                  <p className="mb-2 text-base md:text-lg">Welcome to</p>
+                  <img src="/hackitnow-logo.png" alt="Techmonium" className="h-12 md:h-16 mx-auto" />
                 </motion.div>
 
                 <motion.div
