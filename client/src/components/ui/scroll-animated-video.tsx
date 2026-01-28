@@ -484,7 +484,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
       <style>{`
         /* System theme: define light defaults, override in dark */
         .hsv-root {
-          /* Dark theme for HackGreenwich */
+          /* Dark theme for HackItNow */
           --bg: transparent;
           --text: #e5e7eb;
           --muted: #9ca3af;

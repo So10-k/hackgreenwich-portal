@@ -1,5 +1,5 @@
 -- ============================================
--- HackGreenwich Judges Portal Setup
+-- HackItNow Judges Portal Setup
 -- ============================================
 -- Run this SQL in your Supabase SQL Editor to set up the judges portal
 

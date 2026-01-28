@@ -12,10 +12,10 @@ export default function Sponsors() {
   const [, setLocation] = useLocation();
 
   const handleBecomeASponsor = () => {
-    const subject = encodeURIComponent("HackGreenwich 2026 - Sponsorship Inquiry");
+    const subject = encodeURIComponent("HackItNow 2026 - Sponsorship Inquiry");
     const body = encodeURIComponent(
-      `Hello HackGreenwich Team,\n\n` +
-      `I am interested in becoming a sponsor for HackGreenwich 2026.\n\n` +
+      `Hello HackItNow Team,\n\n` +
+      `I am interested in becoming a sponsor for HackItNow 2026.\n\n` +
       `Company/Organization Name: [Your Company Name]\n` +
       `Contact Person: [Your Name]\n` +
       `Email: [Your Email]\n` +
@@ -27,7 +27,7 @@ export default function Sponsors() {
       `Thank you for considering our sponsorship inquiry.\n\n` +
       `Best regards`
     );
-    window.location.href = `mailto:hackgreenwich@rolecolorfinder.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:hackitnow@techmonium.com?subject=${subject}&body=${body}`;
   };
 
   if (isLoading) {
@@ -94,7 +94,7 @@ export default function Sponsors() {
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-white px-4">Our Sponsors</h1>
             <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto px-4">
-              HackGreenwich is made possible by the generous support of our sponsors. Thank you for
+              HackItNow is made possible by the generous support of our sponsors. Thank you for
               believing in innovation and the next generation of developers!
             </p>
           </div>

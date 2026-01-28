@@ -1,4 +1,4 @@
-# HackGreenwich Portal TODO
+# HackItNow Portal TODO
 
 ## Database Schema
 - [x] Design users table with registration status, skills, interests, experience level
@@ -248,7 +248,7 @@
 - [x] Keep existing buttons for non-authenticated visitors
 
 ## Branding Update
-- [x] Change all instances of "Hack Greenwich" to "HackGreenwich" (already correct)
+- [x] Change all instances of "Hack Greenwich" to "HackItNow" (already correct)
 - [x] Update page titles and meta tags
 - [x] Update navigation and footer text
 
@@ -258,9 +258,9 @@
 - [x] Remove admin approval requirement for initial access
 
 ## Logo and Branding Update
-- [x] Upload HackGreenwich logo to public folder
+- [x] Upload HackItNow logo to public folder
 - [x] Update all logo references to use the new logo image
-- [x] Change "RoleColorOne" to "ONERCF" throughout the site
+- [x] Change "Techmonium" to "Techmonium" throughout the site
 
 ## Color Scheme Redesign
 - [x] Update CSS variables to use logo colors (Red #ED1C24, Yellow #FFD100, Green #00A651)
@@ -269,8 +269,8 @@
 - [x] Update navigation and footer styling
 
 ## Homepage Design Refinement
-- [x] Upload OneRCF logo and replace text with logo image
-- [x] Increase HackGreenwich logo size in navigation
+- [x] Upload Techmonium logo and replace text with logo image
+- [x] Increase HackItNow logo size in navigation
 - [x] Soften background gradients to be less intense
 - [x] Reduce color saturation for a more professional look
 - [x] Update text colors to be more subtle and readable
@@ -281,16 +281,16 @@
 - [x] Update Sponsors page styling to match dark theme
 - [x] Update Schedule page styling to match dark theme
 - [x] Create email template for "Become a Sponsor" button
-- [x] Set up mailto link to hackgreenwich@rolecolorfinder.com
+- [x] Set up mailto link to hackitnow@techmonium.com
 
 ## Logo Size Adjustments
-- [x] Increase HackGreenwich logo size in navigation (h-16)
-- [x] Increase OneRCF logo size (h-12)
-- [x] Move OneRCF logo to separate line under "Sponsored by"
+- [x] Increase HackItNow logo size in navigation (h-16)
+- [x] Increase Techmonium logo size (h-12)
+- [x] Move Techmonium logo to separate line under "Sponsored by"
 
 ## Logo Size Increase
-- [x] Increase HackGreenwich logo to h-20 across all pages
-- [x] Increase OneRCF logo to h-16
+- [x] Increase HackItNow logo to h-20 across all pages
+- [x] Increase Techmonium logo to h-16
 
 ## Theme Application
 - [x] Apply dark slate theme to all remaining pages
@@ -405,7 +405,7 @@
 
 ## Glassmorphism Navbar Adaptation
 - [x] Replace existing navigation with glassmorphism navbar from ResponsiveHeroBanner
-- [x] Keep HackGreenwich logo and branding
+- [x] Keep HackItNow logo and branding
 - [x] Maintain mobile hamburger menu functionality
 - [x] Add fade-slide-in animations to CSS
 - [x] Add Instrument Serif font for headings
@@ -448,7 +448,7 @@
 - [x] Install required dependencies (gsap, lenis)
 - [x] Create HeroScrollVideo component from attachment
 - [x] Replace "Ready to Build" section with scroll-animated video
-- [x] Add HackGreenwich-themed content and styling
+- [x] Add HackItNow-themed content and styling
 
 ## Fix Scroll Video Positioning
 - [x] Adjust HeroScrollVideo component so video and text fill the screen properly
@@ -477,7 +477,7 @@
 
 ## Fix Scroll Video Visibility and Add Content Sections
 - [x] Remove excessive pt-40 padding that pushed video off-screen
-- [x] Add "Why HackGreenwich?" section between stats and scroll video
+- [x] Add "Why HackItNow?" section between stats and scroll video
 - [x] Implement scroll snap points for smooth section navigation
 - [x] Ensure scroll video is visible and properly positioned
 

@@ -38,7 +38,7 @@ export async function syncUserToSupabase(userData: {
   updatedAt: Date;
 }) {
   const { data, error } = await supabase
-    .from('hackgreenwich_users')
+    .from('hackitnow_users')
     .upsert({
       user_id: userData.id,
       open_id: userData.openId,
@@ -76,7 +76,7 @@ export async function syncUserToSupabase(userData: {
 export async function testSupabaseConnection() {
   try {
     const { data, error } = await supabase
-      .from('hackgreenwich_users')
+      .from('hackitnow_users')
       .select('count')
       .limit(1);
     

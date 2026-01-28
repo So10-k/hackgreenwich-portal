@@ -33,7 +33,7 @@ export default function Winners() {
         <div className="container relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Trophy className="h-5 w-5 text-yellow-500" />
-            <span className="text-yellow-500 font-semibold">HackGreenwich 2026 Winners</span>
+            <span className="text-yellow-500 font-semibold">HackItNow 2026 Winners</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
             Congratulations to Our
@@ -43,7 +43,7 @@ export default function Winners() {
             </span>
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            Celebrating the most innovative projects from HackGreenwich 2026. These teams pushed boundaries and created amazing solutions.
+            Celebrating the most innovative projects from HackItNow 2026. These teams pushed boundaries and created amazing solutions.
           </p>
         </div>
       </div>
@@ -140,13 +140,13 @@ export default function Winners() {
         <div className="container px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex flex-col items-center md:items-start gap-4">
-              <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-16" />
+              <img src="/hackitnow-logo.png" alt="HackItNow" className="h-16" />
               <p className="text-sm text-slate-400 text-center md:text-left">Sponsored by</p>
-              <img src="/onercf-logo.png" alt="OneRCF" className="h-12" />
+              <img src="/techmonium-logo.png" alt="Techmonium" className="h-12" />
             </div>
             <div className="text-center md:text-right">
               <p className="text-slate-400 text-sm">
-                © 2026 HackGreenwich. All rights reserved.
+                © 2026 HackItNow. All rights reserved.
               </p>
             </div>
           </div>

@@ -49,7 +49,7 @@ export default function Participants() {
               Participants
             </h1>
             <p className="text-white/70 mt-2">
-              Browse all registered participants for HackGreenwich 2026
+              Browse all registered participants for HackItNow 2026
             </p>
           </div>
           <Badge variant="outline" className="text-lg px-4 py-2 bg-white/5 border-white/20 text-white">

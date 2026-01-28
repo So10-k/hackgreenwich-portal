@@ -157,7 +157,7 @@ export default function Home() {
                   className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8"
                 >
                   <Trophy className="h-4 w-4 text-red-400" />
-                  <span className="text-sm font-medium">HackGreenwich 2026 - Registration Open</span>
+                  <span className="text-sm font-medium">HackItNow 2026 - Registration Open</span>
                 </motion.div>
 
                 <motion.h1
@@ -169,7 +169,7 @@ export default function Home() {
                 >
                   Build the Future at
                   <br />
-                  <span className="bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 bg-clip-text text-transparent">HackGreenwich</span>
+                  <span className="bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 bg-clip-text text-transparent">HackItNow</span>
                 </motion.h1>
 
                 <motion.div
@@ -177,7 +177,7 @@ export default function Home() {
                   className="text-lg md:text-xl lg:text-2xl text-white max-w-3xl mx-auto mb-8 md:mb-12 leading-relaxed text-center px-4"
                 >
                   <p className="mb-2 text-base md:text-lg">Sponsored by</p>
-                  <img src="/onercf-logo.png" alt="OneRCF" className="h-12 md:h-16 mx-auto" />
+                  <img src="/techmonium-logo.png" alt="Techmonium" className="h-12 md:h-16 mx-auto" />
                 </motion.div>
 
                 <motion.div
@@ -320,7 +320,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why HackGreenwich Section */}
+      {/* Why HackItNow Section */}
       <section className="relative py-20">
         <div className="container">
           <motion.div
@@ -331,7 +331,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Why <span className="bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">HackGreenwich</span>?
+              Why <span className="bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">HackItNow</span>?
             </h2>
             <p className="text-xl text-white/80 max-w-3xl mx-auto">
               More than just a hackathon—it's where innovation meets opportunity
@@ -387,7 +387,7 @@ export default function Home() {
               What Are We <span className="bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">Looking For</span>?
             </h2>
             <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
-              Build innovative platforms powered by RoleColorAI
+              Build innovative platforms powered by Techmonium
             </p>
           </motion.div>
 
@@ -404,7 +404,7 @@ export default function Home() {
                 <div>
                   <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">The Challenge</h3>
                   <p className="text-lg text-white/90 leading-relaxed mb-6">
-                    The goal of HackGreenwich is to <strong>develop a new platform using our RoleColorAI API</strong>. Every participant gets <strong className="text-yellow-400">free unlimited access</strong> to the API during the event!
+                    The goal of HackItNow is to <strong>develop a new platform using our Techmonium API</strong>. Every participant gets <strong className="text-yellow-400">free unlimited access</strong> to the API during the event!
                   </p>
                   <p className="text-white/80 mb-8">
                     Whether you're building a career guidance tool, a team formation platform, a personality-based game, or something completely innovative—we want to see how you leverage AI-powered role and personality insights to create something amazing.
@@ -414,14 +414,14 @@ export default function Home() {
 
               <div className="grid md:grid-cols-2 gap-6">
                 <motion.a
-                  href="https://rolecolorfinder.com"
+                  href="https://techmonium.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}
                   className="block p-6 rounded-xl bg-gradient-to-br from-red-500/20 to-yellow-500/20 border border-red-500/30 hover:border-red-500/50 transition-all duration-300"
                 >
                   <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    🎯 RoleColorFinder
+                    🎯 Techmonium
                   </h4>
                   <p className="text-white/80 text-sm mb-3">
                     Discover the platform behind the API. Learn about role-based personality insights and how they help people find their perfect career fit.
@@ -430,14 +430,14 @@ export default function Home() {
                 </motion.a>
 
                 <motion.a
-                  href="https://rolecolorai.com"
+                  href="https://techmonium.com/api"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}
                   className="block p-6 rounded-xl bg-gradient-to-br from-green-500/20 to-blue-500/20 border border-green-500/30 hover:border-green-500/50 transition-all duration-300"
                 >
                   <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    🤖 RoleColorAI API
+                    🤖 Techmonium API
                   </h4>
                   <p className="text-white/80 text-sm mb-3">
                     Explore the AI-powered API you'll be using. Access comprehensive documentation, examples, and get your free unlimited API key for the hackathon.
@@ -460,7 +460,7 @@ export default function Home() {
       <section className="relative py-20">
       <HeroScrollVideo
         title="Ready to Build the Future?"
-        subtitle="Join HackGreenwich 2026"
+        subtitle="Join HackItNow 2026"
         meta="March 2026 • Greenwich, CT"
         credits={null}
         media="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4"
@@ -492,9 +492,9 @@ export default function Home() {
       <footer className="relative py-12 border-t border-white/10 bg-black/20 backdrop-blur-md">
         <div className="container mx-auto px-4 text-center text-white/80">
           <div className="flex items-center justify-center mb-4">
-            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-8" />
+            <img src="/hackitnow-logo.png" alt="HackItNow" className="h-8" />
           </div>
-          <p className="text-sm">© 2026 HackGreenwich. All rights reserved.</p>
+          <p className="text-sm">© 2026 HackItNow. All rights reserved.</p>
         </div>
       </footer>
     </div>

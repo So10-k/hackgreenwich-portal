@@ -26,7 +26,7 @@ export default function JudgesDashboard() {
         <div>
           <h1 className="text-4xl font-bold mb-2 text-white">Judges Portal</h1>
           <p className="text-white/70">
-            Welcome to the HackGreenwich judges dashboard. View participants, announcements, and access Devpost submissions.
+            Welcome to the HackItNow judges dashboard. View participants, announcements, and access Devpost submissions.
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export default function JudgesDashboard() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <SafeExternalLink href="https://hackgreenwich.devpost.com">
+            <SafeExternalLink href="https://hackitnow.devpost.com">
               <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white">
                 Open Devpost <ExternalLink className="ml-2 h-4 w-4" />
               </Button>

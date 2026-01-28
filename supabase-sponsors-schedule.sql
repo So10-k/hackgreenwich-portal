@@ -75,13 +75,13 @@ CREATE TRIGGER update_schedule_events_updated_at
 
 -- Sample data (optional - remove if you don't want sample data)
 INSERT INTO sponsors (name, tier, description, display_order) VALUES
-  ('RoleColorOne', 'platinum', 'Title sponsor of HackGreenwich', 1),
+  ('Techmonium', 'platinum', 'Title sponsor of HackItNow', 1),
   ('Tech Corp', 'gold', 'Supporting innovation in education', 2),
   ('Code Academy', 'silver', 'Empowering the next generation of developers', 3)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO schedule_events (title, description, event_type, location, start_time, end_time, is_featured) VALUES
-  ('Opening Ceremony', 'Welcome to HackGreenwich 2026!', 'ceremony', 'Main Auditorium', '2026-03-15 09:00:00-04', '2026-03-15 10:00:00-04', true),
+  ('Opening Ceremony', 'Welcome to HackItNow 2026!', 'ceremony', 'Main Auditorium', '2026-03-15 09:00:00-04', '2026-03-15 10:00:00-04', true),
   ('Hacking Begins', 'Start building your projects', 'activity', 'All Spaces', '2026-03-15 10:00:00-04', '2026-03-15 10:00:00-04', true),
   ('Lunch', 'Grab some food and network', 'meal', 'Cafeteria', '2026-03-15 12:00:00-04', '2026-03-15 13:00:00-04', false),
   ('Web Development Workshop', 'Learn modern web development techniques', 'workshop', 'Room 101', '2026-03-15 14:00:00-04', '2026-03-15 15:30:00-04', false),

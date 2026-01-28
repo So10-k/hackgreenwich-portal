@@ -204,7 +204,7 @@ export default function Profile() {
                       id="bio"
                       value={bio}
                       onChange={(e) => setBio(e.target.value)}
-                      placeholder="Write a brief introduction about yourself, your background, and what you're hoping to build at HackGreenwich..."
+                      placeholder="Write a brief introduction about yourself, your background, and what you're hoping to build at HackItNow..."
                       rows={4}
                       maxLength={500}
                       className="mt-1 bg-white/5 border-white/20 text-white placeholder:text-white/40"
