@@ -1,6 +1,6 @@
-# Deploying HackGreenwich Portal to Railway
+# Deploying HackItNow Portal to Railway
 
-This guide provides step-by-step instructions for deploying your HackGreenwich portal to Railway.
+This guide provides step-by-step instructions for deploying your HackItNow portal to Railway.
 
 ## Why Railway?
 
@@ -28,7 +28,7 @@ Railway is perfect for this application because:
 
 1. Click "New Project" on Railway dashboard
 2. Select "Deploy from GitHub repo"
-3. Choose your `hackgreenwich-portal` repository
+3. Choose your `hackitnow-portal` repository
 4. Railway will automatically detect it's a Node.js project
 
 ## Step 3: Configure Environment Variables
@@ -50,7 +50,7 @@ PORT=3000
 
 1. Railway will automatically start building and deploying
 2. Wait for the build to complete (usually 2-5 minutes)
-3. Once deployed, Railway will provide you with a URL like `https://hackgreenwich-portal-production.up.railway.app`
+3. Once deployed, Railway will provide you with a URL like `https://hackitnow-portal-production.up.railway.app`
 
 ## Step 5: Configure Supabase Redirect URLs
 
@@ -77,7 +77,7 @@ Railway automatically provides a domain. To customize it:
 
 1. Go to "Settings" → "Domains"
 2. Click "Custom Domain"
-3. Enter your domain (e.g., `hackgreenwich.org`)
+3. Enter your domain (e.g., `hackitnow.org`)
 4. Add the CNAME record to your DNS provider:
    - **Type**: CNAME
    - **Name**: @ (or www)
@@ -355,14 +355,14 @@ Before going live:
 
 ---
 
-**Congratulations!** Your HackGreenwich portal is now live on Railway! 🎉
+**Congratulations!** Your HackItNow portal is now live on Railway! 🎉
 
 ## Quick Deploy Button (Optional)
 
 Add this to your README.md for one-click deployment:
 
 ```markdown
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/YOUR_USERNAME/hackgreenwich-portal)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/YOUR_USERNAME/hackitnow-portal)
 ```
 
 ## Next Steps

@@ -114,7 +114,7 @@ export default function Dashboard() {
         <div>
           <h1 className="text-4xl font-bold mb-2 text-white">Welcome back, {user?.name}!</h1>
           <p className="text-white/70 text-lg">
-            Ready to build something amazing at HackGreenwich?
+            Ready to build something amazing at HackItNow?
           </p>
         </div>
 
@@ -127,7 +127,7 @@ export default function Dashboard() {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Hackathon Hasn't Started Yet</h3>
                   <p className="text-white/80 mb-3">
-                    HackGreenwich 2026 begins on <strong>March 1st, 2026 at 12:00pm EST</strong> and ends on <strong>March 3rd, 2026 at 12:00pm EST</strong>. You're registered and ready to go!
+                    HackItNow 2026 begins on <strong>March 1st, 2026 at 12:00pm EST</strong> and ends on <strong>March 3rd, 2026 at 12:00pm EST</strong>. You're registered and ready to go!
                   </p>
                   <div className="text-white/70 space-y-2">
                     <p className="text-2xl font-bold text-red-400">

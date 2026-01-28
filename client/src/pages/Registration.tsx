@@ -221,14 +221,14 @@ export default function Registration() {
             <CardHeader>
               <CardTitle>Register on Devpost</CardTitle>
               <CardDescription>
-                Complete your registration on the official HackGreenwich Devpost page
+                Complete your registration on the official HackItNow Devpost page
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="p-6 bg-muted rounded-lg space-y-4">
                 <p className="font-medium">Next Steps:</p>
                 <ol className="list-decimal list-inside space-y-2 text-sm">
-                  <li>Click the button below to open the HackGreenwich Devpost page</li>
+                  <li>Click the button below to open the HackItNow Devpost page</li>
                   <li>Register for the hackathon using your Devpost account</li>
                   <li>Return here once completed</li>
                   <li>Wait for admin approval</li>

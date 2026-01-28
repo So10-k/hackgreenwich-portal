@@ -31,7 +31,7 @@ export function MobileMenu({ user, onNavigate }: MobileMenuProps) {
       <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-slate-900 border-white/10">
         <SheetHeader>
           <SheetTitle className="text-white flex items-center gap-2">
-            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-8" />
+            <img src="/hackitnow-logo.png" alt="HackItNow" className="h-8" />
           </SheetTitle>
         </SheetHeader>
         <div className="flex flex-col gap-4 mt-8">

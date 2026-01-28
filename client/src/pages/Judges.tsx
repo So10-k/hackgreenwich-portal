@@ -202,9 +202,9 @@ export default function Judges() {
       <footer className="relative py-12 border-t border-white/10 bg-black/20 backdrop-blur-md">
         <div className="container mx-auto px-4 text-center text-white/80">
           <div className="flex items-center justify-center mb-4">
-            <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-8" />
+            <img src="/hackitnow-logo.png" alt="HackItNow" className="h-8" />
           </div>
-          <p className="text-sm">© 2026 HackGreenwich. All rights reserved.</p>
+          <p className="text-sm">© 2026 HackItNow. All rights reserved.</p>
         </div>
       </footer>
     </div>

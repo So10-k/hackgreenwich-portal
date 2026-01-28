@@ -13,7 +13,7 @@ export default function DashboardRules() {
               Competition <span className="bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">Rules</span>
             </h1>
             <p className="text-xl text-white/80">
-              Fair play guidelines for HackGreenwich 2026
+              Fair play guidelines for HackItNow 2026
             </p>
           </div>
 
@@ -24,7 +24,7 @@ export default function DashboardRules() {
               <div>
                 <h3 className="text-xl font-bold text-red-400 mb-2">Important: Event Dates & Times</h3>
                 <p className="text-white/90">
-                  HackGreenwich 2026 runs from <strong>March 1st, 2026 at 12:00pm EST</strong> to <strong>March 3rd, 2026 at 12:00pm EST</strong>. All projects must be started after the official start time. Any work done before this will result in disqualification.
+                  HackItNow 2026 runs from <strong>March 1st, 2026 at 12:00pm EST</strong> to <strong>March 3rd, 2026 at 12:00pm EST</strong>. All projects must be started after the official start time. Any work done before this will result in disqualification.
                 </p>
               </div>
             </div>
@@ -131,7 +131,7 @@ export default function DashboardRules() {
 
               <div>
                 <h3 className="text-lg font-semibold text-white mb-2">Intellectual Property</h3>
-                <p>You retain all rights to your project. By participating, you grant HackGreenwich permission to showcase your project in promotional materials.</p>
+                <p>You retain all rights to your project. By participating, you grant HackItNow permission to showcase your project in promotional materials.</p>
               </div>
 
               <div>

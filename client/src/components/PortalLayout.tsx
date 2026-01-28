@@ -88,7 +88,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       {/* Logo */}
       <div className="p-6 border-b border-white/10">
         <div className="flex items-center gap-2">
-          <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-8" />
+          <img src="/hackitnow-logo.png" alt="HackItNow" className="h-8" />
         </div>
       </div>
 
@@ -178,7 +178,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       {/* Mobile Header */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img src="/hackgreenwich-logo.png" alt="HackGreenwich" className="h-8" />
+          <img src="/hackitnow-logo.png" alt="HackItNow" className="h-8" />
         </div>
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
           <Button

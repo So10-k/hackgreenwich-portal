@@ -1,5 +1,5 @@
 -- ============================================
--- HackGreenwich Winners Setup
+-- HackItNow Winners Setup
 -- ============================================
 -- Run this SQL in your Supabase SQL Editor to set up the winners feature
 
